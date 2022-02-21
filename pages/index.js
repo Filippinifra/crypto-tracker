@@ -2,14 +2,14 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export default function Home({ prices }) {
+  const router = useRouter();
+
   if (!prices) {
     return <div>No data!!</div>;
   }
 
   const btc = prices.find(({ currency }) => currency === "BTC");
   const btcPrice = btc.price;
-
-  const router = useRouter();
 
   const refreshData = () => {
     router.replace(router.asPath);
