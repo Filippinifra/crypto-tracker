@@ -33,6 +33,8 @@ export async function getStaticProps() {
     console.log(["error", e]);
   }
 
+  console.log(JSON.stringify(res));
+
   const prices = res ? await res.json() : null;
 
   return {
