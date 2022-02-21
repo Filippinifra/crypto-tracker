@@ -12,7 +12,7 @@ export default function Home({ prices }) {
   const btcPrice = btc.price;
 
   const refreshData = () => {
-    router.replace(router.asPath);
+    router.reload(window.location.pathname);
   };
 
   return (
