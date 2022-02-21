@@ -23,9 +23,9 @@ export default function Home({ prices }) {
   );
 }
 
-const FETCHING_SERVICE_API_KEY = "3d170cf90f2902990ba061da9eb39d4d275e3bd3";
-
 export async function getStaticProps() {
+  const FETCHING_SERVICE_API_KEY = "3d170cf90f2902990ba061da9eb39d4d275e3bd3";
+
   let res = null;
   try {
     res = await fetch(`https://api.nomics.com/v1/prices?key=${FETCHING_SERVICE_API_KEY}`);
