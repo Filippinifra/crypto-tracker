@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { FETCHING_SERVICE_API_KEY } from "utils/api";
 
 export default function Home({ prices }) {
   const router = useRouter();
@@ -24,16 +24,13 @@ export default function Home({ prices }) {
 }
 
 export async function getStaticProps() {
-  const FETCHING_SERVICE_API_KEY = "3d170cf90f2902990ba061da9eb39d4d275e3bd3";
-
   let res = null;
+
   try {
     res = await fetch(`https://api.nomics.com/v1/prices?key=${FETCHING_SERVICE_API_KEY}`);
   } catch (e) {
     console.log(["error", e]);
   }
-
-  console.log(["res:", JSON.stringify(res)]);
 
   const prices = res ? await res.json() : null;
 
@@ -41,6 +38,6 @@ export async function getStaticProps() {
     props: {
       prices,
     },
-    revalidate: 60,
+    revalidate: 120,
   };
 }
