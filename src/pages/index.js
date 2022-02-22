@@ -1,3 +1,4 @@
+import { Dropdown } from "components/Dropdown";
 import { useRouter } from "next/router";
 import { FETCHING_SERVICE_API_KEY } from "utils/api";
 
@@ -34,10 +35,19 @@ export default function Home({ prices }) {
     router.reload(window.location.pathname);
   };
 
+  const options = prices.map(({ currency, price }) => ({ value: { currency, price }, label: `${currency} - ${price}$` }));
+
   return (
     <div>
       <div>{`hello, this is BTC price: ${btcPrice}`}</div>
       <button onClick={refreshData}>Refresh</button>
+      <Dropdown
+        value={null}
+        options={options}
+        onChange={(e) => {
+          console.log(`selected ${e.value.currency}`);
+        }}
+      />
     </div>
   );
 }
