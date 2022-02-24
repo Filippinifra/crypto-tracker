@@ -1,12 +1,15 @@
 import { Dropdown } from "components/Dropdown";
+import { useMyCoins } from "hooks/useMyCoins";
 import { useRouter } from "next/router";
-import { FETCHING_SERVICE_API_KEY } from "utils/api";
+import { Button } from "components/Button";
+import { pricesCoin } from "utils/api";
+import { Layout } from "components/Layout";
 
 export async function getStaticProps() {
   let res = null;
 
   try {
-    res = await fetch(`https://api.nomics.com/v1/prices?key=${FETCHING_SERVICE_API_KEY}`);
+    res = await fetch(pricesCoin);
   } catch (e) {
     console.log(["error", e]);
   }
@@ -22,32 +25,36 @@ export async function getStaticProps() {
 }
 
 export default function Home({ prices }) {
-  const router = useRouter();
+  const { coins, setCoins } = useMyCoins();
 
   if (!prices) {
     return <div>No data!!</div>;
   }
 
-  const btc = prices.find(({ currency }) => currency === "BTC");
-  const btcPrice = btc.price;
-
-  const refreshData = () => {
-    router.reload(window.location.pathname);
+  const addCoin = (coin) => {
+    const coinAlreadyExists = coins.some((existingCoin) => existingCoin.currency === coin.currency);
+    if (!coinAlreadyExists) {
+      setCoins((coins) => [...coins, coin]);
+    }
   };
 
   const options = prices.map(({ currency, price }) => ({ value: { currency, price }, label: `${currency} - ${price}$` }));
 
   return (
-    <div>
-      <div>{`hello, this is BTC price: ${btcPrice}`}</div>
-      <button onClick={refreshData}>Refresh</button>
+    <Layout>
+      <div>
+        {coins.map((coin) => {
+          return <div>{coin.currency}</div>;
+        })}
+      </div>
+
       <Dropdown
         value={null}
         options={options}
         onChange={(e) => {
-          console.log(`selected ${e.value.currency}`);
+          addCoin(e.value);
         }}
       />
-    </div>
+    </Layout>
   );
 }
