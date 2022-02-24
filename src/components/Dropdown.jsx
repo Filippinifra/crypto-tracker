@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import Select from "react-select";
+import { shadowStyle } from "./style";
 
 export const Dropdown = ({ options, value, onChange, ...others }) => {
   const [input, setInput] = useState("");
@@ -17,5 +18,14 @@ export const Dropdown = ({ options, value, onChange, ...others }) => {
 
   const slicedOptions = useMemo(() => filteredOptions.slice(0, 100), [filteredOptions]);
 
-  return <Select value={value} onChange={onChange} options={slicedOptions} onInputChange={setInput} {...others} />;
+  return (
+    <Select
+      value={value}
+      onChange={onChange}
+      options={slicedOptions}
+      onInputChange={setInput}
+      {...others}
+      styles={{ container: (props) => ({ ...props, border: "1px solid black", ...shadowStyle }), control: () => ({ display: "flex" }) }}
+    />
+  );
 };
