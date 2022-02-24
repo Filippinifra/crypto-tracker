@@ -1,11 +1,11 @@
 import styled from "styled-components";
+import { shadowStyle } from "./style";
 
 const ButtonStyled = styled.div`
   width: fit-content;
   border: 1px solid grey;
   padding: 3px 6px;
-  -webkit-box-shadow: -2px -2px 0px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: -2px -2px 0px 1px rgba(0, 0, 0, 0.9);
+  ${shadowStyle}
   font-size: 14px;
   cursor: pointer;
 `;
