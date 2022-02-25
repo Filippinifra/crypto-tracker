@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { shadowStyle } from "./style";
 import { Typography } from "./Typography";
@@ -11,13 +12,15 @@ const ButtonStyled = styled.div`
   cursor: pointer;
 `;
 
-export const Button = ({ children, others }) => {
+export const Button = ({ children, ...others }) => {
   return <ButtonStyled {...others}>{children}</ButtonStyled>;
 };
 
 export const RefreshButton = () => {
+  const { reload } = useRouter();
+
   const refreshData = () => {
-    Router.reload();
+    reload();
   };
 
   return (
