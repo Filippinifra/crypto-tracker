@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { shadowStyle } from "./style";
+import { Typography } from "./Typography";
 
 const ButtonStyled = styled.div`
   width: fit-content;
@@ -19,5 +20,9 @@ export const RefreshButton = () => {
     Router.reload();
   };
 
-  return <Button onClick={refreshData}>Refresh</Button>;
+  return (
+    <Button onClick={refreshData}>
+      <Typography variant="body">Ricarica</Typography>
+    </Button>
+  );
 };

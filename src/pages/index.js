@@ -3,6 +3,8 @@ import { useMyCoins } from "hooks/useMyCoins";
 import { pricesCoin } from "utils/api";
 import { Layout } from "components/Layout";
 import { LoadErrorHandler } from "components/LoadErrorHandler";
+import { Typography } from "components/Typography";
+import { Spacer } from "components/Spacer";
 
 export async function getStaticProps() {
   let res = null;
@@ -38,12 +40,8 @@ export default function Home({ prices }) {
   return (
     <LoadErrorHandler data={coins} error={!coins && !loading}>
       <Layout>
-        <div>
-          {coins?.map((coin) => {
-            return <div key={coin.currency}>{coin.currency}</div>;
-          })}
-        </div>
-
+        <Typography variant="body">Aggiungi le tue coins:</Typography>
+        <Spacer size={10} />
         <Dropdown
           value={null}
           options={options}
@@ -51,6 +49,11 @@ export default function Home({ prices }) {
             addCoin(e.value);
           }}
         />
+        <div>
+          {coins?.map((coin) => {
+            return <div key={coin.currency}>{coin.currency}</div>;
+          })}
+        </div>
       </Layout>
     </LoadErrorHandler>
   );
