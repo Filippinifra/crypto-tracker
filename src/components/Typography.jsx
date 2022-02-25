@@ -1,6 +1,10 @@
-export const Typography = ({ children, variant }) => {
+export const Typography = ({ children, variant, style, ...others }) => {
   const styleVariant = styles[variant];
-  return <div style={styleVariant}>{children}</div>;
+  return (
+    <div style={{ ...styleVariant, ...style }} {...others}>
+      {children}
+    </div>
+  );
 };
 
 const styles = {

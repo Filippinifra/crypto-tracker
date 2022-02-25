@@ -10,8 +10,10 @@ export const Dropdown = ({ options, value, onChange, ...others }) => {
       return options;
     }
 
-    const filteredOptions = options.filter(({ label }) => label.includes(input.toUpperCase()));
-    const sortedByLengthOptions = filteredOptions.sort(({ value: { currency: labelA } }, { value: { currency: labelB } }) => labelA.length - labelB.length);
+    const filteredOptions = options.filter(
+      ({ value: { symbol, id, name } }) => symbol.toUpperCase().includes(input.toUpperCase()) || id.toUpperCase().includes(input.toUpperCase()) || symbol.toUpperCase().includes(name.toUpperCase())
+    );
+    const sortedByLengthOptions = filteredOptions.sort(({ value: { symbol: labelA } }, { value: { symbol: labelB } }) => labelA.length - labelB.length);
 
     return sortedByLengthOptions;
   }, [input, options]);

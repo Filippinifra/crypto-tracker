@@ -6,7 +6,7 @@ export const useMyCoins = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setCoins([{ abc: "ciao" }]);
+      setCoins([{ id: "bitcoin" }, { id: "ethereum" }]);
       setLoading(false);
     }, 1000);
   }, [setCoins, setLoading]);
