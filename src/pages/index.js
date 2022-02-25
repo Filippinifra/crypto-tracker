@@ -1,9 +1,8 @@
 import { Dropdown } from "components/Dropdown";
 import { useMyCoins } from "hooks/useMyCoins";
-import { useRouter } from "next/router";
-import { Button } from "components/Button";
 import { pricesCoin } from "utils/api";
 import { Layout } from "components/Layout";
+import { LoadErrorHandler } from "components/LoadErrorHandler";
 
 export async function getStaticProps() {
   let res = null;
@@ -25,11 +24,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ prices }) {
-  const { coins, setCoins } = useMyCoins();
-
-  if (!prices) {
-    return <div>No data!!</div>;
-  }
+  const { coins, setCoins, loading } = useMyCoins();
 
   const addCoin = (coin) => {
     const coinAlreadyExists = coins.some((existingCoin) => existingCoin.currency === coin.currency);
@@ -41,20 +36,22 @@ export default function Home({ prices }) {
   const options = prices.map(({ currency, price }) => ({ value: { currency, price }, label: `${currency} - ${price}$` }));
 
   return (
-    <Layout>
-      <div>
-        {coins.map((coin) => {
-          return <div>{coin.currency}</div>;
-        })}
-      </div>
+    <LoadErrorHandler data={coins?.length} error={!coins && !loading}>
+      <Layout>
+        <div>
+          {coins?.map((coin) => {
+            return <div key={coin.currency}>{coin.currency}</div>;
+          })}
+        </div>
 
-      <Dropdown
-        value={null}
-        options={options}
-        onChange={(e) => {
-          addCoin(e.value);
-        }}
-      />
-    </Layout>
+        <Dropdown
+          value={null}
+          options={options}
+          onChange={(e) => {
+            addCoin(e.value);
+          }}
+        />
+      </Layout>
+    </LoadErrorHandler>
   );
 }

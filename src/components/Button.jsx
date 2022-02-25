@@ -10,6 +10,14 @@ const ButtonStyled = styled.div`
   cursor: pointer;
 `;
 
-export const Button = ({ children }) => {
-  return <ButtonStyled>{children}</ButtonStyled>;
+export const Button = ({ children, others }) => {
+  return <ButtonStyled {...others}>{children}</ButtonStyled>;
+};
+
+export const RefreshButton = () => {
+  const refreshData = () => {
+    Router.reload();
+  };
+
+  return <Button onClick={refreshData}>Refresh</Button>;
 };

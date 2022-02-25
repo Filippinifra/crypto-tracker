@@ -14,7 +14,7 @@ export const Dropdown = ({ options, value, onChange, ...others }) => {
     const sortedByLengthOptions = filteredOptions.sort(({ value: { currency: labelA } }, { value: { currency: labelB } }) => labelA.length - labelB.length);
 
     return sortedByLengthOptions;
-  }, [input]);
+  }, [input, options]);
 
   const slicedOptions = useMemo(() => filteredOptions.slice(0, 100), [filteredOptions]);
 

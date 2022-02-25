@@ -1,6 +1,5 @@
-import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Button } from "./Button";
+import { RefreshButton } from "./Button";
 import { Spacer } from "./Spacer";
 
 const Wrapper = styled.div`
@@ -9,16 +8,10 @@ const Wrapper = styled.div`
 `;
 
 export const Layout = ({ children }) => {
-  const router = useRouter();
-
-  const refreshData = () => {
-    router.reload(window.location.pathname);
-  };
-
   return (
     <Wrapper>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button onClick={refreshData}>Refresh</Button>
+        <RefreshButton />
       </div>
       <Spacer size={20} />
       {children}
