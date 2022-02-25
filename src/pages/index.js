@@ -36,7 +36,7 @@ export default function Home({ prices }) {
   const options = prices.map(({ currency, price }) => ({ value: { currency, price }, label: `${currency} - ${price}$` }));
 
   return (
-    <LoadErrorHandler data={coins?.length} error={!coins && !loading}>
+    <LoadErrorHandler data={coins} error={!coins && !loading}>
       <Layout>
         <div>
           {coins?.map((coin) => {
