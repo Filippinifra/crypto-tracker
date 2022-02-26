@@ -10,15 +10,21 @@ export const Dropdown = ({ options, value, onChange, ...others }) => {
       return options;
     }
 
-    const filteredOptions = options.filter(
-      ({ value: { symbol, id, name } }) => symbol.toUpperCase().includes(input.toUpperCase()) || id.toUpperCase().includes(input.toUpperCase()) || symbol.toUpperCase().includes(name.toUpperCase())
-    );
+    const filteredOptions = options.filter(({ value: { symbol, id, name } }) => {
+      const upperInput = input.toUpperCase();
+      const symbolIncluded = symbol.toUpperCase().includes(upperInput);
+      const idIncluded = id.toUpperCase().includes(upperInput);
+      const nameIncluded = name.toUpperCase().includes(upperInput);
+
+      return symbolIncluded || idIncluded || nameIncluded;
+    });
+
     const sortedByLengthOptions = filteredOptions.sort(({ value: { symbol: labelA } }, { value: { symbol: labelB } }) => labelA.length - labelB.length);
 
     return sortedByLengthOptions;
   }, [input, options]);
 
-  const slicedOptions = useMemo(() => filteredOptions.slice(0, 100), [filteredOptions]);
+  const slicedOptions = useMemo(() => filteredOptions?.slice(0, 100), [filteredOptions]);
 
   return (
     <Select
