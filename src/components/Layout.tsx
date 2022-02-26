@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 import { RefreshButton } from "./Button";
 import { Spacer } from "./Spacer";
@@ -7,7 +8,7 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
-export const Layout = ({ children }) => {
+export const Layout: FC = ({ children }) => {
   return (
     <Wrapper>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>

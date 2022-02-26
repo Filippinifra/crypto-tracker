@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 import { RefreshButton } from "./Button";
 import { Typography } from "./Typography";
@@ -10,7 +11,7 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-export const LoadErrorHandler = ({ data, error, children }) => {
+export const LoadErrorHandler: FC<{ data: any; error: any }> = ({ data, error, children }) => {
   if (!data && !error) {
     return (
       <Wrapper style={{ backgroundColor: "#f3ea5f", color: "black" }}>
@@ -28,5 +29,5 @@ export const LoadErrorHandler = ({ data, error, children }) => {
     );
   }
 
-  return children;
+  return <>{children}</>;
 };

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { PersonalCoins } from "types/personalCoins";
 
-const tempCoins = [
+const tempCoins: PersonalCoins = [
   "convex-finance",
   "curve-dao-token",
   "tokemak",
@@ -34,8 +35,8 @@ const tempCoins = [
   "terrausd",
 ].map((e) => ({ id: e }));
 
-export const useMyCoins = () => {
-  const [coins, setCoins] = useState();
+export const usePersonalCoins = () => {
+  const [coins, setCoins] = useState<PersonalCoins>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

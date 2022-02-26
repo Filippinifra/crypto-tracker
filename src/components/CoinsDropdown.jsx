@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import Select from "react-select";
 import { shadowStyle } from "./style";
 
-export const Dropdown = ({ options, value, onChange, ...others }) => {
+export const CoinsDropdown = ({ options, value, onChange, ...others }) => {
   const [input, setInput] = useState("");
 
   const filteredOptions = useMemo(() => {
@@ -10,14 +10,17 @@ export const Dropdown = ({ options, value, onChange, ...others }) => {
       return options;
     }
 
-    const filteredOptions = options.filter(({ value: { symbol, id, name } }) => {
-      const upperInput = input.toUpperCase();
-      const symbolIncluded = symbol.toUpperCase().includes(upperInput);
-      const idIncluded = id.toUpperCase().includes(upperInput);
-      const nameIncluded = name.toUpperCase().includes(upperInput);
+    const filteredOptions =
+      typeof options === CoinAvailableAPI
+        ? options.filter(({ value: { symbol, id, name } }) => {
+            const upperInput = input.toUpperCase();
+            const symbolIncluded = symbol.toUpperCase().includes(upperInput);
+            const idIncluded = id.toUpperCase().includes(upperInput);
+            const nameIncluded = name.toUpperCase().includes(upperInput);
 
-      return symbolIncluded || idIncluded || nameIncluded;
-    });
+            return symbolIncluded || idIncluded || nameIncluded;
+          })
+        : [];
 
     const sortedByLengthOptions = filteredOptions.sort(({ value: { symbol: labelA } }, { value: { symbol: labelB } }) => labelA.length - labelB.length);
 
@@ -29,7 +32,11 @@ export const Dropdown = ({ options, value, onChange, ...others }) => {
   return (
     <Select
       value={value}
-      onChange={onChange}
+      onChange={(e) => {
+        if (e) {
+          onChange(e);
+        }
+      }}
       options={slicedOptions}
       onInputChange={setInput}
       {...others}

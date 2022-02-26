@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { FC } from "react";
 import styled from "styled-components";
 import { shadowStyle } from "./style";
 import { Typography } from "./Typography";
@@ -12,11 +13,11 @@ const ButtonStyled = styled.div`
   cursor: pointer;
 `;
 
-export const Button = ({ children, ...others }) => {
+export const Button: FC<{ onClick: () => void }> = ({ children, ...others }) => {
   return <ButtonStyled {...others}>{children}</ButtonStyled>;
 };
 
-export const RefreshButton = () => {
+export const RefreshButton: FC = () => {
   const { reload } = useRouter();
 
   const refreshData = () => {
@@ -24,7 +25,11 @@ export const RefreshButton = () => {
   };
 
   return (
-    <Button onClick={refreshData}>
+    <Button
+      onClick={() => {
+        refreshData();
+      }}
+    >
       <Typography variant="body">Ricarica</Typography>
     </Button>
   );

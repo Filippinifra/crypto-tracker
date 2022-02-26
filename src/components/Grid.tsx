@@ -1,6 +1,8 @@
+import { FC } from "react";
 import styled from "styled-components";
 
 const colorGrid = "#7D7D8C";
+
 const Container = styled.div`
   display: grid;
   border: 1px solid ${colorGrid};
@@ -15,7 +17,7 @@ const Item = styled.div`
   box-sizing: border-box;
 `;
 
-export const Grid = ({ templateColumns, data }) => {
+export const Grid: FC<{ templateColumns: string; data: any[] }> = ({ templateColumns, data }) => {
   return (
     <Container
       style={{

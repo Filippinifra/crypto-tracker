@@ -1,9 +1,11 @@
 import { Grid } from "components/Grid";
 import Image from "next/image";
+import { FC } from "react";
+import { DetailedCoin, DetailedCoins } from "types/detailedCoins";
 import { Typography } from "./Typography";
 
-const LabelCell = ({ value, color }) => {
-  const style = { width: "100%", backgroundColor: color, padding: 10, boxSizing: "border-box", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" };
+const LabelCell: FC<{ value: string | number; color: string }> = ({ value, color }) => {
+  const style: React.CSSProperties = { width: "100%", backgroundColor: color, padding: 10, boxSizing: "border-box", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" };
 
   return (
     <Typography variant="body" style={style}>
@@ -29,7 +31,8 @@ const getHEaders = () => {
   ];
 };
 
-const getRow = ({ symbol, name, image, current_price, price_change_percentage_24h, id }, index) => {
+const getRow = (coin: DetailedCoin, index: number) => {
+  const { symbol, name, image, current_price, price_change_percentage_24h, id } = coin;
   const color = index % 2 === 0 ? "#f4f4f5" : "#D4D4D8";
 
   return [
@@ -50,10 +53,11 @@ const getRow = ({ symbol, name, image, current_price, price_change_percentage_24
   ];
 };
 
-export const GridCoins = ({ data }) => {
-  const coins = data.reduce((r, coinData, index) => {
+export const GridCoins: FC<{ data: DetailedCoins }> = ({ data }) => {
+  // @ts-ignore
+  const coinsData: any[] = data.reduce((r, coinData, index) => {
     return [...r, ...getRow(coinData, index)];
   }, []);
 
-  return <Grid templateColumns={"150px 58px 200px 121px 125px 100px 130px 95px 100px 140px 140px 130px"} data={[...getHEaders(), ...coins]} />;
+  return <Grid templateColumns={"150px 58px 200px 121px 125px 100px 130px 95px 100px 140px 140px 130px"} data={[...getHEaders(), ...coinsData]} />;
 };
