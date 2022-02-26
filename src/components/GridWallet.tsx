@@ -8,7 +8,13 @@ const getRow = (walletPiece: WalletPiece, index: number) => {
 
   const color = index % 2 === 0 ? "#f4f4f5" : "#D4D4D8";
 
-  return [<input />, <input />, <Typography variant="body">{value || "-"}</Typography>];
+  return [
+    <input key={`wallet-${typology}`} />,
+    <input key={`wallet-${typology}-percentage`} />,
+    <Typography variant="body" key={`wallet-${typology}-value`}>
+      {value || "-"}
+    </Typography>,
+  ];
 };
 
 export const GridWallet: FC<{ wallet: WalletDivision }> = ({ wallet }) => {
