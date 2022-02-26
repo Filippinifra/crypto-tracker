@@ -9,7 +9,7 @@ export const Typography = ({ children, variant, style, ...others }) => {
 
 const styles = {
   body: {
-    fontSize: 14,
+    fontSize: 12,
     letterSpacing: 2,
   },
 };

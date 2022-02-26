@@ -4,8 +4,8 @@ import { Layout } from "components/Layout";
 import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { Typography } from "components/Typography";
 import { Spacer } from "components/Spacer";
-import { Grid } from "components/Grid";
 import { useDataCoins } from "hooks/useDataCoins";
+import { GridCoins } from "components/GridCoins";
 
 export async function getStaticProps() {
   let res = null;
@@ -37,9 +37,7 @@ export default function Home({ prices }) {
     }
   };
 
-  console.log(data);
-
-  const options = prices?.map(({ id, symbol, name }) => ({ value: { id, symbol, name }, label: `id: ${id} - symbol: ${symbol} - name: ${name}` }));
+  const options = prices?.map(({ id, symbol, name }) => ({ value: { id, symbol, name }, label: `${symbol.toUpperCase()} // ${name} // ${id}` }));
 
   return (
     <LoadErrorHandler data={coins} error={!coins && !loading}>
@@ -54,22 +52,7 @@ export default function Home({ prices }) {
           }}
         />
         <Spacer size={20} />
-        <Grid
-          templateColumns={"1fr 10fr 10fr 10fr 10fr"}
-          data={data?.reduce((r, { symbol, name, image, current_price, price_change_percentage_24h }) => {
-            return [
-              ...r,
-              <div style={{ backgroundColor: "white", height: 36 }}>
-                <img src={image} style={{ height: 36 }} />
-              </div>,
-              ...[symbol, name, current_price, price_change_percentage_24h].map((value) => (
-                <Typography variant="body" style={{ width: "100%", backgroundColor: "white", padding: 10, boxSizing: "border-box" }}>
-                  {value}
-                </Typography>
-              )),
-            ];
-          }, [])}
-        />
+        <GridCoins data={data} />
       </Layout>
     </LoadErrorHandler>
   );
