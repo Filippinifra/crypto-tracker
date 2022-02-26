@@ -35,7 +35,7 @@ const getRow = ({ symbol, name, image, current_price, price_change_percentage_24
   return [
     <LabelCell color={color} value={"Tipologia"} key={`${id}-type`} />,
     <div style={{ backgroundColor: color, height: 34, display: "flex", alignItems: "center", justifyContent: "center" }} key={`${id}-image`}>
-      <Image src={image} alt={id} style={{ height: 25, width: 25 }} />
+      <Image src={image} alt={id} height={25} width={25} />
     </div>,
     <LabelCell color={color} value={`${symbol.toUpperCase()} | ${name}`} key={`${id}-name`} />,
     <LabelCell color={color} value={"Percentage"} key={`${id}-perc`} />,
