@@ -6,6 +6,7 @@ import { Typography } from "components/Typography";
 import { Spacer } from "components/Spacer";
 import { useDataCoins } from "hooks/useDataCoins";
 import { GridCoins } from "components/GridCoins";
+import { GridWallet } from "components/GridWallet";
 
 export async function getStaticProps() {
   let res = null;
@@ -52,7 +53,8 @@ export default function Home({ prices }) {
           }}
         />
         <Spacer size={20} />
-        <GridCoins data={data} />
+        {/* <GridWallet /> */}
+        <GridCoins data={data || []} />
       </Layout>
     </LoadErrorHandler>
   );
