@@ -1,11 +1,12 @@
 import { Grid } from "components/Grid";
+import Image from "next/image";
 import { Typography } from "./Typography";
 
-const LabelCell = ({ value, key, color }) => {
+const LabelCell = ({ value, color }) => {
   const style = { width: "100%", backgroundColor: color, padding: 10, boxSizing: "border-box", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" };
 
   return (
-    <Typography variant="body" key={key} style={style}>
+    <Typography variant="body" style={style}>
       {value || "-"}
     </Typography>
   );
@@ -28,13 +29,13 @@ const getHEaders = () => {
   ];
 };
 
-const getRow = ({ symbol, name, image, current_price, price_change_percentage_24h }, index) => {
+const getRow = ({ symbol, name, image, current_price, price_change_percentage_24h, id }, index) => {
   const color = index % 2 === 0 ? "#f4f4f5" : "#D4D4D8";
 
   return [
     <LabelCell color={color} value={"Tipologia"} />,
     <div style={{ backgroundColor: color, height: 34, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <img src={image} style={{ height: 25, width: 25 }} />
+      <Image src={image} alt={id} style={{ height: 25, width: 25 }} />
     </div>,
     <LabelCell color={color} value={`${symbol.toUpperCase()} | ${name}`} />,
     <LabelCell color={color} value={"Percentage"} />,
