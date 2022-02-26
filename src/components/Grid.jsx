@@ -23,7 +23,7 @@ export const Grid = ({ templateColumns, data }) => {
       }}
     >
       {data?.map((e) => (
-        <Item>{e}</Item>
+        <Item key={e}>{e}</Item>
       ))}
     </Container>
   );
