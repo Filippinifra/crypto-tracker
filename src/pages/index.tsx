@@ -12,6 +12,7 @@ import { AvailableCoins } from "types/availableCoins";
 import { useWallet } from "hooks/useWallet";
 import { useTotalVest } from "hooks/useTotalVest";
 import { VestSummary } from "components/VestSummary";
+import { PieChart } from "components/PieChart";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -32,6 +33,9 @@ export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | u
   };
 };
 
+const pieColor = ["#F1948A", "#BB8FCE", "#85C1E9", "#73C6B6", "#82E0AA", "#F8C471", "#E59866", "#D98880", "#C39BD3", "#7FB3D5", "#76D7C4", "#7DCEA0", "#F7DC6F", "#F0B27A"];
+const pieColorDark = ["#E74C3C", "#8E44AD", "#3498DB", "#16A085", "#2ECC71", "#F39C12", "#D35400", "#C0392B", "#9B59B6", "#2980B9", "#1ABC9C", "#27AE60", "#F1C40F", "#E67E22"];
+
 export default function Home({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { personalCoins, setPersonalCoins, loading: coinsLoading } = usePersonalCoins();
   const { detailedCoins } = useDetailedCoins(personalCoins);
@@ -49,14 +53,34 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
 
   const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading;
 
-  const sumFiatValue = 10;
+  const sumFiatValue = 900;
+
+  const dataChart = {
+    labels: wallet?.map(({ typology }) => typology),
+    datasets: [
+      {
+        label: "Tipologie portafoglio",
+        data: wallet?.map(({ percentage }) => percentage),
+        backgroundColor: pieColor,
+        borderColor: pieColorDark,
+        borderWidth: 1,
+      },
+    ],
+  };
 
   return (
     <LoadErrorHandler data={personalCoins && wallet && totalVest} error={error}>
       <Layout>
-        <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} />
-        <Spacer size={30} />
-        <GridWallet wallet={wallet || []} />
+        <div style={{ display: "flex" }}>
+          <div style={{ marginRight: 150 }}>
+            <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} />
+            <Spacer size={30} />
+            <div style={{ height: "auto" }}>
+              <GridWallet wallet={wallet || []} sumFiatValue={sumFiatValue || 0} />
+            </div>
+          </div>
+          <PieChart data={dataChart} />
+        </div>
         <Spacer size={30} />
         <Typography variant="body">Aggiungi le tue coins:</Typography>
         <Spacer size={10} />

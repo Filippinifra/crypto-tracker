@@ -21,20 +21,20 @@ const getHEaders = () => {
   ];
 };
 
-const getRow = (walletPiece: WalletPiece) => {
-  const { percentage, typology, value } = walletPiece;
+const getRow = (walletPiece: WalletPiece, sumFiatValue: number) => {
+  const { percentage, typology } = walletPiece;
 
   return [
     <LabelCell key={`wallet-${typology}`} value={typology} />,
     <LabelCell key={`wallet-${typology}-percentage`} value={percentage} />,
-    <LabelCell key={`wallet-${typology}-value`} value={value} />,
+    <LabelCell key={`wallet-${typology}-value`} value={(sumFiatValue / 100) * percentage} />,
   ];
 };
 
-export const GridWallet: FC<{ wallet: WalletDivision }> = ({ wallet }) => {
+export const GridWallet: FC<{ wallet: WalletDivision; sumFiatValue: number }> = ({ wallet, sumFiatValue }) => {
   // @ts-ignore
   const walletData: any = wallet.reduce((r, walletDataRow) => {
-    return [...r, ...getRow(walletDataRow)];
+    return [...r, ...getRow(walletDataRow, sumFiatValue)];
   }, []);
 
   return <Grid templateColumns={"250px 200px 200px"} data={[...getHEaders(), ...walletData]} />;
