@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Currency, CurrencySymbol, getSymbolForCurrency } from "types/currency";
+import { CurrencySymbol } from "types/currency";
 import { WalletDivision, WalletPiece } from "types/walletDivision";
 import { gridWalletColor } from "utils/colors";
 import { Grid } from "./Grid";
