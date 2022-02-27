@@ -15,6 +15,7 @@ import { VestSummary } from "components/VestSummary";
 import { PieChart } from "components/PieChart";
 import { pieColors, pieColorsDark } from "utils/colors";
 import { usePrefCurrency } from "hooks/usePrefCurrency";
+import { Currency, getSymbolForCurrency } from "types/currency";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -69,15 +70,17 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const data = personalCoins && wallet && totalVest;
   const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading;
 
+  const symbolCurrency = getSymbolForCurrency(prefCurrency || Currency.EUR) || "€";
+
   return (
     <LoadErrorHandler data={data} error={error}>
       <Layout prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency}>
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: 150 }}>
-            <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} />
+            <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             <Spacer size={30} />
             <div style={{ height: "auto" }}>
-              <GridWallet wallet={wallet || []} sumFiatValue={sumFiatValue || 0} />
+              <GridWallet wallet={wallet || []} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             </div>
           </div>
           <PieChart data={dataChart} />
