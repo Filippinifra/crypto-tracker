@@ -13,6 +13,8 @@ import { useWallet } from "hooks/useWallet";
 import { useTotalVest } from "hooks/useTotalVest";
 import { VestSummary } from "components/VestSummary";
 import { PieChart } from "components/PieChart";
+import { pieColors, pieColorsDark } from "utils/colors";
+import { usePrefCurrency } from "hooks/usePrefCurrency";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -33,14 +35,12 @@ export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | u
   };
 };
 
-const pieColor = ["#F1948A", "#BB8FCE", "#85C1E9", "#73C6B6", "#82E0AA", "#F8C471", "#E59866", "#D98880", "#C39BD3", "#7FB3D5", "#76D7C4", "#7DCEA0", "#F7DC6F", "#F0B27A"];
-const pieColorDark = ["#E74C3C", "#8E44AD", "#3498DB", "#16A085", "#2ECC71", "#F39C12", "#D35400", "#C0392B", "#9B59B6", "#2980B9", "#1ABC9C", "#27AE60", "#F1C40F", "#E67E22"];
-
 export default function Home({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { personalCoins, setPersonalCoins, loading: coinsLoading } = usePersonalCoins();
-  const { detailedCoins } = useDetailedCoins(personalCoins);
   const { wallet, setWallet, loading: walletLoading } = useWallet();
   const { totalVest, setTotalVest, loading: totalVestLoading } = useTotalVest();
+  const { prefCurrency, setPrefCurrency } = usePrefCurrency();
+  const { detailedCoins } = useDetailedCoins(personalCoins, prefCurrency);
 
   const addCoin = (coin: any) => {
     const coinAlreadyExists = personalCoins?.some((existingCoin: any) => existingCoin.id === coin.id);
@@ -51,8 +51,6 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
 
   const options = availableCoins?.map((value) => ({ value, label: `${value.symbol.toUpperCase()} // ${value.name} // ${value.id}` }));
 
-  const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading;
-
   const sumFiatValue = 900;
 
   const dataChart = {
@@ -61,16 +59,19 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
       {
         label: "Tipologie portafoglio",
         data: wallet?.map(({ percentage }) => percentage),
-        backgroundColor: pieColor,
-        borderColor: pieColorDark,
+        backgroundColor: pieColors,
+        borderColor: pieColorsDark,
         borderWidth: 1,
       },
     ],
   };
 
+  const data = personalCoins && wallet && totalVest;
+  const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading;
+
   return (
-    <LoadErrorHandler data={personalCoins && wallet && totalVest} error={error}>
-      <Layout>
+    <LoadErrorHandler data={data} error={error}>
+      <Layout prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency}>
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: 150 }}>
             <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} />

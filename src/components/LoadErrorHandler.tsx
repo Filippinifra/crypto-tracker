@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { errorColor, loadingColor } from "utils/colors";
 import { RefreshButton } from "./Button";
 import { Typography } from "./Typography";
 
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
 export const LoadErrorHandler: FC<{ data: any; error: any }> = ({ data, error, children }) => {
   if (!data && !error) {
     return (
-      <Wrapper style={{ backgroundColor: "#f3ea5f", color: "black" }}>
+      <Wrapper style={{ backgroundColor: loadingColor, color: "black" }}>
         <Typography variant="body">.. Caricamento ..</Typography>
       </Wrapper>
     );
@@ -22,7 +23,7 @@ export const LoadErrorHandler: FC<{ data: any; error: any }> = ({ data, error, c
 
   if (error) {
     return (
-      <Wrapper style={{ backgroundColor: "#ff3f3f", color: "white", display: "flex", flexDirection: "column", gap: 30 }}>
+      <Wrapper style={{ backgroundColor: errorColor, color: "white", display: "flex", flexDirection: "column", gap: 30 }}>
         <Typography variant="body">Errore!</Typography>
         <RefreshButton />
       </Wrapper>

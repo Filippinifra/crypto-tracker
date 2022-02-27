@@ -1,6 +1,8 @@
+import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
+import { Currency, getSymbolForCurrency } from "types/currency";
 import { shadowStyle } from "./style";
 import { Typography } from "./Typography";
 
@@ -33,4 +35,18 @@ export const RefreshButton: FC = () => {
       <Typography variant="body">Ricarica</Typography>
     </Button>
   );
+};
+
+export const ChangeCurrencyButton: FC<{ prefCurrency: Currency | undefined; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>> }> = ({ prefCurrency, setPrefCurrency }) => {
+  const changeCurrency = () => {
+    setPrefCurrency(prefCurrency === Currency.EUR ? Currency.USD : Currency.EUR);
+  };
+
+  return prefCurrency !== undefined ? (
+    <Button onClick={changeCurrency}>
+      <Typography variant="body" style={{ marginLeft: 2 }}>
+        {getSymbolForCurrency(prefCurrency)}
+      </Typography>
+    </Button>
+  ) : null;
 };

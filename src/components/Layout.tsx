@@ -1,6 +1,7 @@
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
-import { RefreshButton } from "./Button";
+import { Currency } from "types/currency";
+import { ChangeCurrencyButton, RefreshButton } from "./Button";
 import { Spacer } from "./Spacer";
 
 const Wrapper = styled.div`
@@ -8,10 +9,11 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
-export const Layout: FC = ({ children }) => {
+export const Layout: FC<{ prefCurrency: Currency | undefined; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>> }> = ({ children, prefCurrency, setPrefCurrency }) => {
   return (
     <Wrapper>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+      <div style={{ display: "flex", justifyContent: "flex-end", gap: 40 }}>
+        <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
         <RefreshButton />
       </div>
       <Spacer size={20} />

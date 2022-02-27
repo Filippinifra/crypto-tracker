@@ -2,6 +2,7 @@ import { Grid } from "components/Grid";
 import Image from "next/image";
 import { FC } from "react";
 import { DetailedCoin, DetailedCoins } from "types/detailedCoins";
+import { gridCoinColors } from "utils/colors";
 import { Typography } from "./Typography";
 
 const LabelCell: FC<{ value: string | number; color: string }> = ({ value, color }) => {
@@ -16,18 +17,18 @@ const LabelCell: FC<{ value: string | number; color: string }> = ({ value, color
 
 const getHEaders = () => {
   return [
-    <LabelCell color={"#FEA99A"} value={"Tipologia"} key={`coin-table-type`} />,
-    <LabelCell color={"#F7D5A1"} value={"Logo"} key={`coin-table-image`} />,
-    <LabelCell color={"#F7D5A1"} value={"Simbolo e nome"} key={`coin-table-name`} />,
-    <LabelCell color={"#F8ED8B"} value={"Allocazione %"} key={`coin-table-perc`} />,
-    <LabelCell color={"#F8ED8B"} value={"Controvalore allocazione"} key={`coin-table-value-for-perc`} />,
-    <LabelCell color={"#C6EF81"} value={"Prezzo"} key={`coin-table-price`} />,
-    <LabelCell color={"#C6EF81"} value={"Variazione 24%"} key={`coin-table-price-variation`} />,
-    <LabelCell color={"#B4EAF8"} value={"Tokens"} key={`coin-table-holding-token`} />,
-    <LabelCell color={"#B4EAF8"} value={"Possesso $"} key={`coin-table-holding-in-fiat`} />,
-    <LabelCell color={"#E2B6D2"} value={"Bilanciamento percentuale"} key={`coin-table-perc-balancing`} />,
-    <LabelCell color={"#E2B6D2"} value={"Sbilanciamento valore in $"} key={`coin-table-value-balancing`} />,
-    <LabelCell color={"#E2B6D2"} value={"Numero coin per ribilancio"} key={`coin-table-coin-balancing`} />,
+    <LabelCell color={gridCoinColors[0]} value={"Tipologia"} key={`coin-table-type`} />,
+    <LabelCell color={gridCoinColors[1]} value={"Logo"} key={`coin-table-image`} />,
+    <LabelCell color={gridCoinColors[1]} value={"Simbolo e nome"} key={`coin-table-name`} />,
+    <LabelCell color={gridCoinColors[2]} value={"Allocazione %"} key={`coin-table-perc`} />,
+    <LabelCell color={gridCoinColors[2]} value={"Controvalore allocazione"} key={`coin-table-value-for-perc`} />,
+    <LabelCell color={gridCoinColors[3]} value={"Prezzo"} key={`coin-table-price`} />,
+    <LabelCell color={gridCoinColors[3]} value={"Variazione 24%"} key={`coin-table-price-variation`} />,
+    <LabelCell color={gridCoinColors[4]} value={"Tokens"} key={`coin-table-holding-token`} />,
+    <LabelCell color={gridCoinColors[4]} value={"Possesso $"} key={`coin-table-holding-in-fiat`} />,
+    <LabelCell color={gridCoinColors[5]} value={"Bilanciamento percentuale"} key={`coin-table-perc-balancing`} />,
+    <LabelCell color={gridCoinColors[5]} value={"Sbilanciamento valore in $"} key={`coin-table-value-balancing`} />,
+    <LabelCell color={gridCoinColors[5]} value={"Numero coin per ribilancio"} key={`coin-table-coin-balancing`} />,
   ];
 };
 

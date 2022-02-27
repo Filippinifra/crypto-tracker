@@ -1,9 +1,10 @@
 import { Grid } from "components/Grid";
 import { FC } from "react";
+import { vestColor } from "utils/colors";
 import { Typography } from "./Typography";
 
-const LabelCell: FC<{ value: string | number; color?: string }> = ({ value, color }) => {
-  const style: React.CSSProperties = { width: "100%", backgroundColor: color || "white", padding: 10, boxSizing: "border-box" };
+const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, isTitle }) => {
+  const style: React.CSSProperties = { width: "100%", backgroundColor: isTitle ? vestColor : "white", padding: 10, boxSizing: "border-box" };
 
   return (
     <Typography variant="body" style={style}>
@@ -17,11 +18,11 @@ export const VestSummary: FC<{ totalVest: number; sumFiatValue: number }> = ({ t
     <Grid
       templateColumns={"200px 200px"}
       data={[
-        <LabelCell color={"#FFD700"} value={"Totale investito"} key={"total-vest-title"} />,
+        <LabelCell value={"Totale investito"} key={"total-vest-title"} isTitle />,
         <LabelCell value={totalVest} key={"total-vest"} />,
-        <LabelCell color={"#FFD700"} value={"Possesso fiat"} key={"fiat-sum-value-title"} />,
+        <LabelCell value={"Possesso fiat"} key={"fiat-sum-value-title"} isTitle />,
         <LabelCell value={sumFiatValue} key={"fiat-sum-value"} />,
-        <LabelCell color={"#FFD700"} value={"Guadagno / perdita"} key={"profit-title"} />,
+        <LabelCell value={"Guadagno / perdita"} key={"profit-title"} isTitle />,
         <LabelCell value={sumFiatValue - totalVest} key={"profit"} />,
       ]}
     />

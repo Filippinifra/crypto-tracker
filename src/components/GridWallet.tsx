@@ -1,10 +1,11 @@
 import { FC } from "react";
 import { WalletDivision, WalletPiece } from "types/walletDivision";
+import { gridWalletColor } from "utils/colors";
 import { Grid } from "./Grid";
 import { Typography } from "./Typography";
 
-const LabelCell: FC<{ value: string | number; color?: string }> = ({ value, color }) => {
-  const style: React.CSSProperties = { width: "100%", backgroundColor: color || "white", padding: 10, boxSizing: "border-box" };
+const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, isTitle }) => {
+  const style: React.CSSProperties = { width: "100%", backgroundColor: isTitle ? gridWalletColor : "white", padding: 10, boxSizing: "border-box" };
 
   return (
     <Typography variant="body" style={style}>
@@ -15,9 +16,9 @@ const LabelCell: FC<{ value: string | number; color?: string }> = ({ value, colo
 
 const getHEaders = () => {
   return [
-    <LabelCell color={"#F3D6FF"} value={"Tipologia"} key={`wallet-typology`} />,
-    <LabelCell color={"#F3D6FF"} value={"Percentuale allocata"} key={`wallet-percentage`} />,
-    <LabelCell color={"#F3D6FF"} value={"Corrispettivo $"} key={`wallet-value`} />,
+    <LabelCell value={"Tipologia"} key={`wallet-typology`} isTitle />,
+    <LabelCell value={"Percentuale allocata"} key={`wallet-percentage`} isTitle />,
+    <LabelCell value={"Corrispettivo $"} key={`wallet-value`} isTitle />,
   ];
 };
 
