@@ -10,17 +10,14 @@ export const CoinsDropdown = ({ options, value, onChange, ...others }) => {
       return options;
     }
 
-    const filteredOptions =
-      typeof options === CoinAvailableAPI
-        ? options.filter(({ value: { symbol, id, name } }) => {
-            const upperInput = input.toUpperCase();
-            const symbolIncluded = symbol.toUpperCase().includes(upperInput);
-            const idIncluded = id.toUpperCase().includes(upperInput);
-            const nameIncluded = name.toUpperCase().includes(upperInput);
+    const filteredOptions = options.filter(({ value: { symbol, id, name } }) => {
+      const upperInput = input.toUpperCase();
+      const symbolIncluded = symbol.toUpperCase().includes(upperInput);
+      const idIncluded = id.toUpperCase().includes(upperInput);
+      const nameIncluded = name.toUpperCase().includes(upperInput);
 
-            return symbolIncluded || idIncluded || nameIncluded;
-          })
-        : [];
+      return symbolIncluded || idIncluded || nameIncluded;
+    });
 
     const sortedByLengthOptions = filteredOptions.sort(({ value: { symbol: labelA } }, { value: { symbol: labelB } }) => labelA.length - labelB.length);
 
