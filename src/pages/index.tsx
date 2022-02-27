@@ -9,6 +9,7 @@ import { GridWallet } from "components/GridWallet";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { GridCoins } from "components/GridCoins";
 import { AvailableCoins } from "types/availableCoins";
+import { useWallet } from "hooks/useWallet";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -30,8 +31,9 @@ export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | u
 };
 
 export default function Home({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { coins, setCoins, loading } = usePersonalCoins();
-  const { data } = useDetailedCoins(coins);
+  const { coins, setCoins, loading: coinsLoading } = usePersonalCoins();
+  const { detailedCoins } = useDetailedCoins(coins);
+  const { wallet, setWallet, loading: walletLoading } = useWallet();
 
   const addCoin = (coin: any) => {
     const coinAlreadyExists = coins?.some((existingCoin: any) => existingCoin.id === coin.id);
@@ -43,20 +45,23 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const options = availableCoins?.map((value) => ({ value, label: `${value.symbol.toUpperCase()} // ${value.name} // ${value.id}` }));
 
   return (
-    <LoadErrorHandler data={coins} error={!coins && !loading}>
+    <LoadErrorHandler data={coins && wallet} error={!coins && !coinsLoading && !wallet && !walletLoading}>
       <Layout>
+        <GridWallet wallet={wallet || []} />
+        <Spacer size={30} />
         <Typography variant="body">Aggiungi le tue coins:</Typography>
         <Spacer size={10} />
-        <CoinsDropdown
-          value={null}
-          options={options}
-          onChange={(e: { value: any }) => {
-            addCoin(e.value);
-          }}
-        />
-        <Spacer size={20} />
-        {/* <GridWallet /> */}
-        <GridCoins data={data || []} />
+        <div style={{ width: 600 }}>
+          <CoinsDropdown
+            value={null}
+            options={options}
+            onChange={(e: { value: any }) => {
+              addCoin(e.value);
+            }}
+          />
+        </div>
+        <Spacer size={30} />
+        <GridCoins data={detailedCoins || []} />
       </Layout>
     </LoadErrorHandler>
   );
