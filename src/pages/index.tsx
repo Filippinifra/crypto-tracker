@@ -1,15 +1,17 @@
 import { CoinsDropdown } from "components/CoinsDropdown";
-import { usePersonalCoins } from "hooks/useMyCoins";
+import { usePersonalCoins } from "hooks/usePersonalCoins";
 import { Layout } from "components/Layout";
 import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { Typography } from "components/Typography";
 import { Spacer } from "components/Spacer";
-import { useDetailedCoins } from "hooks/useDataCoins";
+import { useDetailedCoins } from "hooks/useDetailedCoins";
 import { GridWallet } from "components/GridWallet";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { GridCoins } from "components/GridCoins";
 import { AvailableCoins } from "types/availableCoins";
 import { useWallet } from "hooks/useWallet";
+import { useTotalVest } from "hooks/useTotalVest";
+import { VestSummary } from "components/VestSummary";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -31,22 +33,29 @@ export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | u
 };
 
 export default function Home({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { coins, setCoins, loading: coinsLoading } = usePersonalCoins();
-  const { detailedCoins } = useDetailedCoins(coins);
+  const { personalCoins, setPersonalCoins, loading: coinsLoading } = usePersonalCoins();
+  const { detailedCoins } = useDetailedCoins(personalCoins);
   const { wallet, setWallet, loading: walletLoading } = useWallet();
+  const { totalVest, setTotalVest, loading: totalVestLoading } = useTotalVest();
 
   const addCoin = (coin: any) => {
-    const coinAlreadyExists = coins?.some((existingCoin: any) => existingCoin.id === coin.id);
+    const coinAlreadyExists = personalCoins?.some((existingCoin: any) => existingCoin.id === coin.id);
     if (!coinAlreadyExists) {
-      setCoins((coins: any) => [...coins, coin]);
+      setPersonalCoins((coins: any) => [...coins, coin]);
     }
   };
 
   const options = availableCoins?.map((value) => ({ value, label: `${value.symbol.toUpperCase()} // ${value.name} // ${value.id}` }));
 
+  const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading;
+
+  const sumFiatValue = 10;
+
   return (
-    <LoadErrorHandler data={coins && wallet} error={!coins && !coinsLoading && !wallet && !walletLoading}>
+    <LoadErrorHandler data={personalCoins && wallet && totalVest} error={error}>
       <Layout>
+        <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} />
+        <Spacer size={30} />
         <GridWallet wallet={wallet || []} />
         <Spacer size={30} />
         <Typography variant="body">Aggiungi le tue coins:</Typography>

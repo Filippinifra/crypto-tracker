@@ -36,15 +36,15 @@ const tempCoins: PersonalCoins = [
 ].map((e) => ({ id: e }));
 
 export const usePersonalCoins = () => {
-  const [coins, setCoins] = useState<PersonalCoins>();
+  const [personalCoins, setPersonalCoins] = useState<PersonalCoins>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
-      setCoins(tempCoins);
+      setPersonalCoins(tempCoins);
       setLoading(false);
     }, 1000);
-  }, [setCoins, setLoading]);
+  }, [setPersonalCoins, setLoading]);
 
-  return { coins, setCoins, loading };
+  return { personalCoins, setPersonalCoins, loading };
 };

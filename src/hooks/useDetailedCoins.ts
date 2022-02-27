@@ -1,4 +1,3 @@
-import { ApiResponse } from "./../types/apiResponse";
 import useSWR from "swr";
 import { DetailedCoins } from "types/detailedCoins";
 import { PersonalCoins } from "types/personalCoins";

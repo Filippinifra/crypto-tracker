@@ -3,21 +3,31 @@ import { WalletDivision, WalletPiece } from "types/walletDivision";
 import { Grid } from "./Grid";
 import { Typography } from "./Typography";
 
+const LabelCell: FC<{ value: string | number; color?: string }> = ({ value, color }) => {
+  const style: React.CSSProperties = { width: "100%", backgroundColor: color || "white", padding: 10, boxSizing: "border-box" };
+
+  return (
+    <Typography variant="body" style={style}>
+      {value || "-"}
+    </Typography>
+  );
+};
+
+const getHEaders = () => {
+  return [
+    <LabelCell color={"#F3D6FF"} value={"Tipologia"} key={`wallet-typology`} />,
+    <LabelCell color={"#F3D6FF"} value={"Percentuale allocata"} key={`wallet-percentage`} />,
+    <LabelCell color={"#F3D6FF"} value={"Corrispettivo $"} key={`wallet-value`} />,
+  ];
+};
+
 const getRow = (walletPiece: WalletPiece) => {
   const { percentage, typology, value } = walletPiece;
 
-  const style: React.CSSProperties = { width: "100%", padding: 10, boxSizing: "border-box", backgroundColor: "white" };
-
   return [
-    <Typography variant="body" key={`wallet-${typology}`} style={style}>
-      {typology || "-"}
-    </Typography>,
-    <Typography variant="body" key={`wallet-${typology}-percentage`} style={style}>
-      {percentage || "-"}
-    </Typography>,
-    <Typography variant="body" key={`wallet-${typology}-value`} style={style}>
-      {value || "-"}
-    </Typography>,
+    <LabelCell key={`wallet-${typology}`} value={typology} />,
+    <LabelCell key={`wallet-${typology}-percentage`} value={percentage} />,
+    <LabelCell key={`wallet-${typology}-value`} value={value} />,
   ];
 };
 
@@ -27,5 +37,5 @@ export const GridWallet: FC<{ wallet: WalletDivision }> = ({ wallet }) => {
     return [...r, ...getRow(walletDataRow)];
   }, []);
 
-  return <Grid templateColumns={"250px 200px 200px"} data={[...walletData]} />;
+  return <Grid templateColumns={"250px 200px 200px"} data={[...getHEaders(), ...walletData]} />;
 };
