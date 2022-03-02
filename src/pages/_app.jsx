@@ -1,5 +1,4 @@
 import { AuthProvider } from "contexts/AuthContext";
-import { app } from "utils/firebase";
 
 const MyApp = ({ Component, pageProps }) => {
   return (

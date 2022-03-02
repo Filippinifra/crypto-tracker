@@ -1,28 +1,22 @@
-import React, { useState } from "react";
-import { auth } from "../utils/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth"; //temporaneo
-import { ref, onValue } from "firebase/database";
-import { database } from "utils/firebase";
+import { useState } from "react";
+import { auth } from "utils/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from "contexts/AuthContext";
 import { Button } from "components/Button";
 import { Typography } from "components/Typography";
 import { Input } from "components/Input";
-import { useDatabase } from "hooks/useDatabase";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [pass, setPassword] = useState("");
-  const { currentUser, setCurrentUser, setUserData, userData } = useAuth();
-  const { getDatabase } = useDatabase(currentUser);
+  const { setCurrentUser } = useAuth();
 
   const onConfirm = async () => {
     try {
       const response = await signInWithEmailAndPassword(auth, email, pass);
-      await setCurrentUser(response.user);
-      const databaseResponse = await getDatabase("coin");
-      await setUserData(databaseResponse);
+      setCurrentUser(response.user);
     } catch (error) {
-      console.log(error); //da fare file log
+      console.log(["error on signin", error]);
     }
   };
 
@@ -47,7 +41,6 @@ export default function SignInPage() {
         }}
       />
       <Button onClick={onConfirm}>Conferma</Button>
-      <p>{JSON.stringify(userData)}</p>
     </div>
   );
 }

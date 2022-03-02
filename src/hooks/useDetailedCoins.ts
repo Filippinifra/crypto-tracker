@@ -1,4 +1,4 @@
-import { Currency, getNameForCurrency } from "./../types/currency";
+import { Currency, getNameForCurrency } from "types/currency";
 import useSWR from "swr";
 import { DetailedCoins } from "types/detailedCoins";
 import { PersonalCoins } from "types/personalCoins";

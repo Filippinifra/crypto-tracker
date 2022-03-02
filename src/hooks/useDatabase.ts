@@ -1,30 +1,23 @@
-import { useAuth } from "contexts/AuthContext";
 import { database } from "utils/firebase";
-import { child, get, ref, set, onValue } from "firebase/database";
+import { child, get, ref, set } from "firebase/database";
 import { Paths } from "types/paths";
-import { UserData } from "types/userData";
 import { PersonalCoins } from "types/personalCoins";
 import { User } from "firebase/auth";
 
 export const useDatabase = (currentUser: User | undefined) => {
-  console.log(["useDatabase - currentUser", currentUser]);
   const mainPath = "Users/" + currentUser?.uid + "/";
 
   const setCoins = (data: PersonalCoins) => {
-    console.log(["in setCoins", currentUser?.email]);
     setDatabase(data, "coin");
   };
 
-  // aggiungere try catch?
   const setDatabase = (data: any, path: Paths) => {
     if (currentUser) {
       try {
         set(ref(database, mainPath + path), data);
       } catch (error) {
-        console.log(error);
+        console.log(["on set db error", error]);
       }
-    } else {
-      console.log("utente non settato");
     }
   };
 
@@ -38,7 +31,7 @@ export const useDatabase = (currentUser: User | undefined) => {
           return {};
         }
       } catch (error) {
-        console.log(error);
+        console.log(["on get db error", error]);
       }
     }
     return null;
@@ -46,7 +39,3 @@ export const useDatabase = (currentUser: User | undefined) => {
 
   return { setCoins, getDatabase };
 };
-
-/* onValue(ref(path), (snapshot) => {
-  return snapshot.val();
-}); */

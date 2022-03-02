@@ -1,4 +1,3 @@
-import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { useRouter } from "next/router";
 import { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";

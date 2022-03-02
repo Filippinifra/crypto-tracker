@@ -23,29 +23,20 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider: FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [userData, setUserData] = useState<UserData>({ coins: [] });
-  const { setCoins } = useDatabase(currentUser);
-  const data = {
-    coins: [
-      {
-        id: "BTC",
-        typology: "bet",
-        percentage: 30,
-        platform: "binance",
-        coins: 4012,
-      },
-      {
-        id: "ETH",
-        typology: "liquidity",
-        percentage: 70,
-        platform: "crypto.com",
-        coins: 123,
-      },
-    ],
+  const { getDatabase } = useDatabase(currentUser);
+
+  const setInitialInfo = async () => {
+    try {
+      const coins = await getDatabase("coin");
+
+      setUserData({ coins });
+    } catch (e) {
+      console.log(["on set initial info in context", e]);
+    }
   };
 
   useEffect(() => {
-    console.log(["nuovo current user use effect", currentUser]);
-    setCoins(data.coins);
+    setInitialInfo();
   }, [currentUser]);
 
   useEffect(() => {
