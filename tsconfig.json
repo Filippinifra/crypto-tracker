@@ -16,6 +16,13 @@
     "jsx": "preserve",
     "baseUrl": "./src"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/_app.jsx", "src/components/CoinsDropdown.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/pages/_app.jsx",
+    "src/components/CoinsDropdown.jsx",
+    "src/hooks/useDatabase.ts"
+  ],
   "exclude": ["node_modules"]
 }

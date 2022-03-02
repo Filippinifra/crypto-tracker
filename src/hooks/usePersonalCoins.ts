@@ -33,7 +33,7 @@ const tempCoins: PersonalCoins = [
   "bitcoin",
   "usd-coin",
   "terrausd",
-].map((e) => ({ id: e }));
+].map((e) => ({ id: e, typology:"", percentage:10, coins:12, platform:'' }));
 
 export const usePersonalCoins = () => {
   const [personalCoins, setPersonalCoins] = useState<PersonalCoins>();

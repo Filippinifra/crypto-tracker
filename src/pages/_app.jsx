@@ -1,6 +1,9 @@
+import { AuthProvider } from "contexts/AuthContext";
+import { app } from "utils/firebase";
+
 const MyApp = ({ Component, pageProps }) => {
   return (
-    <>
+    <AuthProvider>
       <Component {...pageProps} />
       <style global jsx>{`
         html,
@@ -12,7 +15,7 @@ const MyApp = ({ Component, pageProps }) => {
           margin: 0;
         }
       `}</style>
-    </>
+    </AuthProvider>
   );
 };
 
