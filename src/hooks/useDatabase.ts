@@ -4,9 +4,10 @@ import { child, get, ref, set, onValue } from "firebase/database";
 import { Paths } from "types/paths";
 import { UserData } from "types/userData";
 import { PersonalCoins } from "types/personalCoins";
+import { User } from "firebase/auth";
 
-export const useDatabase = () => {
-  const { currentUser } = useAuth();
+export const useDatabase = (currentUser: User | undefined) => {
+  console.log(["useDatabase - currentUser", currentUser]);
   const mainPath = "Users/" + currentUser?.uid + "/";
 
   const setCoins = (data: PersonalCoins) => {

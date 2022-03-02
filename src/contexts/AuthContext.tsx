@@ -1,12 +1,4 @@
-import {
-  useContext,
-  useState,
-  useEffect,
-  createContext,
-  FC,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { useContext, useState, useEffect, createContext, FC, Dispatch, SetStateAction } from "react";
 import { auth } from "utils/firebase";
 import { User } from "firebase/auth";
 import { UserData } from "types/userData";
@@ -31,7 +23,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider: FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [userData, setUserData] = useState<UserData>({ coins: [] });
-  const { setCoins } = useDatabase();
+  const { setCoins } = useDatabase(currentUser);
   const data = {
     coins: [
       {
@@ -65,11 +57,5 @@ export const AuthProvider: FC = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  return (
-    <AuthContext.Provider
-      value={{ currentUser, setCurrentUser, userData, setUserData }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ currentUser, setCurrentUser, userData, setUserData }}>{children}</AuthContext.Provider>;
 };

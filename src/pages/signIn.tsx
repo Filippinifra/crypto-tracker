@@ -13,7 +13,7 @@ export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [pass, setPassword] = useState("");
   const { currentUser, setCurrentUser, setUserData, userData } = useAuth();
-  const { getDatabase } = useDatabase();
+  const { getDatabase } = useDatabase(currentUser);
 
   const onConfirm = async () => {
     try {
