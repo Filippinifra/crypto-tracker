@@ -2,10 +2,9 @@ import { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
 import { Currency } from "types/currency";
 import { ChangeCurrencyButton, RefreshButton } from "components/Button";
-import { Spacer } from "components/Spacer";
 
 const Wrapper = styled.div`
-  height: 100vh;
+  height: 100%;
   padding: 20px;
 `;
 
@@ -16,7 +15,6 @@ export const Layout: FC<{ prefCurrency: Currency | undefined; setPrefCurrency: D
         <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
         <RefreshButton />
       </div>
-      <Spacer size={20} />
       {children}
     </Wrapper>
   );

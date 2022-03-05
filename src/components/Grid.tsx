@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { shadowStyle } from "./ShadowStyle";
 
 const colorGrid = "#7D7D8C";
 
@@ -7,6 +8,7 @@ const Container = styled.div`
   display: grid;
   border: 1px solid ${colorGrid};
   width: fit-content;
+  ${shadowStyle}
 `;
 
 const Item = styled.div`
