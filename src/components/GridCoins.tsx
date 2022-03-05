@@ -1,16 +1,18 @@
 import { Grid } from "components/Grid";
 import Image from "next/image";
 import { FC } from "react";
-import { DetailedCoin, DetailedCoins } from "types/detailedCoins";
+import { CurrencySymbol } from "types/currency";
+import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
 import { gridCoinColors } from "utils/colors";
-import { Typography } from "./Typography";
+import { Typography } from "components/Typography";
+import { PLACEHOLDER } from "utils/labels";
 
 const LabelCell: FC<{ value: string | number; color: string }> = ({ value, color }) => {
   const style: React.CSSProperties = { width: "100%", backgroundColor: color, padding: 10, boxSizing: "border-box", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" };
 
   return (
     <Typography variant="body" style={style}>
-      {value || "-"}
+      {value || PLACEHOLDER}
     </Typography>
   );
 };
@@ -25,39 +27,54 @@ const getHEaders = () => {
     <LabelCell color={gridCoinColors[3]} value={"Prezzo"} key={`coin-table-price`} />,
     <LabelCell color={gridCoinColors[3]} value={"Variazione 24%"} key={`coin-table-price-variation`} />,
     <LabelCell color={gridCoinColors[4]} value={"Tokens"} key={`coin-table-holding-token`} />,
-    <LabelCell color={gridCoinColors[4]} value={"Possesso $"} key={`coin-table-holding-in-fiat`} />,
+    <LabelCell color={gridCoinColors[4]} value={"Possesso"} key={`coin-table-holding-in-fiat`} />,
     <LabelCell color={gridCoinColors[5]} value={"Bilanciamento percentuale"} key={`coin-table-perc-balancing`} />,
     <LabelCell color={gridCoinColors[5]} value={"Sbilanciamento valore in $"} key={`coin-table-value-balancing`} />,
     <LabelCell color={gridCoinColors[5]} value={"Numero coin per ribilancio"} key={`coin-table-coin-balancing`} />,
   ];
 };
 
-const getRow = (coin: DetailedCoin, index: number) => {
-  const { symbol, name, image, current_price, price_change_percentage_24h, id } = coin;
+const getRow = (coin: RebalancingCoin, index: number, symbolCurrency: CurrencySymbol) => {
+  const {
+    symbolAndName,
+    logoUrl,
+    price,
+    priceChangePercentage24h,
+    id,
+    allocationPercentage,
+    tokens,
+    holdingInFiat,
+    balancingPercentage,
+    rebalancingInFiat,
+    rebalancingTokens,
+    idealAllocationValue,
+    typology,
+  } = coin;
+
   const color = index % 2 === 0 ? "#f4f4f5" : "#D4D4D8";
 
   return [
-    <LabelCell color={color} value={"Tipologia"} key={`coin-table-${id}-type`} />,
+    <LabelCell color={color} value={typology} key={`coin-table-${id}-type`} />,
     <div style={{ backgroundColor: color, height: 34, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${id}-image`}>
-      <Image src={image} alt={id} height={25} width={25} />
+      <Image src={logoUrl} alt={id} height={25} width={25} />
     </div>,
-    <LabelCell color={color} value={`${symbol.toUpperCase()} | ${name}`} key={`coin-table-${id}-name`} />,
-    <LabelCell color={color} value={"Percentage"} key={`coin-table-${id}-perc`} />,
-    <LabelCell color={color} value={"Controvalore"} key={`coin-table-${id}-value-for-perc`} />,
-    <LabelCell color={color} value={current_price} key={`coin-table-${id}-price`} />,
-    <LabelCell color={color} value={price_change_percentage_24h} key={`coin-table-${id}-price-variation`} />,
-    <LabelCell color={color} value={"Token posseduti"} key={`coin-table-${id}-holding-token`} />,
-    <LabelCell color={color} value={"Possesso"} key={`coin-table-${id}-holding-in-fiat`} />,
-    <LabelCell color={color} value={"Percentuale bilanciamento"} key={`coin-table-${id}-perc-balancing`} />,
-    <LabelCell color={color} value={"Sbilanciamento valore"} key={`coin-table-${id}-value-balancing`} />,
-    <LabelCell color={color} value={"Numero coin per ribilancio"} key={`coin-table-${id}-coin-balancing`} />,
+    <LabelCell color={color} value={symbolAndName} key={`coin-table-${id}-name`} />,
+    <LabelCell color={color} value={allocationPercentage} key={`coin-table-${id}-perc`} />,
+    <LabelCell color={color} value={idealAllocationValue} key={`coin-table-${id}-value-for-perc`} />,
+    <LabelCell color={color} value={`${price}${symbolCurrency}`} key={`coin-table-${id}-price`} />,
+    <LabelCell color={color} value={priceChangePercentage24h} key={`coin-table-${id}-price-variation`} />,
+    <LabelCell color={color} value={tokens} key={`coin-table-${id}-holding-token`} />,
+    <LabelCell color={color} value={`${holdingInFiat}${symbolCurrency}`} key={`coin-table-${id}-holding-in-fiat`} />,
+    <LabelCell color={color} value={balancingPercentage} key={`coin-table-${id}-perc-balancing`} />,
+    <LabelCell color={color} value={rebalancingInFiat} key={`coin-table-${id}-value-balancing`} />,
+    <LabelCell color={color} value={rebalancingTokens} key={`coin-table-${id}-coin-balancing`} />,
   ];
 };
 
-export const GridCoins: FC<{ data: DetailedCoins }> = ({ data }) => {
+export const GridCoins: FC<{ rebalancingCoins: RebalancingCoins; symbolCurrency: CurrencySymbol }> = ({ rebalancingCoins, symbolCurrency }) => {
   // @ts-ignore
-  const coinsData: any[] = data.reduce((r, coinData, index) => {
-    return [...r, ...getRow(coinData, index)];
+  const coinsData: any[] = rebalancingCoins.reduce((r, coinData, index) => {
+    return [...r, ...getRow(coinData, index, symbolCurrency)];
   }, []);
 
   return <Grid templateColumns={"150px 58px 200px 121px 125px 100px 130px 95px 100px 140px 140px 130px"} data={[...getHEaders(), ...coinsData]} />;

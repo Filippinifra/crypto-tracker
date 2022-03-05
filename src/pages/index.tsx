@@ -16,6 +16,8 @@ import { PieChart } from "components/PieChart";
 import { pieColors, pieColorsDark } from "utils/colors";
 import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { Currency, getSymbolForCurrency } from "types/currency";
+import { getCrossedCoins, toRebalancingCoins } from "utils/coins";
+import { useMemo } from "react";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -52,7 +54,9 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
 
   const options = availableCoins?.map((value) => ({ value, label: `${value.symbol.toUpperCase()} // ${value.name} // ${value.id}` }));
 
-  const sumFiatValue = 900;
+  const crossedCoins = useMemo(() => getCrossedCoins(personalCoins || [], detailedCoins || []), [personalCoins, detailedCoins]);
+
+  const sumFiatValue = crossedCoins?.reduce((r, { currentPrice, coins }) => r + (currentPrice || 0) * coins, 0);
 
   const dataChart = {
     labels: wallet?.map(({ typology }) => typology),
@@ -71,6 +75,8 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading;
 
   const symbolCurrency = getSymbolForCurrency(prefCurrency || Currency.EUR) || "€";
+
+  const rebalancingCoins = toRebalancingCoins(crossedCoins, wallet || [], sumFiatValue);
 
   return (
     <LoadErrorHandler data={data} error={error}>
@@ -98,7 +104,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
           />
         </div>
         <Spacer size={30} />
-        <GridCoins data={detailedCoins || []} />
+        <GridCoins rebalancingCoins={rebalancingCoins} symbolCurrency={symbolCurrency} />
       </Layout>
     </LoadErrorHandler>
   );

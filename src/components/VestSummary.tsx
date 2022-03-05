@@ -2,6 +2,7 @@ import { Grid } from "components/Grid";
 import { FC } from "react";
 import { CurrencySymbol } from "types/currency";
 import { vestColor } from "utils/colors";
+import { PLACEHOLDER } from "utils/labels";
 import { Typography } from "./Typography";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, isTitle }) => {
@@ -9,7 +10,7 @@ const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, i
 
   return (
     <Typography variant="body" style={style}>
-      {value || "-"}
+      {value || PLACEHOLDER}
     </Typography>
   );
 };

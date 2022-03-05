@@ -2,6 +2,7 @@ import { FC } from "react";
 import { CurrencySymbol } from "types/currency";
 import { WalletDivision, WalletPiece } from "types/walletDivision";
 import { gridWalletColor } from "utils/colors";
+import { PLACEHOLDER } from "utils/labels";
 import { Grid } from "./Grid";
 import { Typography } from "./Typography";
 
@@ -10,7 +11,7 @@ const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, i
 
   return (
     <Typography variant="body" style={style}>
-      {value || "-"}
+      {value || PLACEHOLDER}
     </Typography>
   );
 };
