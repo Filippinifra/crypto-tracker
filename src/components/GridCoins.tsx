@@ -57,7 +57,6 @@ const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, sy
     logoUrl,
     price,
     priceChangePercentage24h,
-    id,
     allocationPercentage,
     coins,
     holdingInFiat,
@@ -66,6 +65,7 @@ const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, sy
     rebalancingCoins,
     idealAllocationValue,
     typology,
+    keyElement,
   } = coin;
 
   const color = index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
@@ -77,27 +77,27 @@ const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, sy
       textColor={colorTypologyText?.color || "black"}
       color={"white"}
       value={typology}
-      key={`coin-table-${id}-type`}
+      key={`coin-table-${keyElement}-type`}
       style={{ fontWeight: 800, border: `5px solid ${colorTypologyText?.color}`, padding: 5 }}
     />,
-    <div style={{ backgroundColor: color, height: 34, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${id}-image`}>
-      <Image src={logoUrl} alt={id} height={25} width={25} />
+    <div style={{ backgroundColor: color, height: 34, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-image`}>
+      <Image src={logoUrl} alt={keyElement} height={25} width={25} />
     </div>,
-    <LabelCell color={color} value={symbolAndName} key={`coin-table-${id}-name`} />,
-    <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${id}-perc`} />,
-    <LabelCell color={color} value={`${getSplittedPrice(idealAllocationValue)}${symbolCurrency}`} key={`coin-table-${id}-value-for-perc`} />,
-    <LabelCell color={color} value={`${getSplittedPrice(price)}${symbolCurrency}`} key={`coin-table-${id}-price`} />,
+    <LabelCell color={color} value={symbolAndName} key={`coin-table-${keyElement}-name`} />,
+    <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} />,
+    <LabelCell color={color} value={`${getSplittedPrice(idealAllocationValue)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-for-perc`} />,
+    <LabelCell color={color} value={`${getSplittedPrice(price)}${symbolCurrency}`} key={`coin-table-${keyElement}-price`} />,
     <LabelCell
       color={color}
       textColor={priceChangePercentage24h < 0 ? redVariationColor : greenVariationColor}
       value={`${getSplittedPrice(priceChangePercentage24h, 3, 2, true)}%`}
-      key={`coin-table-${id}-price-variation`}
+      key={`coin-table-${keyElement}-price-variation`}
     />,
-    <LabelCell color={color} value={coins} key={`coin-table-${id}-holding-token`} />,
-    <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${id}-holding-in-fiat`} />,
-    <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={`${getSplittedPrice(balancingPercentage, 5, 0)}%`} key={`coin-table-${id}-perc-balancing`} />,
-    <LabelCell color={getFiatRebalanceColor(rebalancingInFiat)} value={`${getSplittedPrice(rebalancingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${id}-value-balancing`} />,
-    <LabelCell color={color} value={getSplittedPrice(rebalancingCoins)} key={`coin-table-${id}-coin-balancing`} />,
+    <LabelCell color={color} value={coins} key={`coin-table-${keyElement}-holding-token`} />,
+    <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-holding-in-fiat`} />,
+    <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={`${getSplittedPrice(balancingPercentage, 5, 0)}%`} key={`coin-table-${keyElement}-perc-balancing`} />,
+    <LabelCell color={getFiatRebalanceColor(rebalancingInFiat)} value={`${getSplittedPrice(rebalancingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-balancing`} />,
+    <LabelCell color={color} value={getSplittedPrice(rebalancingCoins)} key={`coin-table-${keyElement}-coin-balancing`} />,
   ];
 };
 

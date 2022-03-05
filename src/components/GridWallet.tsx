@@ -34,12 +34,12 @@ const getHeaders = () => {
 };
 
 const getRow = (walletPiece: WalletPiece, sumFiatValue: number, symbolCurrency: string | undefined, index: number) => {
-  const { percentage, typology, color } = walletPiece;
+  const { percentage, typology, color, keyElement } = walletPiece;
 
   return [
-    <LabelCell color={color} key={`wallet-${typology}`} value={typology} style={{ fontWeight: 800 }} />,
-    <LabelCell key={`wallet-${typology}-percentage`} value={`${percentage}%`} />,
-    <LabelCell key={`wallet-${typology}-value`} value={`${getSplittedPrice((sumFiatValue / 100) * percentage, 5, 0)}${symbolCurrency}`} />,
+    <LabelCell color={color} key={`wallet-${keyElement}`} value={typology} style={{ fontWeight: 800 }} />,
+    <LabelCell key={`wallet-${keyElement}-percentage`} value={`${percentage}%`} />,
+    <LabelCell key={`wallet-${keyElement}-value`} value={`${getSplittedPrice((sumFiatValue / 100) * percentage, 5, 0)}${symbolCurrency}`} />,
   ];
 };
 

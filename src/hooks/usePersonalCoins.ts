@@ -8,6 +8,7 @@ const tempCoins: PersonalCoins = [
     percentage: 96,
     platform: "Anchor",
     coins: 3147,
+    keyElement: "9b663bff-b733-4d88-a23f-f8b1b495c08a",
   },
   {
     id: "usd-coin",
@@ -15,6 +16,7 @@ const tempCoins: PersonalCoins = [
     percentage: 4,
     platform: "Ledn",
     coins: 128.7,
+    keyElement: "8df659c2-0954-4026-8b0d-37b1de1e279b",
   },
   {
     id: "bitcoin",
@@ -22,6 +24,7 @@ const tempCoins: PersonalCoins = [
     percentage: 50,
     platform: "Binance",
     coins: 0.0176,
+    keyElement: "ccc16a6c-87e9-4337-ae72-e441a0428ba3",
   },
   {
     id: "ethereum",
@@ -29,6 +32,7 @@ const tempCoins: PersonalCoins = [
     percentage: 34,
     platform: "Binance",
     coins: 0.1288,
+    keyElement: "8ffa84c2-8acd-4bfa-a45d-afef054b81c0",
   },
   {
     id: "ethereum",
@@ -36,6 +40,7 @@ const tempCoins: PersonalCoins = [
     percentage: 7,
     platform: "Metamask",
     coins: 0.041,
+    keyElement: "3e06b3cd-2cc2-4e4a-ba33-76a28a4b73fc",
   },
   {
     id: "binance-eth",
@@ -43,6 +48,7 @@ const tempCoins: PersonalCoins = [
     percentage: 9,
     platform: "Binance",
     coins: 0.055,
+    keyElement: "807e6785-4863-4c4a-9290-14996bb156eb",
   },
   {
     id: "solana",
@@ -50,6 +56,7 @@ const tempCoins: PersonalCoins = [
     percentage: 25,
     platform: "Binance",
     coins: 1.2,
+    keyElement: "fde1ea29-a0de-4a73-a4a0-f11b5eeadd0a",
   },
   {
     id: "terra-luna",
@@ -57,6 +64,7 @@ const tempCoins: PersonalCoins = [
     percentage: 25,
     platform: "Terra Station",
     coins: 5,
+    keyElement: "161ead96-a947-425e-a5d0-3ba28ba9d3a8",
   },
   {
     id: "polkadot",
@@ -64,6 +72,7 @@ const tempCoins: PersonalCoins = [
     percentage: 25,
     platform: "Binance",
     coins: 10.35,
+    keyElement: "cba52b68-4140-43e6-aa6c-a9803051a84d",
   },
   {
     id: "binancecoin",
@@ -71,6 +80,7 @@ const tempCoins: PersonalCoins = [
     percentage: 25,
     platform: "Binance",
     coins: 0.5188,
+    keyElement: "8131b112-81d7-4d6d-9d07-44f916b11fd4",
   },
   {
     id: "avalanche-2",
@@ -78,6 +88,7 @@ const tempCoins: PersonalCoins = [
     percentage: 10,
     platform: "Binance",
     coins: 0.783,
+    keyElement: "ba5a7fee-064c-4948-bf44-37dafe2e3c69",
   },
   {
     id: "matic-network",
@@ -85,6 +96,7 @@ const tempCoins: PersonalCoins = [
     percentage: 10,
     platform: "Binance",
     coins: 36.15,
+    keyElement: "e3672492-5ab8-4d07-b139-866ffbd9fd12",
   },
   {
     id: "crypto-com-chain",
@@ -92,6 +104,7 @@ const tempCoins: PersonalCoins = [
     percentage: 9,
     platform: "crypto.com",
     coins: 174,
+    keyElement: "e9bb7f3f-dc5d-4652-9708-667f5f76b94d",
   },
   {
     id: "algorand",
@@ -99,6 +112,7 @@ const tempCoins: PersonalCoins = [
     percentage: 9,
     platform: "Binance",
     coins: 53.69,
+    keyElement: "2559ead8-eb09-4ffa-87c9-b12576e15add",
   },
   {
     id: "cosmos",
@@ -106,6 +120,7 @@ const tempCoins: PersonalCoins = [
     percentage: 10,
     platform: "Binance",
     coins: 1.838,
+    keyElement: "983f9f8e-037c-4284-9853-fa4bed8011fa",
   },
   {
     id: "fantom",
@@ -113,6 +128,7 @@ const tempCoins: PersonalCoins = [
     percentage: 10,
     platform: "Binance",
     coins: 26.9877,
+    keyElement: "eefe5898-4eda-46e5-a244-2d90f2f0d0a6",
   },
   {
     id: "tezos",
@@ -120,6 +136,7 @@ const tempCoins: PersonalCoins = [
     percentage: 10,
     platform: "Binance",
     coins: 15.119,
+    keyElement: "9a8a9773-3963-48e3-8ef2-da2a837b8624",
   },
   {
     id: "stellar",
@@ -127,6 +144,7 @@ const tempCoins: PersonalCoins = [
     percentage: 9,
     platform: "Binance",
     coins: 250.68,
+    keyElement: "9ba60408-c2d2-4a3f-a6a6-41e7b8a62787",
   },
   {
     id: "decentraland",
@@ -134,6 +152,7 @@ const tempCoins: PersonalCoins = [
     percentage: 5,
     platform: "Binance",
     coins: 10.31,
+    keyElement: "6bb111d0-0756-4cd0-8cbd-50f5910a904d",
   },
   {
     id: "aave",
@@ -141,6 +160,7 @@ const tempCoins: PersonalCoins = [
     percentage: 9,
     platform: "Binance",
     coins: 0.165,
+    keyElement: "0b329a7b-d165-4cf1-9f45-de4d1752eb51",
   },
   {
     id: "ftx-token",
@@ -148,6 +168,7 @@ const tempCoins: PersonalCoins = [
     percentage: 9,
     platform: "Binance",
     coins: 1.2987,
+    keyElement: "00780d5b-e37c-4da4-ab54-f33122e0762a",
   },
   {
     id: "bitdao",
@@ -155,6 +176,7 @@ const tempCoins: PersonalCoins = [
     percentage: 17,
     platform: "Bybit",
     coins: 37.4,
+    keyElement: "4310c807-d23f-40a5-8b51-ff970550e82f",
   },
   {
     id: "oasis-network",
@@ -162,6 +184,7 @@ const tempCoins: PersonalCoins = [
     percentage: 16,
     platform: "Binance",
     coins: 164.835,
+    keyElement: "fac301bd-39bd-4609-957a-6aef2683dffc",
   },
   {
     id: "loopring",
@@ -169,6 +192,7 @@ const tempCoins: PersonalCoins = [
     percentage: 17,
     platform: "Binance",
     coins: 65.945,
+    keyElement: "208059ce-0743-430f-8ab5-a4eab29ecb0f",
   },
   {
     id: "audius",
@@ -176,6 +200,7 @@ const tempCoins: PersonalCoins = [
     percentage: 17,
     platform: "Binance",
     coins: 59.27,
+    keyElement: "18d3d362-2cf5-4e31-a24c-ff25991a92ae",
   },
   {
     id: "chromaway",
@@ -183,6 +208,7 @@ const tempCoins: PersonalCoins = [
     percentage: 17,
     platform: "Binance",
     coins: 106.6,
+    keyElement: "c79f93c1-3fdb-4722-a231-d2dc6b91d89e",
   },
   {
     id: "bitpanda-ecosystem-token",
@@ -190,6 +216,7 @@ const tempCoins: PersonalCoins = [
     percentage: 16,
     platform: "Bitpanda",
     coins: 63.45,
+    keyElement: "bd8109a6-57c2-4248-8adb-913d77e1aecb",
   },
   {
     id: "insure",
@@ -197,6 +224,7 @@ const tempCoins: PersonalCoins = [
     percentage: 23,
     platform: "Metamask",
     coins: 19482,
+    keyElement: "818c0ef8-1f46-4aa0-a47b-a772eb9d034b",
   },
   {
     id: "genie-protocol",
@@ -204,6 +232,7 @@ const tempCoins: PersonalCoins = [
     percentage: 5,
     platform: "Metamask",
     coins: 33.1,
+    keyElement: "e3d046e4-f201-495e-a81b-0cd34599a43b",
   },
   {
     id: "tokemak",
@@ -211,6 +240,7 @@ const tempCoins: PersonalCoins = [
     percentage: 24,
     platform: "Mexc",
     coins: 2.08,
+    keyElement: "fd570449-15a0-4f04-bb19-238cf785e07e",
   },
   {
     id: "curve-dao-token",
@@ -218,6 +248,7 @@ const tempCoins: PersonalCoins = [
     percentage: 24,
     platform: "Binance",
     coins: 21.945,
+    keyElement: "cf0d4c42-f802-4cb7-81d7-0f7be9b5ddaf",
   },
   {
     id: "convex-finance",
@@ -225,6 +256,7 @@ const tempCoins: PersonalCoins = [
     percentage: 24,
     platform: "Binance",
     coins: 2.22,
+    keyElement: "b6186943-dd6b-48c8-a109-eed89216a155",
   },
 ];
 

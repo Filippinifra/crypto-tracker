@@ -11,14 +11,6 @@ const Container = styled.div`
   ${shadowStyle}
 `;
 
-const Item = styled.div`
-  padding: 2px 2px 2px 2px;
-  font-size: 30px;
-  text-align: center;
-  background-color: ${colorGrid};
-  box-sizing: border-box;
-`;
-
 export const Grid: FC<{ templateColumns: string; data: any[] }> = ({ templateColumns, data }) => {
   return (
     <Container
@@ -26,9 +18,7 @@ export const Grid: FC<{ templateColumns: string; data: any[] }> = ({ templateCol
         gridTemplateColumns: templateColumns,
       }}
     >
-      {data?.map((e) => (
-        <Item key={e}>{e}</Item>
-      ))}
+      {data?.map((e) => e)}
     </Container>
   );
 };

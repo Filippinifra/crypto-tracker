@@ -4,4 +4,5 @@ export interface WalletPiece {
   typology: string;
   percentage: number;
   color: string;
+  keyElement: string;
 }

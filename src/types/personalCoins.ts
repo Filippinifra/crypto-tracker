@@ -6,4 +6,5 @@ export interface PersonalCoin {
   percentage: number;
   platform: string;
   coins: number;
+  keyElement: string;
 }
