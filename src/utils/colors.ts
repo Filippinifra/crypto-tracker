@@ -10,40 +10,51 @@ export const loadingColor = "#f3ea5f";
 export const errorColor = "#ff3f3f";
 export const successColor = "#8fce00";
 
-export const percentageBalanceColor = ["#ff0000", "#ff4c4c", "#ff9999", "#f3fae5", "#d2eb99", "#b0dc4c", "#8fce00"];
-export const fiatRebalanceColor = ["#ff0000", "#ff4c4c", "#f3fae5", "#b0dc4c", "#8fce00"];
+export const percentageBalanceColors = ["#ff0000", "#ff4c4c", "#ff9999", "#f3fae5", "#d2eb99", "#b0dc4c", "#8fce00"];
+export const fiatRebalanceColors = ["#ff0000", "#ff4c4c", "#f3fae5", "#b0dc4c", "#8fce00"];
+export const vestSummaryColors = ["#ff9999", "#f3fae5", "#b0dc4c"];
 
 export const greenVariationColor = "#006400";
 export const redVariationColor = "#8B0000";
 
 export const getPercentageBalanceColor = (value: number) => {
   if (value < 40) {
-    return percentageBalanceColor[0];
+    return percentageBalanceColors[0];
   } else if (value >= 40 && value <= 59) {
-    return percentageBalanceColor[1];
+    return percentageBalanceColors[1];
   } else if (value >= 60 && value <= 79) {
-    return percentageBalanceColor[2];
+    return percentageBalanceColors[2];
   } else if (value >= 80 && value <= 120) {
-    return percentageBalanceColor[3];
+    return percentageBalanceColors[3];
   } else if (value >= 121 && value <= 140) {
-    return percentageBalanceColor[4];
+    return percentageBalanceColors[4];
   } else if (value >= 141 && value <= 160) {
-    return percentageBalanceColor[5];
+    return percentageBalanceColors[5];
   } else {
-    return percentageBalanceColor[6];
+    return percentageBalanceColors[6];
   }
 };
 
 export const getFiatRebalanceColor = (value: number) => {
   if (value < -200) {
-    return fiatRebalanceColor[0];
+    return fiatRebalanceColors[0];
   } else if (value >= -200 && value <= -50) {
-    return fiatRebalanceColor[1];
+    return fiatRebalanceColors[1];
   } else if (value >= -50 && value <= 50) {
-    return fiatRebalanceColor[2];
+    return fiatRebalanceColors[2];
   } else if (value >= 50 && value <= 200) {
-    return fiatRebalanceColor[3];
+    return fiatRebalanceColors[3];
   } else {
-    return fiatRebalanceColor[4];
+    return fiatRebalanceColors[4];
+  }
+};
+
+export const getVestSummaryColor = (value: number) => {
+  if (value < -1000) {
+    return vestSummaryColors[0];
+  } else if (value >= -1000 && value <= +1000) {
+    return vestSummaryColors[1];
+  } else {
+    return vestSummaryColors[2];
   }
 };

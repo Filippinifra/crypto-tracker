@@ -1,12 +1,12 @@
 import { Grid } from "components/Grid";
 import { FC } from "react";
 import { CurrencySymbol } from "types/currency";
-import { vestColor } from "utils/colors";
+import { getVestSummaryColor, vestColor } from "utils/colors";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { Typography } from "components/Typography";
 
-const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, isTitle }) => {
-  const style: React.CSSProperties = { width: "100%", backgroundColor: isTitle ? vestColor : "white", padding: 10, boxSizing: "border-box" };
+const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string }> = ({ value, isTitle, color }) => {
+  const style: React.CSSProperties = { width: "100%", backgroundColor: color || (isTitle ? vestColor : "white"), padding: 10, boxSizing: "border-box" };
 
   return (
     <Typography variant="body" style={style}>
@@ -16,6 +16,8 @@ const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, i
 };
 
 export const VestSummary: FC<{ totalVest: number; sumFiatValue: number; symbolCurrency: CurrencySymbol }> = ({ totalVest, sumFiatValue, symbolCurrency }) => {
+  const profit = sumFiatValue - totalVest;
+
   return (
     <Grid
       templateColumns={"200px 200px"}
@@ -25,7 +27,7 @@ export const VestSummary: FC<{ totalVest: number; sumFiatValue: number; symbolCu
         <LabelCell value={"Controvalore ora"} key={"fiat-sum-value-title"} isTitle />,
         <LabelCell value={`${getSplittedPrice(sumFiatValue, 5, 0)}${symbolCurrency}`} key={"fiat-sum-value"} />,
         <LabelCell value={"Guadagno / perdita"} key={"profit-title"} isTitle />,
-        <LabelCell value={`${getSplittedPrice(sumFiatValue - totalVest, 5, 0)}${symbolCurrency}`} key={"profit"} />,
+        <LabelCell color={getVestSummaryColor(profit)} value={`${getSplittedPrice(profit, 5, 0)}${symbolCurrency}`} key={"profit"} />,
       ]}
     />
   );
