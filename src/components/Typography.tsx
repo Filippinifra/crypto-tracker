@@ -18,5 +18,6 @@ const styles: tStyle = {
     fontFamily: "Roboto",
     fontSize: 12,
     letterSpacing: 2,
+    color: "black",
   },
 };

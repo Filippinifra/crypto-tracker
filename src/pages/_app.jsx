@@ -9,12 +9,16 @@ const MyApp = ({ Component, pageProps }) => {
       <Component {...pageProps} />
       <style global jsx>{`
         html,
-        body,
-        body > div:first-child,
-        div#__next,
-        div#__next > div {
-          height: auto;
+        body {
           margin: 0;
+        }
+
+        #__next {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
         }
       `}</style>
     </>
