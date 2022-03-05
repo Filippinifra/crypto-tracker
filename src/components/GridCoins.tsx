@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FC } from "react";
 import { CurrencySymbol } from "types/currency";
 import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
-import { gridCoinColors } from "utils/colors";
+import { getFiatRebalanceColor, getPercentageBalanceColor, gridCoinColors } from "utils/colors";
 import { Typography } from "components/Typography";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 
@@ -72,8 +72,8 @@ const getRow = (coin: RebalancingCoin, index: number, symbolCurrency: CurrencySy
     <LabelCell color={color} value={`${getSplittedPrice(priceChangePercentage24h, 3, 2, true)}%`} key={`coin-table-${id}-price-variation`} />,
     <LabelCell color={color} value={coins} key={`coin-table-${id}-holding-token`} />,
     <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${id}-holding-in-fiat`} />,
-    <LabelCell color={color} value={`${getSplittedPrice(balancingPercentage, 5, 0)}%`} key={`coin-table-${id}-perc-balancing`} />,
-    <LabelCell color={color} value={`${getSplittedPrice(rebalancingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${id}-value-balancing`} />,
+    <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={`${getSplittedPrice(balancingPercentage, 5, 0)}%`} key={`coin-table-${id}-perc-balancing`} />,
+    <LabelCell color={getFiatRebalanceColor(rebalancingInFiat)} value={`${getSplittedPrice(rebalancingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${id}-value-balancing`} />,
     <LabelCell color={color} value={getSplittedPrice(rebalancingCoins)} key={`coin-table-${id}-coin-balancing`} />,
   ];
 };
