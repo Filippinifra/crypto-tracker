@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
 import { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
 import { Currency, getSymbolForCurrency } from "types/currency";
 import { shadowStyle } from "components/ShadowStyle";
 import { Typography } from "components/Typography";
+import { PersonalCoins } from "types/personalCoins";
+import { useDetailedCoins } from "hooks/useDetailedCoins";
 
 const ButtonStyled = styled.div`
   width: fit-content;
@@ -19,17 +20,13 @@ export const Button: FC<{ onClick: () => void }> = ({ children, ...others }) => 
   return <ButtonStyled {...others}>{children}</ButtonStyled>;
 };
 
-export const RefreshButton: FC = () => {
-  const { reload } = useRouter();
-
-  const refreshData = () => {
-    reload();
-  };
+export const RefreshButton: FC<{ personalCoins: PersonalCoins; prefCurrency: Currency }> = ({ personalCoins, prefCurrency }) => {
+  const { mutate } = useDetailedCoins(personalCoins, prefCurrency);
 
   return (
     <Button
       onClick={() => {
-        refreshData();
+        mutate();
       }}
     >
       <Typography variant="body">Ricarica</Typography>
@@ -37,7 +34,7 @@ export const RefreshButton: FC = () => {
   );
 };
 
-export const ChangeCurrencyButton: FC<{ prefCurrency: Currency | undefined; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>> }> = ({ prefCurrency, setPrefCurrency }) => {
+export const ChangeCurrencyButton: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>> }> = ({ prefCurrency, setPrefCurrency }) => {
   const changeCurrency = () => {
     setPrefCurrency(prefCurrency === Currency.EUR ? Currency.USD : Currency.EUR);
   };
