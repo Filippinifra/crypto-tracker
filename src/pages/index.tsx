@@ -80,20 +80,24 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
 
   return (
     <LoadErrorHandler data={data} error={error}>
-      <Layout prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency}>
+      <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: 150 }}>
+            <Typography variant="body">Sommario investimento:</Typography>
+            <Spacer size={20} />
             <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
-            <Spacer size={50} />
+            <Spacer size={40} />
             <div style={{ height: "auto" }}>
+              <Typography variant="body">Allocazione percentuale portafoglio:</Typography>
+              <Spacer size={20} />
               <GridWallet wallet={wallet || []} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             </div>
           </div>
           <DoughnutChart data={dataChart} />
         </div>
-        <Spacer size={60} />
+        <Spacer size={50} />
         <Typography variant="body">Aggiungi le tue coins:</Typography>
-        <Spacer size={10} />
+        <Spacer size={20} />
         <div style={{ width: 600 }}>
           <CoinsDropdown
             value={null}
@@ -104,6 +108,8 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
           />
         </div>
         <Spacer size={40} />
+        <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
+        <Spacer size={20} />
         <GridCoins rebalancingCoins={rebalancingCoins} wallet={wallet || []} symbolCurrency={symbolCurrency} />
       </Layout>
     </LoadErrorHandler>
