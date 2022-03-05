@@ -84,14 +84,14 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: 150 }}>
             <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
-            <Spacer size={30} />
+            <Spacer size={50} />
             <div style={{ height: "auto" }}>
               <GridWallet wallet={wallet || []} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             </div>
           </div>
           <DoughnutChart data={dataChart} />
         </div>
-        <Spacer size={30} />
+        <Spacer size={60} />
         <Typography variant="body">Aggiungi le tue coins:</Typography>
         <Spacer size={10} />
         <div style={{ width: 600 }}>
@@ -103,7 +103,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
             }}
           />
         </div>
-        <Spacer size={30} />
+        <Spacer size={40} />
         <GridCoins rebalancingCoins={rebalancingCoins} wallet={wallet || []} symbolCurrency={symbolCurrency} />
       </Layout>
     </LoadErrorHandler>
