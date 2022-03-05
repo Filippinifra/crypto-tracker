@@ -9,9 +9,9 @@ export interface RebalancingCoin {
   idealAllocationValue: number;
   price: number;
   priceChangePercentage24h: number;
-  tokens: number;
+  coins: number;
   holdingInFiat: number;
   balancingPercentage: number;
   rebalancingInFiat: number;
-  rebalancingTokens: number;
+  rebalancingCoins: number;
 }

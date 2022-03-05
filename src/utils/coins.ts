@@ -7,23 +7,30 @@ import { CrossedCoins } from "types/crossedCoins";
 
 export const toRebalancingCoins = (crossedCoins: CrossedCoins, walletDivision: WalletDivision, sumFiatValue: number): RebalancingCoins => {
   return crossedCoins.map(({ typology, image, symbol, name, percentage, currentPrice, priceChangePercentage24h, coins, id }) => {
-    const allocationPercentageTypology = walletDivision.find(({ typology: typologyWallet }) => typologyWallet === typology)?.percentage || 0;
-    const allocationCoin = (((sumFiatValue / 100) * allocationPercentageTypology) / 100) * percentage;
+    const idealAllocationPercentageTypology = walletDivision.find(({ typology: typologyWallet }) => typologyWallet === typology)?.percentage || 0;
+    const idealAllocationValue = (((sumFiatValue / 100) * idealAllocationPercentageTypology) / 100) * percentage;
+
+    const holdingInFiat = coins * (currentPrice || 0);
+    const balancingPercentage = (holdingInFiat / idealAllocationValue) * 100;
+    const rebalancingInFiat = holdingInFiat - idealAllocationValue;
+    const rebalancingCoins = idealAllocationValue / currentPrice - coins;
+
+    const symbolAndName = [symbol?.toUpperCase(), name].filter(Boolean).join(" | ");
 
     return {
       id,
-      typology: typology,
-      logoUrl: image || "",
-      symbolAndName: [symbol?.toUpperCase(), name].filter(Boolean).join(" | "),
+      typology,
+      logoUrl: image,
+      symbolAndName,
       allocationPercentage: percentage,
-      idealAllocationValue: allocationCoin,
-      price: currentPrice || 0,
-      priceChangePercentage24h: priceChangePercentage24h || 0,
-      tokens: coins,
-      holdingInFiat: coins * (currentPrice || 0),
-      balancingPercentage: 10,
-      rebalancingInFiat: 10,
-      rebalancingTokens: 10,
+      idealAllocationValue,
+      price: currentPrice,
+      priceChangePercentage24h,
+      coins,
+      holdingInFiat,
+      balancingPercentage,
+      rebalancingInFiat,
+      rebalancingCoins,
     };
   });
 };

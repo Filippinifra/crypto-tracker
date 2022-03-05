@@ -42,11 +42,11 @@ const getRow = (coin: RebalancingCoin, index: number, symbolCurrency: CurrencySy
     priceChangePercentage24h,
     id,
     allocationPercentage,
-    tokens,
+    coins,
     holdingInFiat,
     balancingPercentage,
     rebalancingInFiat,
-    rebalancingTokens,
+    rebalancingCoins,
     idealAllocationValue,
     typology,
   } = coin;
@@ -63,11 +63,11 @@ const getRow = (coin: RebalancingCoin, index: number, symbolCurrency: CurrencySy
     <LabelCell color={color} value={idealAllocationValue} key={`coin-table-${id}-value-for-perc`} />,
     <LabelCell color={color} value={`${price}${symbolCurrency}`} key={`coin-table-${id}-price`} />,
     <LabelCell color={color} value={priceChangePercentage24h} key={`coin-table-${id}-price-variation`} />,
-    <LabelCell color={color} value={tokens} key={`coin-table-${id}-holding-token`} />,
+    <LabelCell color={color} value={coins} key={`coin-table-${id}-holding-token`} />,
     <LabelCell color={color} value={`${holdingInFiat}${symbolCurrency}`} key={`coin-table-${id}-holding-in-fiat`} />,
     <LabelCell color={color} value={balancingPercentage} key={`coin-table-${id}-perc-balancing`} />,
     <LabelCell color={color} value={rebalancingInFiat} key={`coin-table-${id}-value-balancing`} />,
-    <LabelCell color={color} value={rebalancingTokens} key={`coin-table-${id}-coin-balancing`} />,
+    <LabelCell color={color} value={rebalancingCoins} key={`coin-table-${id}-coin-balancing`} />,
   ];
 };
 
