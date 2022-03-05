@@ -104,7 +104,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
           />
         </div>
         <Spacer size={30} />
-        <GridCoins rebalancingCoins={rebalancingCoins} symbolCurrency={symbolCurrency} />
+        <GridCoins rebalancingCoins={rebalancingCoins} wallet={wallet || []} symbolCurrency={symbolCurrency} />
       </Layout>
     </LoadErrorHandler>
   );

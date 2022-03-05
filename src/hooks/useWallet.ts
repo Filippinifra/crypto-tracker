@@ -1,3 +1,4 @@
+import { pieColorsDark } from "utils/colors";
 import { WalletDivision } from "types/walletDivision";
 import { useEffect, useState } from "react";
 
@@ -8,7 +9,7 @@ const tempCoins: WalletDivision = [
   { typology: "Mid cap", percentage: 8 },
   { typology: "Low cap", percentage: 4 },
   { typology: "Gambling", percentage: 3 },
-];
+].map((e, i) => ({ ...e, color: pieColorsDark[i] }));
 
 export const useWallet = () => {
   const [wallet, setWallet] = useState<WalletDivision>();

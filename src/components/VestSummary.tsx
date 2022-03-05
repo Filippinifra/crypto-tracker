@@ -22,7 +22,7 @@ export const VestSummary: FC<{ totalVest: number; sumFiatValue: number; symbolCu
       data={[
         <LabelCell value={"Totale investito"} key={"total-vest-title"} isTitle />,
         <LabelCell value={`${totalVest}${symbolCurrency}`} key={"total-vest"} />,
-        <LabelCell value={"Controvalore coin ad ora"} key={"fiat-sum-value-title"} isTitle />,
+        <LabelCell value={"Controvalore ora"} key={"fiat-sum-value-title"} isTitle />,
         <LabelCell value={`${getSplittedPrice(sumFiatValue, 5, 0)}${symbolCurrency}`} key={"fiat-sum-value"} />,
         <LabelCell value={"Guadagno / perdita"} key={"profit-title"} isTitle />,
         <LabelCell value={`${getSplittedPrice(sumFiatValue - totalVest, 5, 0)}${symbolCurrency}`} key={"profit"} />,

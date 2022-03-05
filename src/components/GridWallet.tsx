@@ -1,16 +1,16 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { CurrencySymbol } from "types/currency";
 import { WalletDivision, WalletPiece } from "types/walletDivision";
-import { gridWalletColor } from "utils/colors";
+import { headerGridWalletColor } from "utils/colors";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { Grid } from "components/Grid";
 import { Typography } from "components/Typography";
 
-const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, isTitle }) => {
-  const style: React.CSSProperties = { width: "100%", backgroundColor: isTitle ? gridWalletColor : "white", padding: 10, boxSizing: "border-box" };
+const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string; style?: React.CSSProperties }> = ({ value, isTitle, color, style }) => {
+  const additionalStyle: React.CSSProperties = { width: "100%", backgroundColor: isTitle ? headerGridWalletColor : "white", padding: 10, boxSizing: "border-box", color };
 
   return (
-    <Typography variant="body" style={style}>
+    <Typography variant="body" style={{ ...additionalStyle, ...style }}>
       {value || PLACEHOLDER}
     </Typography>
   );
@@ -24,11 +24,11 @@ const getHeaders = () => {
   ];
 };
 
-const getRow = (walletPiece: WalletPiece, sumFiatValue: number, symbolCurrency: string | undefined) => {
-  const { percentage, typology } = walletPiece;
+const getRow = (walletPiece: WalletPiece, sumFiatValue: number, symbolCurrency: string | undefined, index: number) => {
+  const { percentage, typology, color } = walletPiece;
 
   return [
-    <LabelCell key={`wallet-${typology}`} value={typology} />,
+    <LabelCell color={color} key={`wallet-${typology}`} value={typology} style={{ fontWeight: 800 }} />,
     <LabelCell key={`wallet-${typology}-percentage`} value={`${percentage}%`} />,
     <LabelCell key={`wallet-${typology}-value`} value={`${getSplittedPrice((sumFiatValue / 100) * percentage, 5, 0)}${symbolCurrency}`} />,
   ];
@@ -36,8 +36,8 @@ const getRow = (walletPiece: WalletPiece, sumFiatValue: number, symbolCurrency: 
 
 export const GridWallet: FC<{ wallet: WalletDivision; sumFiatValue: number; symbolCurrency: CurrencySymbol }> = ({ wallet, sumFiatValue, symbolCurrency }) => {
   // @ts-ignore
-  const walletData: any = wallet.reduce((r, walletDataRow) => {
-    return [...r, ...getRow(walletDataRow, sumFiatValue, symbolCurrency)];
+  const walletData: any = wallet.reduce((r, walletDataRow, index) => {
+    return [...r, ...getRow(walletDataRow, sumFiatValue, symbolCurrency, index)];
   }, []);
 
   return <Grid templateColumns={"150px 120px 120px"} data={[...getHeaders(), ...walletData]} />;
