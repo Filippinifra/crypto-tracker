@@ -1,8 +1,10 @@
+import { ToastContainer } from "components/ToastContainer";
+import { ToastProvider } from "contexts/ToastContext";
 import Head from "next/head";
 
 const MyApp = ({ Component, pageProps }) => {
   return (
-    <>
+    <ToastProvider>
       <Head>
         <style>@import url('https://fonts.googleapis.com/css2?family=Quicksand&family=Roboto:wght@400;500;700;900&display=swap');</style>
       </Head>
@@ -21,7 +23,8 @@ const MyApp = ({ Component, pageProps }) => {
           right: 0;
         }
       `}</style>
-    </>
+      <ToastContainer />
+    </ToastProvider>
   );
 };
 

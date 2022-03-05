@@ -17,12 +17,14 @@
     "react-dom": "17.0.2",
     "react-select": "^5.2.2",
     "styled-components": "^5.3.3",
-    "swr": "^1.2.2"
+    "swr": "^1.2.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
     "@types/react": "^17.0.39",
     "@types/styled-components": "^5.1.23",
+    "@types/uuid": "^8.3.4",
     "babel-plugin-styled-components": "^2.0.5",
     "eslint": "8.9.0",
     "eslint-config-next": "12.1.0",
