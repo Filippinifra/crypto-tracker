@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 export const Layout: FC<{ prefCurrency: Currency | undefined; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>> }> = ({ children, prefCurrency, setPrefCurrency }) => {
   return (
     <Wrapper>
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: 40 }}>
+      <div style={{ display: "flex", justifyContent: "flex-end", gap: 40, position: "fixed", right: 20 }}>
         <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
         <RefreshButton />
       </div>

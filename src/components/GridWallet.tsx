@@ -29,7 +29,7 @@ const getRow = (walletPiece: WalletPiece, sumFiatValue: number, symbolCurrency: 
 
   return [
     <LabelCell key={`wallet-${typology}`} value={typology} />,
-    <LabelCell key={`wallet-${typology}-percentage`} value={percentage} />,
+    <LabelCell key={`wallet-${typology}-percentage`} value={`${percentage}%`} />,
     <LabelCell key={`wallet-${typology}-value`} value={`${getSplittedPrice((sumFiatValue / 100) * percentage, 5, 0)}${symbolCurrency}`} />,
   ];
 };

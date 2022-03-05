@@ -12,6 +12,7 @@ const ButtonStyled = styled.div`
   ${shadowStyle}
   font-size: 14px;
   cursor: pointer;
+  background-color: white;
 `;
 
 export const Button: FC<{ onClick: () => void }> = ({ children, ...others }) => {
