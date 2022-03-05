@@ -7,7 +7,16 @@ import { Grid } from "components/Grid";
 import { Typography } from "components/Typography";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string; style?: React.CSSProperties }> = ({ value, isTitle, color, style }) => {
-  const additionalStyle: React.CSSProperties = { width: "100%", backgroundColor: isTitle ? headerGridWalletColor : "white", padding: 10, boxSizing: "border-box", color };
+  const additionalStyle: React.CSSProperties = {
+    width: "100%",
+    backgroundColor: isTitle ? headerGridWalletColor : "white",
+    padding: 10,
+    boxSizing: "border-box",
+    color,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  };
 
   return (
     <Typography variant="body" style={{ ...additionalStyle, ...style }}>
