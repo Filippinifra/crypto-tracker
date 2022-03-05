@@ -12,6 +12,9 @@ export const errorColor = "#ff3f3f";
 export const percentageBalanceColor = ["#ff0000", "#ff4c4c", "#ff9999", "#f3fae5", "#d2eb99", "#b0dc4c", "#8fce00"];
 export const fiatRebalanceColor = ["#ff0000", "#ff4c4c", "#f3fae5", "#b0dc4c", "#8fce00"];
 
+export const greenVariationColor = "#006400";
+export const redVariationColor = "#8B0000";
+
 export const getPercentageBalanceColor = (value: number) => {
   if (value < 40) {
     return percentageBalanceColor[0];

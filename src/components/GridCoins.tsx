@@ -3,16 +3,17 @@ import Image from "next/image";
 import { FC } from "react";
 import { CurrencySymbol } from "types/currency";
 import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
-import { getFiatRebalanceColor, getPercentageBalanceColor, gridCoinColors } from "utils/colors";
+import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, gridCoinColors, redVariationColor } from "utils/colors";
 import { Typography } from "components/Typography";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 
-const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number }> = ({ value, color, trunc = true, height }) => {
+const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string }> = ({ value, color, trunc = true, height, textColor }) => {
   const style: React.CSSProperties = {
     width: "100%",
     backgroundColor: color,
     padding: 10,
     boxSizing: "border-box",
+    color: textColor,
     ...(height && { height, display: "flex", alignItems: "center", justifyContent: "center" }),
     ...(trunc && { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }),
   };
@@ -32,7 +33,7 @@ const getHEaders = () => {
     <LabelCell height={50} trunc={false} color={gridCoinColors[2]} value={"Allocazione"} key={`coin-table-perc`} />,
     <LabelCell height={50} trunc={false} color={gridCoinColors[2]} value={"Controvalore allocazione"} key={`coin-table-value-for-perc`} />,
     <LabelCell height={50} trunc={false} color={gridCoinColors[3]} value={"Prezzo"} key={`coin-table-price`} />,
-    <LabelCell height={50} trunc={false} color={gridCoinColors[3]} value={"Variazione 24"} key={`coin-table-price-variation`} />,
+    <LabelCell height={50} trunc={false} color={gridCoinColors[3]} value={"Variazione 24 ore"} key={`coin-table-price-variation`} />,
     <LabelCell height={50} trunc={false} color={gridCoinColors[4]} value={"Tokens"} key={`coin-table-holding-token`} />,
     <LabelCell height={50} trunc={false} color={gridCoinColors[4]} value={"Possesso"} key={`coin-table-holding-in-fiat`} />,
     <LabelCell height={50} trunc={false} color={gridCoinColors[5]} value={"Bilanciamento percentuale"} key={`coin-table-perc-balancing`} />,
@@ -69,7 +70,12 @@ const getRow = (coin: RebalancingCoin, index: number, symbolCurrency: CurrencySy
     <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${id}-perc`} />,
     <LabelCell color={color} value={`${getSplittedPrice(idealAllocationValue)}${symbolCurrency}`} key={`coin-table-${id}-value-for-perc`} />,
     <LabelCell color={color} value={`${getSplittedPrice(price)}${symbolCurrency}`} key={`coin-table-${id}-price`} />,
-    <LabelCell color={color} value={`${getSplittedPrice(priceChangePercentage24h, 3, 2, true)}%`} key={`coin-table-${id}-price-variation`} />,
+    <LabelCell
+      color={color}
+      textColor={priceChangePercentage24h < 0 ? redVariationColor : greenVariationColor}
+      value={`${getSplittedPrice(priceChangePercentage24h, 3, 2, true)}%`}
+      key={`coin-table-${id}-price-variation`}
+    />,
     <LabelCell color={color} value={coins} key={`coin-table-${id}-holding-token`} />,
     <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${id}-holding-in-fiat`} />,
     <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={`${getSplittedPrice(balancingPercentage, 5, 0)}%`} key={`coin-table-${id}-perc-balancing`} />,
