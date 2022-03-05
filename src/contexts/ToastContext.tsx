@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useCallback, useContext, useState } from "react";
 import { Toast, ToastType } from "types/toastType";
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,14 +14,17 @@ export const useToast = () => useContext(ToastContext);
 export const ToastProvider: FC = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const showToast = (message: string, type: ToastType) => {
+  const showToast = useCallback((message: string, type: ToastType) => {
     const id = uuidv4();
 
-    setToasts((state) => [...state, { message, type, id }]);
-    setTimeout(() => {
-      setToasts((state) => state.filter(({ id: toastId }) => toastId !== id));
-    }, 4000);
-  };
+    setToasts((state) => {
+      setTimeout(() => {
+        setToasts((state) => state.filter(({ id: toastId }) => toastId !== id));
+      }, 4000);
+
+      return [...state, { message, type, id }];
+    });
+  }, []);
 
   return <ToastContext.Provider value={{ toasts, showToast }}>{children}</ToastContext.Provider>;
 };
