@@ -13,7 +13,7 @@ const MyApp = ({ Component, pageProps }) => {
         body > div:first-child,
         div#__next,
         div#__next > div {
-          height: 100%;
+          height: auto;
           margin: 0;
         }
       `}</style>
