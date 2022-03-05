@@ -3,7 +3,7 @@ import { FC } from "react";
 import { CurrencySymbol } from "types/currency";
 import { vestColor } from "utils/colors";
 import { PLACEHOLDER } from "utils/labels";
-import { Typography } from "./Typography";
+import { Typography } from "components/Typography";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, isTitle }) => {
   const style: React.CSSProperties = { width: "100%", backgroundColor: isTitle ? vestColor : "white", padding: 10, boxSizing: "border-box" };

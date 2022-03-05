@@ -1,4 +1,4 @@
-import { Currency } from "./../types/currency";
+import { Currency } from "types/currency";
 import { useEffect, useState } from "react";
 
 const tempPrefCurrency: Currency = Currency.EUR;

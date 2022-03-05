@@ -3,8 +3,8 @@ import { CurrencySymbol } from "types/currency";
 import { WalletDivision, WalletPiece } from "types/walletDivision";
 import { gridWalletColor } from "utils/colors";
 import { PLACEHOLDER } from "utils/labels";
-import { Grid } from "./Grid";
-import { Typography } from "./Typography";
+import { Grid } from "components/Grid";
+import { Typography } from "components/Typography";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, isTitle }) => {
   const style: React.CSSProperties = { width: "100%", backgroundColor: isTitle ? gridWalletColor : "white", padding: 10, boxSizing: "border-box" };

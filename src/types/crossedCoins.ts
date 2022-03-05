@@ -1,5 +1,5 @@
-import { DetailedCoin } from "./detailedCoins";
-import { PersonalCoin } from "./personalCoins";
+import { DetailedCoin } from "types/detailedCoins";
+import { PersonalCoin } from "types/personalCoins";
 
 export type CrossedCoins = CrossedCoin[];
 

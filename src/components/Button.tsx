@@ -1,10 +1,9 @@
-import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { useRouter } from "next/router";
 import { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
 import { Currency, getSymbolForCurrency } from "types/currency";
-import { shadowStyle } from "./style";
-import { Typography } from "./Typography";
+import { shadowStyle } from "components/ShadowStyle";
+import { Typography } from "components/Typography";
 
 const ButtonStyled = styled.div`
   width: fit-content;

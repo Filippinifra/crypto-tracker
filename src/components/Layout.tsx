@@ -1,8 +1,8 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
 import { Currency } from "types/currency";
-import { ChangeCurrencyButton, RefreshButton } from "./Button";
-import { Spacer } from "./Spacer";
+import { ChangeCurrencyButton, RefreshButton } from "components/Button";
+import { Spacer } from "components/Spacer";
 
 const Wrapper = styled.div`
   height: 100vh;

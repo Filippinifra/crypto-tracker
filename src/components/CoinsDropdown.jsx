@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import Select from "react-select";
-import { shadowStyle } from "./style";
+import { shadowStyle } from "components/ShadowStyle";
 
 export const CoinsDropdown = ({ options, value, onChange, ...others }) => {
   const [input, setInput] = useState("");

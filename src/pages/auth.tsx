@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { AuthProvider } from "../contexts/AuthContext";
-import { auth } from "../utils/firebase";
+import { AuthProvider } from "contexts/AuthContext";
+import { auth } from "utils/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth"; //temporaneo
 import { Button } from "components/Button";
 import { Typography } from "components/Typography";

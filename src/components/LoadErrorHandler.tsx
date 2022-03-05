@@ -1,8 +1,8 @@
 import { FC } from "react";
 import styled from "styled-components";
 import { errorColor, loadingColor } from "utils/colors";
-import { RefreshButton } from "./Button";
-import { Typography } from "./Typography";
+import { RefreshButton } from "components/Button";
+import { Typography } from "components/Typography";
 
 const Wrapper = styled.div`
   height: 100%;
