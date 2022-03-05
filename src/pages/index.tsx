@@ -12,7 +12,7 @@ import { AvailableCoins } from "types/availableCoins";
 import { useWallet } from "hooks/useWallet";
 import { useTotalVest } from "hooks/useTotalVest";
 import { VestSummary } from "components/VestSummary";
-import { PieChart } from "components/PieChart";
+import { DoughnutChart } from "components/DoughnutChart";
 import { pieColors, pieColorsDark } from "utils/colors";
 import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { Currency, getSymbolForCurrency } from "types/currency";
@@ -66,7 +66,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
         data: wallet?.map(({ percentage }) => percentage),
         backgroundColor: pieColors,
         borderColor: pieColorsDark,
-        borderWidth: 1,
+        borderWidth: 2,
       },
     ],
   };
@@ -89,7 +89,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
               <GridWallet wallet={wallet || []} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             </div>
           </div>
-          <PieChart data={dataChart} />
+          <DoughnutChart data={dataChart} />
         </div>
         <Spacer size={30} />
         <Typography variant="body">Aggiungi le tue coins:</Typography>
