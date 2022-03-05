@@ -2,7 +2,7 @@ import { FC } from "react";
 import { CurrencySymbol } from "types/currency";
 import { WalletDivision, WalletPiece } from "types/walletDivision";
 import { gridWalletColor } from "utils/colors";
-import { PLACEHOLDER } from "utils/labels";
+import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { Grid } from "components/Grid";
 import { Typography } from "components/Typography";
 
@@ -30,7 +30,7 @@ const getRow = (walletPiece: WalletPiece, sumFiatValue: number, symbolCurrency: 
   return [
     <LabelCell key={`wallet-${typology}`} value={typology} />,
     <LabelCell key={`wallet-${typology}-percentage`} value={percentage} />,
-    <LabelCell key={`wallet-${typology}-value`} value={`${(sumFiatValue / 100) * percentage}${symbolCurrency}`} />,
+    <LabelCell key={`wallet-${typology}-value`} value={`${getSplittedPrice((sumFiatValue / 100) * percentage, 5, 0)}${symbolCurrency}`} />,
   ];
 };
 
@@ -40,5 +40,5 @@ export const GridWallet: FC<{ wallet: WalletDivision; sumFiatValue: number; symb
     return [...r, ...getRow(walletDataRow, sumFiatValue, symbolCurrency)];
   }, []);
 
-  return <Grid templateColumns={"250px 200px 200px"} data={[...getHEaders(), ...walletData]} />;
+  return <Grid templateColumns={"150px 120px 120px"} data={[...getHEaders(), ...walletData]} />;
 };

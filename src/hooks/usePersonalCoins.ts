@@ -7,7 +7,7 @@ const tempCoins: PersonalCoins = [
     typology: "Liquidity",
     percentage: 96,
     platform: "Anchor",
-    coins: 3137,
+    coins: 3147,
   },
   {
     id: "usd-coin",
