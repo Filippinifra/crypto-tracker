@@ -25,7 +25,7 @@ const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; he
   );
 };
 
-const getHEaders = () => {
+const getHeaders = () => {
   return [
     <LabelCell height={50} trunc={false} color={gridCoinColors[0]} value={"Tipologia"} key={`coin-table-type`} />,
     <LabelCell height={50} trunc={false} color={gridCoinColors[1]} value={"Logo"} key={`coin-table-image`} />,
@@ -90,5 +90,5 @@ export const GridCoins: FC<{ rebalancingCoins: RebalancingCoins; symbolCurrency:
     return [...r, ...getRow(coinData, index, symbolCurrency)];
   }, []);
 
-  return <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHEaders(), ...coinsData]} />;
+  return <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />;
 };

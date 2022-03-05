@@ -16,7 +16,7 @@ const LabelCell: FC<{ value: string | number; isTitle?: boolean }> = ({ value, i
   );
 };
 
-const getHEaders = () => {
+const getHeaders = () => {
   return [
     <LabelCell value={"Tipologia"} key={`wallet-typology`} isTitle />,
     <LabelCell value={"Percentuale"} key={`wallet-percentage`} isTitle />,
@@ -40,5 +40,5 @@ export const GridWallet: FC<{ wallet: WalletDivision; sumFiatValue: number; symb
     return [...r, ...getRow(walletDataRow, sumFiatValue, symbolCurrency)];
   }, []);
 
-  return <Grid templateColumns={"150px 120px 120px"} data={[...getHEaders(), ...walletData]} />;
+  return <Grid templateColumns={"150px 120px 120px"} data={[...getHeaders(), ...walletData]} />;
 };
