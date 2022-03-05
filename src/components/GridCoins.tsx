@@ -84,5 +84,5 @@ export const GridCoins: FC<{ rebalancingCoins: RebalancingCoins; symbolCurrency:
     return [...r, ...getRow(coinData, index, symbolCurrency)];
   }, []);
 
-  return <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 115px 115px 115px"} data={[...getHEaders(), ...coinsData]} />;
+  return <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHEaders(), ...coinsData]} />;
 };
