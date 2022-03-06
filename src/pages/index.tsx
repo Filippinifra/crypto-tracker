@@ -7,7 +7,7 @@ import { Spacer } from "components/Spacer";
 import { useDetailedCoins } from "hooks/useDetailedCoins";
 import { GridWallet } from "components/GridWallet";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { GridCoins } from "components/GridCoins";
+import { GridCoinsPanel } from "components/GridCoinsPanel";
 import { AvailableCoins } from "types/availableCoins";
 import { useWallet } from "hooks/useWallet";
 import { useTotalVest } from "hooks/useTotalVest";
@@ -108,9 +108,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
           />
         </div>
         <Spacer size={40} />
-        <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
-        <Spacer size={20} />
-        <GridCoins rebalancingCoins={rebalancingCoins} wallet={wallet || []} symbolCurrency={symbolCurrency} />
+        <GridCoinsPanel rebalancingCoins={rebalancingCoins} wallet={wallet || []} symbolCurrency={symbolCurrency} />
       </Layout>
     </LoadErrorHandler>
   );
