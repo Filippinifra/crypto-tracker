@@ -1,12 +1,16 @@
 import { Grid } from "components/Grid";
 import Image from "next/image";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
 import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, redVariationColor } from "utils/colors";
 import { Typography } from "components/Typography";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { WalletDivision } from "types/walletDivision";
+import { Input } from "components/Input";
+import { Spacer } from "components/Spacer";
+import { Button } from "components/Button";
+import { TypologyDropdown } from "components/TypologyDropdown";
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,
@@ -51,7 +55,7 @@ const getHeaders = () => {
   ];
 };
 
-const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, symbolCurrency: CurrencySymbol) => {
+const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, symbolCurrency: CurrencySymbol, isEditing: boolean) => {
   const {
     symbolAndName,
     logoUrl,
@@ -72,19 +76,26 @@ const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, sy
 
   const colorTypologyText = wallet.find(({ typology: walletTypology }) => walletTypology === typology);
 
+  const typologyDrodpownOptions = wallet.map((e) => ({ label: e.typology, value: e, color: e.color }));
+  const currentTypology = typologyDrodpownOptions.find(({ value: { typology: walletTypology } }) => walletTypology === typology);
+
   return [
-    <LabelCell
-      textColor={colorTypologyText?.color || "black"}
-      color={"white"}
-      value={typology}
-      key={`coin-table-${keyElement}-type`}
-      style={{ fontWeight: 800, border: `5px solid ${colorTypologyText?.color}`, padding: 5 }}
-    />,
-    <div style={{ backgroundColor: color, height: 34, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-image`}>
+    isEditing ? (
+      <TypologyDropdown options={typologyDrodpownOptions} value={currentTypology ? currentTypology : null} onChange={() => {}} />
+    ) : (
+      <LabelCell
+        textColor={colorTypologyText?.color || "black"}
+        color={"white"}
+        value={typology}
+        key={`coin-table-${keyElement}-type`}
+        style={{ fontWeight: 800, border: `5px solid ${colorTypologyText?.color}`, padding: 5 }}
+      />
+    ),
+    <div style={{ backgroundColor: color, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-image`}>
       <Image src={logoUrl} alt={keyElement} height={25} width={25} />
     </div>,
     <LabelCell color={color} value={symbolAndName} key={`coin-table-${keyElement}-name`} />,
-    <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} />,
+    isEditing ? <Input value={allocationPercentage} onChange={() => {}} /> : <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} />,
     <LabelCell color={color} value={`${getSplittedPrice(idealAllocationValue)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-for-perc`} />,
     <LabelCell color={color} value={`${getSplittedPrice(price)}${symbolCurrency}`} key={`coin-table-${keyElement}-price`} />,
     <LabelCell
@@ -93,7 +104,7 @@ const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, sy
       value={`${getSplittedPrice(priceChangePercentage24h, 3, 2, true)}%`}
       key={`coin-table-${keyElement}-price-variation`}
     />,
-    <LabelCell color={color} value={coins} key={`coin-table-${keyElement}-holding-token`} />,
+    isEditing ? <Input value={coins} onChange={() => {}} /> : <LabelCell color={color} value={coins} key={`coin-table-${keyElement}-holding-token`} />,
     <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-holding-in-fiat`} />,
     <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={`${getSplittedPrice(balancingPercentage, 5, 0)}%`} key={`coin-table-${keyElement}-perc-balancing`} />,
     <LabelCell color={getFiatRebalanceColor(rebalancingInFiat)} value={`${getSplittedPrice(rebalancingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-balancing`} />,
@@ -101,11 +112,31 @@ const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, sy
   ];
 };
 
-export const GridCoins: FC<{ rebalancingCoins: RebalancingCoins; wallet: WalletDivision; symbolCurrency: CurrencySymbol }> = ({ rebalancingCoins, wallet, symbolCurrency }) => {
+export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: WalletDivision; symbolCurrency: CurrencySymbol }> = ({ rebalancingCoins, wallet, symbolCurrency }) => {
+  const [isEditing, setEditing] = useState(false);
   // @ts-ignore
   const coinsData: any[] = rebalancingCoins.reduce((r, coinData, index) => {
-    return [...r, ...getRow(coinData, index, wallet, symbolCurrency)];
+    return [...r, ...getRow(coinData, index, wallet, symbolCurrency, isEditing)];
   }, []);
 
-  return <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />;
+  return (
+    <>
+      <div style={{ display: "flex", justifyContent: "space-between", maxWidth: 1285 }}>
+        <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
+        <Button
+          onClick={() => {
+            if (isEditing) {
+              setEditing(false);
+            } else {
+              setEditing(true);
+            }
+          }}
+        >
+          {isEditing ? "Salva" : "Modifica"}
+        </Button>
+      </div>
+      <Spacer size={20} />
+      <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />
+    </>
+  );
 };
