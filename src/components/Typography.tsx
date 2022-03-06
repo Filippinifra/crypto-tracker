@@ -15,7 +15,6 @@ type tStyle = {
 
 const styles: tStyle = {
   body: {
-    fontFamily: "Roboto",
     fontSize: 12,
     letterSpacing: 2,
     color: "black",

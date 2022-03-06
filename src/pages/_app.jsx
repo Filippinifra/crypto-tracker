@@ -22,6 +22,10 @@ const MyApp = ({ Component, pageProps }) => {
           left: 0;
           right: 0;
         }
+
+        * {
+          font-family: "Roboto";
+        }
       `}</style>
       <ToastContainer />
     </ToastProvider>

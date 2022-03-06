@@ -132,7 +132,7 @@ export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: Wa
             }
           }}
         >
-          {isEditing ? "Salva" : "Modifica"}
+          <Typography variant="body">{isEditing ? "Salva" : "Modifica"}</Typography>
         </Button>
       </div>
       <Spacer size={20} />

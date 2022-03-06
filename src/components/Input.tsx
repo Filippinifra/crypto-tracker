@@ -1,9 +1,7 @@
 import { FC, FormEvent } from "react";
 import styled from "styled-components";
 
-const InputStyled = styled.input`
-  font-family: "Roboto";
-`;
+const InputStyled = styled.input``;
 
 interface Props {
   type?: string;
