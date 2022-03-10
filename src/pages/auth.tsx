@@ -44,6 +44,7 @@ export default function AuthPage() {
           onChange={(e) => {
             setEmail(e.currentTarget.value);
           }}
+          value=""
         />
         <Typography variant="body">Password</Typography>
         <Input
@@ -53,6 +54,7 @@ export default function AuthPage() {
           onChange={(e) => {
             setPassword(e.currentTarget.value);
           }}
+          value=""
         />
         <Button onClick={onConfirm}>Conferma</Button>
       </div>
