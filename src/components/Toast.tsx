@@ -8,7 +8,7 @@ import { Typography } from "./Typography";
 const Wrapper = styled.div`
   width: 150px;
   padding: 5px 10px;
-  background-color: ${({ color }) => color};
+  border: 7px solid ${({ color }) => color};
   ${shadowStyle}
 `;
 
