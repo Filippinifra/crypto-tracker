@@ -7,7 +7,7 @@ const tempCoins: PersonalCoins = [
     typology: "Liquidity",
     percentage: 96,
     platform: "Anchor",
-    coins: 3147,
+    coins: 3272.5,
     keyElement: "9b663bff-b733-4d88-a23f-f8b1b495c08a",
   },
   {
@@ -15,7 +15,7 @@ const tempCoins: PersonalCoins = [
     typology: "Liquidity",
     percentage: 4,
     platform: "Ledn",
-    coins: 128.7,
+    coins: 129.6,
     keyElement: "8df659c2-0954-4026-8b0d-37b1de1e279b",
   },
   {
@@ -23,7 +23,7 @@ const tempCoins: PersonalCoins = [
     typology: "Bigs",
     percentage: 50,
     platform: "Binance",
-    coins: 0.0176,
+    coins: 0.02092773,
     keyElement: "ccc16a6c-87e9-4337-ae72-e441a0428ba3",
   },
   {
@@ -31,7 +31,7 @@ const tempCoins: PersonalCoins = [
     typology: "Bigs",
     percentage: 34,
     platform: "Binance",
-    coins: 0.1288,
+    coins: 0.21814528,
     keyElement: "8ffa84c2-8acd-4bfa-a45d-afef054b81c0",
   },
   {
@@ -39,7 +39,7 @@ const tempCoins: PersonalCoins = [
     typology: "Bigs",
     percentage: 7,
     platform: "Metamask",
-    coins: 0.041,
+    coins: 0.0415,
     keyElement: "3e06b3cd-2cc2-4e4a-ba33-76a28a4b73fc",
   },
   {
@@ -47,7 +47,7 @@ const tempCoins: PersonalCoins = [
     typology: "Bigs",
     percentage: 9,
     platform: "Binance",
-    coins: 0.055,
+    coins: 0.05538937,
     keyElement: "807e6785-4863-4c4a-9290-14996bb156eb",
   },
   {
@@ -55,7 +55,7 @@ const tempCoins: PersonalCoins = [
     typology: "High cap",
     percentage: 25,
     platform: "Binance",
-    coins: 1.2,
+    coins: 2.0299,
     keyElement: "fde1ea29-a0de-4a73-a4a0-f11b5eeadd0a",
   },
   {
@@ -71,7 +71,7 @@ const tempCoins: PersonalCoins = [
     typology: "High cap",
     percentage: 25,
     platform: "Binance",
-    coins: 10.35,
+    coins: 10.35394401,
     keyElement: "cba52b68-4140-43e6-aa6c-a9803051a84d",
   },
   {
@@ -79,7 +79,7 @@ const tempCoins: PersonalCoins = [
     typology: "High cap",
     percentage: 25,
     platform: "Binance",
-    coins: 0.5188,
+    coins: 0.55146373,
     keyElement: "8131b112-81d7-4d6d-9d07-44f916b11fd4",
   },
   {
@@ -87,7 +87,7 @@ const tempCoins: PersonalCoins = [
     typology: "Mid cap",
     percentage: 10,
     platform: "Binance",
-    coins: 0.783,
+    coins: 0.7838337,
     keyElement: "ba5a7fee-064c-4948-bf44-37dafe2e3c69",
   },
   {
@@ -95,7 +95,7 @@ const tempCoins: PersonalCoins = [
     typology: "Mid cap",
     percentage: 10,
     platform: "Binance",
-    coins: 36.15,
+    coins: 36.22041551,
     keyElement: "e3672492-5ab8-4d07-b139-866ffbd9fd12",
   },
   {
@@ -111,7 +111,7 @@ const tempCoins: PersonalCoins = [
     typology: "Mid cap",
     percentage: 9,
     platform: "Binance",
-    coins: 53.69,
+    coins: 53.70874891,
     keyElement: "2559ead8-eb09-4ffa-87c9-b12576e15add",
   },
   {
@@ -119,7 +119,7 @@ const tempCoins: PersonalCoins = [
     typology: "Mid cap",
     percentage: 10,
     platform: "Binance",
-    coins: 1.838,
+    coins: 1.83816,
     keyElement: "983f9f8e-037c-4284-9853-fa4bed8011fa",
   },
   {
@@ -127,7 +127,7 @@ const tempCoins: PersonalCoins = [
     typology: "Mid cap",
     percentage: 10,
     platform: "Binance",
-    coins: 26.9877,
+    coins: 39.98253579,
     keyElement: "eefe5898-4eda-46e5-a244-2d90f2f0d0a6",
   },
   {
@@ -135,7 +135,7 @@ const tempCoins: PersonalCoins = [
     typology: "Mid cap",
     percentage: 10,
     platform: "Binance",
-    coins: 15.119,
+    coins: 15.12292975,
     keyElement: "9a8a9773-3963-48e3-8ef2-da2a837b8624",
   },
   {
@@ -143,7 +143,7 @@ const tempCoins: PersonalCoins = [
     typology: "Mid cap",
     percentage: 9,
     platform: "Binance",
-    coins: 250.68,
+    coins: 250.71603237,
     keyElement: "9ba60408-c2d2-4a3f-a6a6-41e7b8a62787",
   },
   {
@@ -151,7 +151,7 @@ const tempCoins: PersonalCoins = [
     typology: "Mid cap",
     percentage: 5,
     platform: "Binance",
-    coins: 10.31,
+    coins: 10.31603183,
     keyElement: "6bb111d0-0756-4cd0-8cbd-50f5910a904d",
   },
   {
@@ -159,7 +159,7 @@ const tempCoins: PersonalCoins = [
     typology: "Mid cap",
     percentage: 9,
     platform: "Binance",
-    coins: 0.165,
+    coins: 0.42551176,
     keyElement: "0b329a7b-d165-4cf1-9f45-de4d1752eb51",
   },
   {
@@ -191,7 +191,7 @@ const tempCoins: PersonalCoins = [
     typology: "Low cap",
     percentage: 17,
     platform: "Binance",
-    coins: 65.945,
+    coins: 65.95485186,
     keyElement: "208059ce-0743-430f-8ab5-a4eab29ecb0f",
   },
   {
@@ -199,7 +199,7 @@ const tempCoins: PersonalCoins = [
     typology: "Low cap",
     percentage: 17,
     platform: "Binance",
-    coins: 59.27,
+    coins: 59.27090064,
     keyElement: "18d3d362-2cf5-4e31-a24c-ff25991a92ae",
   },
   {
@@ -207,7 +207,7 @@ const tempCoins: PersonalCoins = [
     typology: "Low cap",
     percentage: 17,
     platform: "Binance",
-    coins: 106.6,
+    coins: 106.64156523,
     keyElement: "c79f93c1-3fdb-4722-a231-d2dc6b91d89e",
   },
   {
@@ -223,7 +223,7 @@ const tempCoins: PersonalCoins = [
     typology: "Gambling",
     percentage: 23,
     platform: "Metamask",
-    coins: 19482,
+    coins: 8802,
     keyElement: "818c0ef8-1f46-4aa0-a47b-a772eb9d034b",
   },
   {
@@ -247,7 +247,7 @@ const tempCoins: PersonalCoins = [
     typology: "Gambling",
     percentage: 24,
     platform: "Binance",
-    coins: 21.945,
+    coins: 21.94541198,
     keyElement: "cf0d4c42-f802-4cb7-81d7-0f7be9b5ddaf",
   },
   {
@@ -255,7 +255,7 @@ const tempCoins: PersonalCoins = [
     typology: "Gambling",
     percentage: 24,
     platform: "Binance",
-    coins: 2.22,
+    coins: 3.081915,
     keyElement: "b6186943-dd6b-48c8-a109-eed89216a155",
   },
 ];

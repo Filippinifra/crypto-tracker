@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TotalVest } from "types/totalVest";
 
-const tempTotalVest: TotalVest = 6920;
+const tempTotalVest: TotalVest = 7420;
 
 export const useTotalVest = () => {
   const [totalVest, setTotalVest] = useState<TotalVest>();
