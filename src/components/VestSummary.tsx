@@ -17,6 +17,7 @@ const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string 
 
 export const VestSummary: FC<{ totalVest: number; sumFiatValue: number; symbolCurrency: CurrencySymbol }> = ({ totalVest, sumFiatValue, symbolCurrency }) => {
   const profit = sumFiatValue - totalVest;
+  const percentageProfit = (100 / (totalVest / profit)).toFixed(1);
 
   return (
     <Grid
@@ -27,7 +28,7 @@ export const VestSummary: FC<{ totalVest: number; sumFiatValue: number; symbolCu
         <LabelCell value={"Controvalore ora"} key={"fiat-sum-value-title"} isTitle />,
         <LabelCell value={`${getSplittedPrice(sumFiatValue, 5, 0)}${symbolCurrency}`} key={"fiat-sum-value"} />,
         <LabelCell value={"Guadagno / perdita"} key={"profit-title"} isTitle />,
-        <LabelCell color={getVestSummaryColor(profit)} value={`${getSplittedPrice(profit, 5, 0)}${symbolCurrency}`} key={"profit"} />,
+        <LabelCell color={getVestSummaryColor(profit)} value={`${getSplittedPrice(profit, 5, 0)}${symbolCurrency} (${percentageProfit}%)`} key={"profit"} />,
       ]}
     />
   );
