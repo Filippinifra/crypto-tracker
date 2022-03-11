@@ -3,7 +3,7 @@ import { useToast } from "contexts/ToastContext";
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
-import { Spacer } from "./Spacer";
+import { Spacer } from "components/Spacer";
 
 const Wrapper = styled.div`
   position: fixed;

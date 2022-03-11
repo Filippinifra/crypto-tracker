@@ -7,7 +7,7 @@ import { shadowStyle } from "components/ShadowStyle";
 import { Typography } from "components/Typography";
 
 const Wrapper = styled.div`
-  width: 150px;
+  width: 200px;
   padding: 5px 10px;
   border: 7px solid ${({ color }) => color};
   ${shadowStyle}
@@ -25,7 +25,6 @@ const getColor = (type: ToastType) => {
 };
 
 const getIconName = (type: ToastType) => {
-  console.log(type);
   if (type === "error") {
     return "error";
   }
@@ -40,9 +39,7 @@ export const Toast: FC<{ type: ToastType; message: string }> = ({ type, message 
     <Wrapper color={getColor(type)}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 10, alignItems: "center" }}>
         <Icon name={getIconName(type)} color={getColor(type)} />
-        <Typography variant="body2" style={{ ...(type === "error" && { color: "white" }) }}>
-          {message}
-        </Typography>
+        <Typography variant="body2">{message}</Typography>
       </div>
     </Wrapper>
   );

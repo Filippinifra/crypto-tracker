@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { shadowStyle } from "./ShadowStyle";
+import { shadowStyle } from "components/ShadowStyle";
 
 const colorGrid = "#7D7D8C";
 

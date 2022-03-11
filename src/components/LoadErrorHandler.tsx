@@ -2,7 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 import { errorColor, loadingColor } from "utils/colors";
 import { Typography } from "components/Typography";
-import { ReloadPageButton } from "./ReloadPageButton";
+import { ReloadPageButton } from "components/ReloadPageButton";
 
 const Wrapper = styled.div`
   height: 100%;

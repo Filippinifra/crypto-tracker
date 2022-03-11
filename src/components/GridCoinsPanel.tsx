@@ -1,6 +1,6 @@
 import { Grid } from "components/Grid";
 import Image from "next/image";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
 import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, redVariationColor } from "utils/colors";
@@ -12,6 +12,7 @@ import { Spacer } from "components/Spacer";
 import { Button } from "components/Button";
 import { TypologyDropdown } from "components/TypologyDropdown";
 import { WarningCoinAllocation } from "components/WarningCoinAllocation";
+import { useToast } from "contexts/ToastContext";
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,
@@ -56,7 +57,14 @@ const getHeaders = () => {
   ];
 };
 
-const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, symbolCurrency: CurrencySymbol, isEditing: boolean) => {
+const getRow = (
+  coin: RebalancingCoin,
+  index: number,
+  wallet: WalletDivision,
+  symbolCurrency: CurrencySymbol,
+  isEditing: boolean,
+  setTempRebalancing: React.Dispatch<React.SetStateAction<RebalancingCoins>>
+) => {
   const {
     symbolAndName,
     logoUrl,
@@ -73,6 +81,8 @@ const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, sy
     keyElement,
   } = coin;
 
+  const { showToast } = useToast();
+
   const color = index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
 
   const colorTypologyText = wallet.find(({ typology: walletTypology }) => walletTypology === typology);
@@ -80,9 +90,29 @@ const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, sy
   const typologyDrodpownOptions = wallet.map((e) => ({ label: e.typology, value: e, color: e.color }));
   const currentTypology = typologyDrodpownOptions.find(({ value: { typology: walletTypology } }) => walletTypology === typology);
 
+  const percentageBalance = !isNaN(balancingPercentage) && isFinite(balancingPercentage) ? `${getSplittedPrice(balancingPercentage, 5, 0)}%` : PLACEHOLDER;
+
+  const onEditTypology = (typology: string) => {
+    setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, typology } : e)));
+  };
+
+  const onEditAllocation = (allocation: number) => {
+    setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, allocationPercentage: Number(allocation) } : e)));
+  };
+
+  const onEditCoins = (coins: number) => {
+    setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, coins: Number(coins) } : e)));
+  };
+
   return [
     isEditing ? (
-      <TypologyDropdown options={typologyDrodpownOptions} value={currentTypology ? currentTypology : null} onChange={() => {}} />
+      <TypologyDropdown
+        options={typologyDrodpownOptions}
+        value={currentTypology ? currentTypology : null}
+        onChange={(e: any) => {
+          onEditTypology(e.value.typology);
+        }}
+      />
     ) : (
       <LabelCell
         textColor={colorTypologyText?.color || "black"}
@@ -96,7 +126,22 @@ const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, sy
       <Image src={logoUrl} alt={keyElement} height={25} width={25} />
     </div>,
     <LabelCell color={color} value={symbolAndName} key={`coin-table-${keyElement}-name`} />,
-    isEditing ? <Input value={allocationPercentage} onChange={() => {}} /> : <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} />,
+    isEditing ? (
+      <Input
+        value={allocationPercentage}
+        type="number"
+        onChange={(e: any) => {
+          const value = e.currentTarget.value;
+          if (value >= 0) {
+            onEditAllocation(value);
+          } else {
+            showToast("Non puoi inserire una percentuale di allocazione negativa", "error");
+          }
+        }}
+      />
+    ) : (
+      <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} />
+    ),
     <LabelCell color={color} value={`${getSplittedPrice(idealAllocationValue)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-for-perc`} />,
     <LabelCell color={color} value={`${getSplittedPrice(price)}${symbolCurrency}`} key={`coin-table-${keyElement}-price`} />,
     <LabelCell
@@ -105,20 +150,64 @@ const getRow = (coin: RebalancingCoin, index: number, wallet: WalletDivision, sy
       value={`${getSplittedPrice(priceChangePercentage24h, 3, 2, true)}%`}
       key={`coin-table-${keyElement}-price-variation`}
     />,
-    isEditing ? <Input value={coins} onChange={() => {}} /> : <LabelCell color={color} value={coins} key={`coin-table-${keyElement}-holding-token`} />,
+    isEditing ? (
+      <Input
+        value={coins}
+        type="number"
+        onChange={(e: any) => {
+          const value = e.currentTarget.value;
+          if (value >= 0) {
+            onEditCoins(value);
+          } else {
+            showToast("Non puoi avere un numero negativo di monete", "error");
+          }
+        }}
+      />
+    ) : (
+      <LabelCell color={color} value={coins} key={`coin-table-${keyElement}-holding-token`} />
+    ),
     <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-holding-in-fiat`} />,
-    <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={`${getSplittedPrice(balancingPercentage, 5, 0)}%`} key={`coin-table-${keyElement}-perc-balancing`} />,
+    <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={percentageBalance} key={`coin-table-${keyElement}-perc-balancing`} />,
     <LabelCell color={getFiatRebalanceColor(rebalancingInFiat)} value={`${getSplittedPrice(rebalancingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-balancing`} />,
     <LabelCell color={color} value={getSplittedPrice(rebalancingCoins)} key={`coin-table-${keyElement}-coin-balancing`} />,
   ];
 };
 
-export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: WalletDivision; symbolCurrency: CurrencySymbol }> = ({ rebalancingCoins, wallet, symbolCurrency }) => {
-  const [isEditing, setEditing] = useState(false);
+const reorderCoins = (coins: RebalancingCoins, wallet: WalletDivision) => {
+  const sortByAllocation = coins.sort(({ allocationPercentage: allocationA }, { allocationPercentage: allocationB }) => allocationB - allocationA);
   // @ts-ignore
-  const coinsData: any[] = rebalancingCoins.reduce((r, coinData, index) => {
-    return [...r, ...getRow(coinData, index, wallet, symbolCurrency, isEditing)];
+  const sortedByTypology: RebalancingCoins = wallet.reduce((r, { typology: walletTypology }) => {
+    return [...r, ...sortByAllocation.filter(({ typology }) => walletTypology === typology)];
   }, []);
+
+  const noTypologyCoins = coins.filter(({ typology }) => typology === "");
+
+  return [...sortedByTypology, ...noTypologyCoins];
+};
+
+export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: WalletDivision; symbolCurrency: CurrencySymbol; setRebalancingCoins: (rebalancingCoins: RebalancingCoins) => void }> = ({
+  rebalancingCoins,
+  wallet,
+  symbolCurrency,
+  setRebalancingCoins,
+}) => {
+  const [isEditing, setEditing] = useState(false);
+  const [tempRebalancing, setTempRebalancing] = useState(reorderCoins(rebalancingCoins, wallet));
+  // @ts-ignore
+  const coinsData: any[] = tempRebalancing.reduce((r, coinData, index) => {
+    return [...r, ...getRow(coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing)];
+  }, []);
+
+  const normalizeAndSetCoins = () => {
+    const normalizedCoins = tempRebalancing.map((e) => ({ ...e, allocationPercentage: e.allocationPercentage || 0, coins: e.coins || 0 }));
+    setRebalancingCoins(normalizedCoins);
+  };
+
+  useEffect(() => {
+    if (!isEditing) {
+      setTempRebalancing(reorderCoins(rebalancingCoins, wallet));
+    }
+  }, [rebalancingCoins, isEditing, wallet]);
 
   return (
     <>
@@ -130,6 +219,7 @@ export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: Wa
             onClick={() => {
               if (isEditing) {
                 setEditing(false);
+                normalizeAndSetCoins();
               } else {
                 setEditing(true);
               }

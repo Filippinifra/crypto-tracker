@@ -6,7 +6,9 @@ import { RebalancingCoins } from "types/rebalancingCoins";
 import { CrossedCoins } from "types/crossedCoins";
 
 export const toRebalancingCoins = (crossedCoins: CrossedCoins, walletDivision: WalletDivision, sumFiatValue: number): RebalancingCoins => {
-  return crossedCoins.map(({ typology, image, symbol, name, percentage, currentPrice, priceChangePercentage24h, coins, id, keyElement }) => {
+  return crossedCoins.map((crossedCoin) => {
+    const { typology, image, symbol, name, percentage, currentPrice, priceChangePercentage24h, coins, id, keyElement, platform } = crossedCoin;
+
     const idealAllocationPercentageTypology = walletDivision.find(({ typology: typologyWallet }) => typologyWallet === typology)?.percentage || 0;
     const idealAllocationValue = (((sumFiatValue / 100) * idealAllocationPercentageTypology) / 100) * percentage;
 
@@ -32,6 +34,7 @@ export const toRebalancingCoins = (crossedCoins: CrossedCoins, walletDivision: W
       rebalancingInFiat,
       rebalancingCoins,
       keyElement,
+      platform,
     };
   });
 };
