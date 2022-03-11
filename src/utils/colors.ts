@@ -17,6 +17,9 @@ export const vestSummaryColors = ["#ff9999", "#f3fae5", "#b0dc4c"];
 export const greenVariationColor = "#006400";
 export const redVariationColor = "#8B0000";
 
+export const tooltipColor = loadingColor;
+export const warningColor = loadingColor;
+
 export const getPercentageBalanceColor = (value: number) => {
   if (value < 40) {
     return percentageBalanceColors[0];

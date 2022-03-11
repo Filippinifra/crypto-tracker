@@ -11,6 +11,7 @@ import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
 import { Button } from "components/Button";
 import { TypologyDropdown } from "components/TypologyDropdown";
+import { WarningCoinAllocation } from "components/WarningCoinAllocation";
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,
@@ -122,18 +123,23 @@ export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: Wa
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between", maxWidth: 1285 }}>
-        <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
-        <Button
-          onClick={() => {
-            if (isEditing) {
-              setEditing(false);
-            } else {
-              setEditing(true);
-            }
-          }}
-        >
-          <Typography variant="body">{isEditing ? "Salva" : "Modifica"}</Typography>
-        </Button>
+        <Typography variant="body" style={{ marginBottom: 8 }}>
+          Allocazione asset e ribilanciamento:
+        </Typography>
+        <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+          <WarningCoinAllocation wallet={wallet} coins={rebalancingCoins} />
+          <Button
+            onClick={() => {
+              if (isEditing) {
+                setEditing(false);
+              } else {
+                setEditing(true);
+              }
+            }}
+          >
+            <Typography variant="body2">{isEditing ? "Salva" : "Modifica"}</Typography>
+          </Button>
+        </div>
       </div>
       <Spacer size={20} />
       <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />

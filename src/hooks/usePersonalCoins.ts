@@ -29,7 +29,7 @@ const tempCoins: PersonalCoins = [
   {
     id: "ethereum",
     typology: "Bigs",
-    percentage: 34,
+    percentage: 24,
     platform: "Binance",
     coins: 0.21814528,
     keyElement: "8ffa84c2-8acd-4bfa-a45d-afef054b81c0",
@@ -37,7 +37,7 @@ const tempCoins: PersonalCoins = [
   {
     id: "ethereum",
     typology: "Bigs",
-    percentage: 7,
+    percentage: 6,
     platform: "Metamask",
     coins: 0.0415,
     keyElement: "3e06b3cd-2cc2-4e4a-ba33-76a28a4b73fc",
@@ -45,7 +45,7 @@ const tempCoins: PersonalCoins = [
   {
     id: "binance-eth",
     typology: "Bigs",
-    percentage: 9,
+    percentage: 20,
     platform: "Binance",
     coins: 0.05538937,
     keyElement: "807e6785-4863-4c4a-9290-14996bb156eb",

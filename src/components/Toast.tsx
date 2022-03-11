@@ -1,23 +1,49 @@
 import { FC } from "react";
 import styled from "styled-components";
 import { ToastType } from "types/toastType";
-import { errorColor, successColor } from "utils/colors";
-import { shadowStyle } from "./ShadowStyle";
-import { Typography } from "./Typography";
+import { errorColor, successColor, warningColor } from "utils/colors";
+import { Icon } from "components/Icon";
+import { shadowStyle } from "components/ShadowStyle";
+import { Typography } from "components/Typography";
 
 const Wrapper = styled.div`
   width: 150px;
   padding: 5px 10px;
   border: 7px solid ${({ color }) => color};
   ${shadowStyle}
+  background-color: white;
 `;
+
+const getColor = (type: ToastType) => {
+  if (type === "error") {
+    return errorColor;
+  }
+  if (type === "success") {
+    return successColor;
+  }
+  return warningColor;
+};
+
+const getIconName = (type: ToastType) => {
+  console.log(type);
+  if (type === "error") {
+    return "error";
+  }
+  if (type === "success") {
+    return "check_circle";
+  }
+  return "priority_high";
+};
 
 export const Toast: FC<{ type: ToastType; message: string }> = ({ type, message }) => {
   return (
-    <Wrapper color={type === "error" ? errorColor : type === "success" ? successColor : "white"}>
-      <Typography variant="body" style={{ ...(type === "error" && { color: "white" }) }}>
-        {message}
-      </Typography>
+    <Wrapper color={getColor(type)}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 10, alignItems: "center" }}>
+        <Icon name={getIconName(type)} color={getColor(type)} />
+        <Typography variant="body2" style={{ ...(type === "error" && { color: "white" }) }}>
+          {message}
+        </Typography>
+      </div>
     </Wrapper>
   );
 };

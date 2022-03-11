@@ -18,6 +18,7 @@ import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { Currency, getSymbolForCurrency } from "types/currency";
 import { getCrossedCoins, toRebalancingCoins } from "utils/coins";
 import { useMemo } from "react";
+import { WarningWalletAllocation } from "components/WarningWalletAllocation";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -88,7 +89,12 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
             <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             <Spacer size={40} />
             <div style={{ height: "auto" }}>
-              <Typography variant="body">Allocazione percentuale portafoglio:</Typography>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <Typography variant="body" style={{ marginBottom: 8 }}>
+                  Allocazione percentuale portafoglio:
+                </Typography>
+                <WarningWalletAllocation wallet={wallet || []} />
+              </div>
               <Spacer size={20} />
               <GridWallet wallet={wallet || []} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             </div>

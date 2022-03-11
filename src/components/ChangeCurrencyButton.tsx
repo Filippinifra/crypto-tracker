@@ -15,7 +15,7 @@ export const ChangeCurrencyButton: FC<{ prefCurrency: Currency; setPrefCurrency:
 
   return prefCurrency !== undefined ? (
     <Button onClick={changeCurrency}>
-      <Typography variant="body" style={{ marginLeft: 2 }}>
+      <Typography variant="body2" style={{ marginLeft: 2 }}>
         {getSymbolForCurrency(prefCurrency)}
       </Typography>
     </Button>
