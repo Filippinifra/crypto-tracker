@@ -12,10 +12,13 @@ export const successColor = "#8fce00";
 
 export const percentageBalanceColors = ["#ff0000", "#ff4c4c", "#ff9999", "#f3fae5", "#d2eb99", "#b0dc4c", "#8fce00"];
 export const fiatRebalanceColors = ["#ff0000", "#ff4c4c", "#f3fae5", "#b0dc4c", "#8fce00"];
-export const vestSummaryColors = ["#ff9999", "#f3fae5", "#b0dc4c"];
+export const vestSummaryColors = ["#ff4c4c", "#ff9999", "#f3fae5", "#b0dc4c"];
 
 export const greenVariationColor = "#006400";
 export const redVariationColor = "#8B0000";
+
+export const tooltipColor = loadingColor;
+export const warningColor = loadingColor;
 
 export const getPercentageBalanceColor = (value: number) => {
   if (value < 40) {
@@ -52,9 +55,11 @@ export const getFiatRebalanceColor = (value: number) => {
 export const getVestSummaryColor = (value: number) => {
   if (value < -1000) {
     return vestSummaryColors[0];
-  } else if (value >= -1000 && value <= +1000) {
+  } else if (value < 0) {
     return vestSummaryColors[1];
-  } else {
+  } else if (value < 1000) {
     return vestSummaryColors[2];
+  } else {
+    return vestSummaryColors[3];
   }
 };

@@ -18,7 +18,7 @@ export const RefreshButton: FC<{ personalCoins: PersonalCoins; prefCurrency: Cur
         showToast("I dati sono stati ricaricati", "success");
       }}
     >
-      <Typography variant="body">Ricarica</Typography>
+      <Typography variant="body2">Ricarica</Typography>
     </Button>
   );
 };

@@ -51,5 +51,5 @@ export const GridWallet: FC<{ wallet: WalletDivision; sumFiatValue: number; symb
     return [...r, ...getRow(walletDataRow, sumFiatValue, symbolCurrency, index)];
   }, []);
 
-  return <Grid templateColumns={"150px 120px 120px"} data={[...getHeaders(), ...walletData]} />;
+  return <Grid templateColumns={"150px 126px 126px"} data={[...getHeaders(), ...walletData]} />;
 };

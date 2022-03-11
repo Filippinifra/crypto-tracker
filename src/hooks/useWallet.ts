@@ -1,7 +1,6 @@
 import { pieColorsDark } from "utils/colors";
 import { WalletDivision } from "types/walletDivision";
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 const tempCoins: WalletDivision = [
   {

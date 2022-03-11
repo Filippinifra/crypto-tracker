@@ -12,7 +12,7 @@ export const ReloadPageButton: FC = () => {
         reload();
       }}
     >
-      <Typography variant="body">Ricarica</Typography>
+      <Typography variant="body2">Ricarica</Typography>
     </Button>
   );
 };

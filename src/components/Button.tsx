@@ -10,6 +10,7 @@ const ButtonStyled = styled.div`
   font-size: 14px;
   cursor: pointer;
   background-color: white;
+  height: fit-content;
 `;
 
 export const Button: FC<{ onClick: () => void }> = ({ children, ...others }) => {
