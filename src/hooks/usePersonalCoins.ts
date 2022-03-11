@@ -91,7 +91,6 @@ const tempCoins: PersonalCoins = [
     keyElement: "e3672492-5ab8-4d07-b139-866ffbd9fd12",
   },
   {
-
     id: "fantom",
     typology: "Mid cap",
     percentage: 10,
@@ -123,7 +122,6 @@ const tempCoins: PersonalCoins = [
     coins: 10.31603183,
     keyElement: "6bb111d0-0756-4cd0-8cbd-50f5910a904d",
   },
->>>>>>> 339832b97059541992f8765ee2c1f74aaa9872a8
   {
     id: "aave",
     typology: "Mid cap",
