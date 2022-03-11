@@ -1,7 +1,6 @@
 import React from "react";
 import { usePopperTooltip } from "react-popper-tooltip";
 import styled from "styled-components";
-import { Typography } from "components/Typography";
 import { tooltipColor } from "utils/colors";
 
 const Arrow = styled.div`
@@ -36,7 +35,7 @@ const TooltipWrapper = styled.div`
   }
   background-color: ${tooltipColor};
   pointer-events: none;
-  max-width: 300px;
+  width: 300px;
 `;
 
 interface Props {

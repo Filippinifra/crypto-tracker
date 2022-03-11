@@ -89,11 +89,11 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
             <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             <Spacer size={40} />
             <div style={{ height: "auto" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <Typography variant="body" style={{ marginBottom: 8 }}>
-                  Allocazione percentuale portafoglio:
-                </Typography>
-                <WarningWalletAllocation wallet={wallet || []} />
+              <div style={{ position: "relative" }}>
+                <Typography variant="body">Allocazione percentuale portafoglio:</Typography>
+                <div style={{ position: "absolute", right: 0, top: 0 }}>
+                  <WarningWalletAllocation wallet={wallet || []} />
+                </div>
               </div>
               <Spacer size={20} />
               <GridWallet wallet={wallet || []} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />

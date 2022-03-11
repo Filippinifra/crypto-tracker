@@ -123,9 +123,7 @@ export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: Wa
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between", maxWidth: 1285 }}>
-        <Typography variant="body" style={{ marginBottom: 8 }}>
-          Allocazione asset e ribilanciamento:
-        </Typography>
+        <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
         <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
           <WarningCoinAllocation wallet={wallet} coins={rebalancingCoins} />
           <Button
