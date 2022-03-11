@@ -8,7 +8,7 @@ import { useDetailedCoins } from "hooks/useDetailedCoins";
 import { GridWallet } from "components/GridWallet";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { GridCoinsPanel } from "components/GridCoinsPanel";
-import { AvailableCoins } from "types/availableCoins";
+import { AvailableCoin, AvailableCoins } from "types/availableCoins";
 import { useWallet } from "hooks/useWallet";
 import { useTotalVest } from "hooks/useTotalVest";
 import { VestSummary } from "components/VestSummary";
@@ -19,6 +19,9 @@ import { Currency, getSymbolForCurrency } from "types/currency";
 import { getCrossedCoins, toRebalancingCoins } from "utils/coins";
 import { useMemo } from "react";
 import { WarningWalletAllocation } from "components/WarningWalletAllocation";
+import { RebalancingCoins } from "types/rebalancingCoins";
+import { PersonalCoin } from "types/personalCoins";
+import { v4 as uuidv4 } from "uuid";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -46,14 +49,13 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const { prefCurrency, setPrefCurrency } = usePrefCurrency();
   const { detailedCoins } = useDetailedCoins(personalCoins, prefCurrency);
 
-  const addCoin = (coin: any) => {
-    const coinAlreadyExists = personalCoins?.some((existingCoin: any) => existingCoin.id === coin.id);
-    if (!coinAlreadyExists) {
-      setPersonalCoins((coins: any) => [...coins, coin]);
-    }
+  const addCoin = (coin: AvailableCoin) => {
+    const keyElement = uuidv4();
+    const newCoin: PersonalCoin = { coins: 0, id: coin.id, keyElement, percentage: 0, platform: "", typology: "" };
+    setPersonalCoins((coins) => (coins ? [...coins, newCoin] : [newCoin]));
   };
 
-  const options = availableCoins?.map((value) => ({ value, label: `${value.symbol.toUpperCase()} // ${value.name} // ${value.id}` }));
+  const options = availableCoins?.filter(({ id }) => id).map((value) => ({ value, label: `${value.symbol.toUpperCase()} // ${value.name} // ${value.id}` }));
 
   const crossedCoins = useMemo(() => getCrossedCoins(personalCoins || [], detailedCoins || []), [personalCoins, detailedCoins]);
 
@@ -78,6 +80,10 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const symbolCurrency = getSymbolForCurrency(prefCurrency || Currency.EUR) || "€";
 
   const rebalancingCoins = toRebalancingCoins(crossedCoins, wallet || [], sumFiatValue);
+
+  const onSetRebalancingCoins = (rebalancingCoins: RebalancingCoins) => {
+    setPersonalCoins(rebalancingCoins.map(({ coins, id, keyElement, allocationPercentage, platform, typology }) => ({ coins, id, keyElement, percentage: allocationPercentage, platform, typology })));
+  };
 
   return (
     <LoadErrorHandler data={data} error={error}>
@@ -108,13 +114,13 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
           <CoinsDropdown
             value={null}
             options={options}
-            onChange={(e: { value: any }) => {
+            onChange={(e: { value: AvailableCoin }) => {
               addCoin(e.value);
             }}
           />
         </div>
         <Spacer size={40} />
-        <GridCoinsPanel rebalancingCoins={rebalancingCoins} wallet={wallet || []} symbolCurrency={symbolCurrency} />
+        <GridCoinsPanel rebalancingCoins={rebalancingCoins} wallet={wallet || []} symbolCurrency={symbolCurrency} setRebalancingCoins={onSetRebalancingCoins} />
       </Layout>
     </LoadErrorHandler>
   );

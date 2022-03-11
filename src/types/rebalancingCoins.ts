@@ -15,4 +15,5 @@ export interface RebalancingCoin {
   rebalancingInFiat: number;
   rebalancingCoins: number;
   keyElement: string;
+  platform: string;
 }

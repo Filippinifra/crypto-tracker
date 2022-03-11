@@ -11,6 +11,7 @@ export const ChangeCurrencyButton: FC<{ prefCurrency: Currency; setPrefCurrency:
     const newCurrency = prefCurrency === Currency.EUR ? Currency.USD : Currency.EUR;
     setPrefCurrency(newCurrency);
     showToast(`La valuta è stata cambiata in ${Currency[newCurrency]}`, "success");
+    showToast(`Attenzione! È necessario cambiare manualmente il totale investito in ${Currency[newCurrency]}`, "warning");
   };
 
   return prefCurrency !== undefined ? (

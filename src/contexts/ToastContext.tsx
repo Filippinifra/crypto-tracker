@@ -20,7 +20,7 @@ export const ToastProvider: FC = ({ children }) => {
     setToasts((state) => {
       setTimeout(() => {
         setToasts((state) => state.filter(({ id: toastId }) => toastId !== id));
-      }, 4000);
+      }, 6000);
 
       return [...state, { message, type, id }];
     });
