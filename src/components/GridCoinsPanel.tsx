@@ -29,6 +29,8 @@ const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; he
     padding: 10,
     boxSizing: "border-box",
     color: textColor,
+    alignItems: "center",
+    display: "flex",
     ...style,
     ...(height && { height, display: "flex", alignItems: "center", justifyContent: "center" }),
     ...(trunc && { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }),
