@@ -11,7 +11,7 @@ export const WarningWalletAllocation: FC<{ wallet: WalletDivision }> = ({ wallet
 
   return showWarning ? (
     <Tooltip content={<Typography variant="body">La somma delle percentuali nel tuo portafoglio non fa 100!</Typography>} placement="top">
-      <Icon style={{ color: errorColor }} name="warning" />
+      <Icon style={{ color: errorColor }} name="warning_amber" />
     </Tooltip>
   ) : null;
 };
