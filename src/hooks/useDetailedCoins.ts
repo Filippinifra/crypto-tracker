@@ -35,5 +35,5 @@ export const useDetailedCoins = (coins: PersonalCoins | undefined, prefCurrency:
     }
   }, [data, setPreviousData]);
 
-  return { detailedCoins: data ? toDetailedCoin(data) : null, mutate: onMutate, error, loading: !data && !error };
+  return { detailedCoins: data ? toDetailedCoin(data) : null, mutate: onMutate, error, loading: Boolean(coins?.length && !data && !error) };
 };

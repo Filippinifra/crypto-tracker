@@ -253,7 +253,15 @@ export const GridCoinsPanel: FC<{
       {detailedCoinsLoading ? (
         <Placeholder height={1000} width={1285} />
       ) : (
-        <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />
+        <>
+          <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />
+          {!tempRebalancing.length && (
+            <>
+              <Spacer size={20} />
+              <Typography variant="body">Inserisci almeno una moneta</Typography>
+            </>
+          )}
+        </>
       )}
     </>
   );
