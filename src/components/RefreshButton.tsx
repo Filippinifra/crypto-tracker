@@ -9,13 +9,10 @@ import { useToast } from "contexts/ToastContext";
 export const RefreshButton: FC<{ personalCoins: PersonalCoins; prefCurrency: Currency }> = ({ personalCoins, prefCurrency }) => {
   const { mutate } = useDetailedCoins(personalCoins, prefCurrency);
 
-  const { showToast } = useToast();
-
   return (
     <Button
-      onClick={async () => {
-        await mutate();
-        showToast("I dati sono stati ricaricati", "success");
+      onClick={() => {
+        mutate();
       }}
     >
       <Typography variant="body2">Ricarica</Typography>

@@ -13,6 +13,7 @@ import { Button } from "components/Button";
 import { TypologyDropdown } from "components/TypologyDropdown";
 import { WarningCoinAllocation } from "components/WarningCoinAllocation";
 import { useToast } from "contexts/ToastContext";
+import { ToastType } from "types/toastType";
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,
@@ -63,7 +64,8 @@ const getRow = (
   wallet: WalletDivision,
   symbolCurrency: CurrencySymbol,
   isEditing: boolean,
-  setTempRebalancing: React.Dispatch<React.SetStateAction<RebalancingCoins>>
+  setTempRebalancing: React.Dispatch<React.SetStateAction<RebalancingCoins>>,
+  showToast: (message: string, type: ToastType) => void
 ) => {
   const {
     symbolAndName,
@@ -80,8 +82,6 @@ const getRow = (
     typology,
     keyElement,
   } = coin;
-
-  const { showToast } = useToast();
 
   const color = index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
 
@@ -112,6 +112,7 @@ const getRow = (
         onChange={(e: any) => {
           onEditTypology(e.value.typology);
         }}
+        key={`coin-table-${keyElement}-typology-editing`}
       />
     ) : (
       <LabelCell
@@ -138,6 +139,7 @@ const getRow = (
             showToast("Non puoi inserire una percentuale di allocazione negativa", "error");
           }
         }}
+        key={`coin-table-${keyElement}-allocation-editing`}
       />
     ) : (
       <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} />
@@ -162,6 +164,7 @@ const getRow = (
             showToast("Non puoi avere un numero negativo di monete", "error");
           }
         }}
+        key={`coin-table-${keyElement}-coins-editing`}
       />
     ) : (
       <LabelCell color={color} value={coins} key={`coin-table-${keyElement}-holding-token`} />
@@ -193,21 +196,24 @@ export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: Wa
 }) => {
   const [isEditing, setEditing] = useState(false);
   const [tempRebalancing, setTempRebalancing] = useState(reorderCoins(rebalancingCoins, wallet));
-  // @ts-ignore
-  const coinsData: any[] = tempRebalancing.reduce((r, coinData, index) => {
-    return [...r, ...getRow(coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing)];
-  }, []);
 
-  const normalizeAndSetCoins = () => {
-    const normalizedCoins = tempRebalancing.map((e) => ({ ...e, allocationPercentage: e.allocationPercentage || 0, coins: e.coins || 0 }));
-    setRebalancingCoins(normalizedCoins);
-  };
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (!isEditing) {
       setTempRebalancing(reorderCoins(rebalancingCoins, wallet));
     }
   }, [rebalancingCoins, isEditing, wallet]);
+
+  // @ts-ignore
+  const coinsData: any[] = tempRebalancing.reduce((r, coinData, index) => {
+    return [...r, ...getRow(coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing, showToast)];
+  }, []);
+
+  const normalizeAndSetCoins = () => {
+    const normalizedCoins = tempRebalancing.map((e) => ({ ...e, allocationPercentage: e.allocationPercentage || 0, coins: e.coins || 0 }));
+    setRebalancingCoins(normalizedCoins);
+  };
 
   return (
     <>
