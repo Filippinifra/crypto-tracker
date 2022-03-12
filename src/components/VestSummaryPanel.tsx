@@ -4,10 +4,10 @@ import { CurrencySymbol } from "types/currency";
 import { getVestSummaryColor, vestColor } from "utils/colors";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { Typography } from "components/Typography";
-import { Button } from "components/Button";
 import { Spacer } from "components/Spacer";
 import { Input } from "components/Input";
 import { useToast } from "contexts/ToastContext";
+import { EditButtons } from "components/EditButtons";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string }> = ({ value, isTitle, color }) => {
   const style: React.CSSProperties = { width: "100%", backgroundColor: color || (isTitle ? vestColor : "white"), padding: 10, boxSizing: "border-box" };
@@ -60,9 +60,24 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: Dispatch<Se
     <>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Typography variant="body">Sommario investimento:</Typography>
-        <Button onClick={onConfirm}>
-          <Typography variant="body2">{isEditing ? "Salva" : "Modifica"}</Typography>
-        </Button>
+        <EditButtons
+          isEditing={isEditing}
+          onEdit={() => {
+            setEditing(true);
+          }}
+          onSave={() => {
+            setEditing(false);
+            if (tempTotalVest) {
+              setTotalVest(tempTotalVest);
+            } else {
+              setTempTotalVest(totalVest);
+            }
+          }}
+          onCancel={() => {
+            setEditing(false);
+            setTempTotalVest(totalVest);
+          }}
+        />
       </div>
       <Spacer size={20} />
       <Grid

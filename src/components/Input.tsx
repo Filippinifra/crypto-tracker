@@ -1,7 +1,11 @@
 import { FC, FormEvent, KeyboardEvent } from "react";
 import styled from "styled-components";
 
-const InputStyled = styled.input``;
+const InputStyled = styled.input`
+  padding: 8px;
+  letter-spacing: 2px;
+  font-size: 12px;
+`;
 
 interface Props {
   type?: string;

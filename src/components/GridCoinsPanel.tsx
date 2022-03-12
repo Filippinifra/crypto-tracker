@@ -9,13 +9,13 @@ import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { WalletDivision } from "types/walletDivision";
 import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
-import { Button } from "components/Button";
 import { TypologyDropdown } from "components/TypologyDropdown";
 import { WarningCoinAllocation } from "components/WarningCoinAllocation";
 import { useToast } from "contexts/ToastContext";
 import { ToastType } from "types/toastType";
 import { Placeholder } from "components/Placeholder";
 import { Icon } from "components/Icon";
+import { EditButtons } from "components/EditButtons";
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,
@@ -32,7 +32,6 @@ const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; he
     boxSizing: "border-box",
     color: textColor,
     alignItems: "center",
-    display: "flex",
     ...style,
     ...(height && { height, display: "flex", alignItems: "center", justifyContent: "center" }),
     ...(trunc && { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }),
@@ -132,7 +131,7 @@ const getRow = (
         color={"white"}
         value={typology}
         key={`coin-table-${keyElement}-type`}
-        style={{ fontWeight: 800, border: `5px solid ${colorTypologyText?.color}`, padding: 5 }}
+        style={{ fontWeight: 800, border: `5px solid ${colorTypologyText?.color}`, padding: 5, display: "flex" }}
       />
     ),
     <div style={{ backgroundColor: color, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-image`}>
@@ -213,7 +212,13 @@ export const GridCoinsPanel: FC<{
   const { showToast } = useToast();
 
   useEffect(() => {
-    if (!isEditing) {
+    const hasChangedSomething = JSON.stringify(rebalancingCoins) !== JSON.stringify(tempRebalancing);
+
+    if (!hasChangedSomething) {
+      setTempRebalancing(rebalancingCoins);
+    }
+
+    if (!isEditing && hasChangedSomething) {
       setTempRebalancing(reorderCoins(rebalancingCoins, wallet));
     }
   }, [rebalancingCoins, isEditing, wallet]);
@@ -224,8 +229,12 @@ export const GridCoinsPanel: FC<{
   }, []);
 
   const normalizeAndSetCoins = () => {
-    const normalizedCoins = tempRebalancing.map((e) => ({ ...e, allocationPercentage: e.allocationPercentage || 0, coins: e.coins || 0 }));
-    setRebalancingCoins(normalizedCoins);
+    const hasChangedSomething = JSON.stringify(rebalancingCoins) !== JSON.stringify(tempRebalancing);
+
+    if (hasChangedSomething) {
+      const normalizedCoins = tempRebalancing.map((e) => ({ ...e, allocationPercentage: e.allocationPercentage || 0, coins: e.coins || 0 }));
+      setRebalancingCoins(normalizedCoins);
+    }
   };
 
   return (
@@ -234,18 +243,19 @@ export const GridCoinsPanel: FC<{
         <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
         <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
           {!detailedCoinsLoading && <WarningCoinAllocation wallet={wallet} coins={rebalancingCoins} />}
-          <Button
-            onClick={() => {
-              if (isEditing) {
-                setEditing(false);
-                normalizeAndSetCoins();
-              } else {
-                setEditing(true);
-              }
+          <EditButtons
+            isEditing={isEditing}
+            onEdit={() => {
+              setEditing(true);
             }}
-          >
-            <Typography variant="body2">{isEditing ? "Salva" : "Modifica"}</Typography>
-          </Button>
+            onSave={() => {
+              setEditing(false);
+              normalizeAndSetCoins();
+            }}
+            onCancel={() => {
+              setEditing(false);
+            }}
+          />
         </div>
       </div>
       <Spacer size={20} />
