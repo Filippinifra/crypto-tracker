@@ -69,13 +69,16 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: Dispatch<Se
             setEditing(false);
             if (tempTotalVest) {
               setTotalVest(tempTotalVest);
+              showToast("Modifiche salvate correttamente al valore investito", "success");
             } else {
               setTempTotalVest(totalVest);
+              showToast("Non puoi inserire 0 come valore investito", "error");
             }
           }}
           onCancel={() => {
             setEditing(false);
             setTempTotalVest(totalVest);
+            showToast("Hai cancellato le modifiche al valore investito", "warning");
           }}
         />
       </div>
