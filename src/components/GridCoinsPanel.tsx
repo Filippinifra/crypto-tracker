@@ -15,7 +15,7 @@ import { WarningCoinAllocation } from "components/WarningCoinAllocation";
 import { useToast } from "contexts/ToastContext";
 import { ToastType } from "types/toastType";
 import { Placeholder } from "components/Placeholder";
-import { Icon } from "./Icon";
+import { Icon } from "components/Icon";
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,

@@ -9,8 +9,9 @@ interface Props {
   name?: string;
   value: any;
   onChange: (e: FormEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: any) => void;
 }
 
-export const Input: FC<Props> = ({ type, placeholder, name, value, onChange }) => {
-  return <InputStyled type={type} placeholder={placeholder} value={value} name={name} onChange={(e) => onChange(e)} />;
+export const Input: FC<Props> = ({ type, placeholder, name, value, onChange, onKeyDown }) => {
+  return <InputStyled type={type} placeholder={placeholder} value={value} name={name} onChange={(e) => onChange(e)} onKeyDown={onKeyDown} />;
 };
