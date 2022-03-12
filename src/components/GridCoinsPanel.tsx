@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { FC, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
-import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, redVariationColor } from "utils/colors";
+import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, redVariationColor, removeColor } from "utils/colors";
 import { Typography } from "components/Typography";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { WalletDivision } from "types/walletDivision";
@@ -15,6 +15,7 @@ import { WarningCoinAllocation } from "components/WarningCoinAllocation";
 import { useToast } from "contexts/ToastContext";
 import { ToastType } from "types/toastType";
 import { Placeholder } from "components/Placeholder";
+import { Icon } from "./Icon";
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,
@@ -107,16 +108,25 @@ const getRow = (
     setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, coins: Number(coins) } : e)));
   };
 
+  const onRemoveCoins = () => {
+    setTempRebalancing((state) => state.filter((e) => keyElement !== e.keyElement));
+  };
+
   return [
     isEditing ? (
-      <TypologyDropdown
-        options={typologyDrodpownOptions}
-        value={currentTypology ? currentTypology : null}
-        onChange={(e: any) => {
-          onEditTypology(e.value.typology);
-        }}
-        key={`coin-table-${keyElement}-typology-editing`}
-      />
+      <div style={{ position: "relative" }}>
+        <div style={{ position: "absolute", top: 10, left: -25 }}>
+          <Icon name="remove_circle" color={removeColor} style={{ cursor: "pointer" }} onClick={onRemoveCoins} />
+        </div>
+        <TypologyDropdown
+          options={typologyDrodpownOptions}
+          value={currentTypology ? currentTypology : null}
+          onChange={(e: any) => {
+            onEditTypology(e.value.typology);
+          }}
+          key={`coin-table-${keyElement}-typology-editing`}
+        />
+      </div>
     ) : (
       <LabelCell
         textColor={colorTypologyText?.color || "black"}
