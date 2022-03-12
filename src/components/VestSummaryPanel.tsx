@@ -82,6 +82,7 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: Dispatch<Se
                 }
               }}
               onKeyDown={handleKeyDown}
+              key={"total-vest-input"}
             />
           ) : (
             <LabelCell value={`${totalVest}${symbolCurrency}`} key={"total-vest"} />

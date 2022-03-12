@@ -114,7 +114,7 @@ const getRow = (
 
   return [
     isEditing ? (
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative" }} key={`coin-table-${keyElement}-typology-editing-and-deleting`}>
         <div style={{ position: "absolute", top: 10, left: -25 }}>
           <Icon name="remove_circle" color={removeColor} style={{ cursor: "pointer" }} onClick={onRemoveCoins} />
         </div>
@@ -124,7 +124,6 @@ const getRow = (
           onChange={(e: any) => {
             onEditTypology(e.value.typology);
           }}
-          key={`coin-table-${keyElement}-typology-editing`}
         />
       </div>
     ) : (
