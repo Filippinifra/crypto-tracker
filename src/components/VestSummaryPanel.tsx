@@ -1,5 +1,5 @@
 import { Grid } from "components/Grid";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, FC, FormEvent, KeyboardEvent, SetStateAction, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { getVestSummaryColor, vestColor } from "utils/colors";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
@@ -33,7 +33,7 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: Dispatch<Se
   const percentageProfit = 100 / (totalVest / profit);
   const profitResultLabel = `${getSplittedPrice(profit, 5, 0)}${symbolCurrency} ${!isNaN(percentageProfit) && isFinite(percentageProfit) ? `(${percentageProfit.toFixed(1)}%)` : ""}`;
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event?.key === "Enter") {
       onConfirm();
     }
@@ -73,8 +73,8 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: Dispatch<Se
             <Input
               value={tempTotalVest}
               type="number"
-              onChange={(e: any) => {
-                const value = e.currentTarget.value;
+              onChange={(e: FormEvent<HTMLInputElement>) => {
+                const value = Number(e.currentTarget.value);
                 if (value >= 0) {
                   setTempTotalVest(value);
                 } else {

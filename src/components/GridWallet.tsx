@@ -47,7 +47,7 @@ const getRow = (walletPiece: WalletPiece, sumFiatValue: number, symbolCurrency: 
 
 export const GridWallet: FC<{ wallet: WalletDivision; sumFiatValue: number; symbolCurrency: CurrencySymbol }> = ({ wallet, sumFiatValue, symbolCurrency }) => {
   // @ts-ignore
-  const walletData: any = wallet.reduce((r, walletDataRow, index) => {
+  const walletData: React.ReactElement<any, any>[] = wallet.reduce((r, walletDataRow, index) => {
     return [...r, ...getRow(walletDataRow, sumFiatValue, symbolCurrency, index)];
   }, []);
 

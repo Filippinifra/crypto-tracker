@@ -1,6 +1,6 @@
 import { Grid } from "components/Grid";
 import Image from "next/image";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, ReactElement, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
 import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, redVariationColor, removeColor } from "utils/colors";
@@ -144,12 +144,12 @@ const getRow = (
       <Input
         value={allocationPercentage}
         type="number"
-        onChange={(e: any) => {
-          const value = e.currentTarget.value;
-          if (value >= 0) {
-            onEditAllocation(value);
-          } else {
+        onChange={(e: React.FormEvent<HTMLInputElement>) => {
+          const value = Number(e.currentTarget.value);
+          if (value < 0) {
             showToast("Non puoi inserire una percentuale di allocazione negativa", "error");
+          } else {
+            onEditAllocation(value);
           }
         }}
         key={`coin-table-${keyElement}-allocation-editing`}
@@ -169,12 +169,12 @@ const getRow = (
       <Input
         value={coins}
         type="number"
-        onChange={(e: any) => {
-          const value = e.currentTarget.value;
-          if (value >= 0) {
-            onEditCoins(value);
-          } else {
+        onChange={(e: React.FormEvent<HTMLInputElement>) => {
+          const value = Number(e.currentTarget.value);
+          if (value < 0) {
             showToast("Non puoi avere un numero negativo di monete", "error");
+          } else {
+            onEditCoins(value);
           }
         }}
         key={`coin-table-${keyElement}-coins-editing`}
@@ -220,7 +220,7 @@ export const GridCoinsPanel: FC<{
   }, [rebalancingCoins, isEditing, wallet]);
 
   // @ts-ignore
-  const coinsData: any[] = tempRebalancing.reduce((r, coinData, index) => {
+  const coinsData: ReactElement<any, any>[] = tempRebalancing.reduce((r, coinData, index) => {
     return [...r, ...getRow(coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing, showToast)];
   }, []);
 
