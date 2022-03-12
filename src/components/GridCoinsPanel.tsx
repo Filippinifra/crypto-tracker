@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { FC, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
-import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, redVariationColor } from "utils/colors";
+import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, redVariationColor, removeColor } from "utils/colors";
 import { Typography } from "components/Typography";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { WalletDivision } from "types/walletDivision";
@@ -13,6 +13,9 @@ import { Button } from "components/Button";
 import { TypologyDropdown } from "components/TypologyDropdown";
 import { WarningCoinAllocation } from "components/WarningCoinAllocation";
 import { useToast } from "contexts/ToastContext";
+import { ToastType } from "types/toastType";
+import { Placeholder } from "components/Placeholder";
+import { Icon } from "./Icon";
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,
@@ -28,6 +31,8 @@ const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; he
     padding: 10,
     boxSizing: "border-box",
     color: textColor,
+    alignItems: "center",
+    display: "flex",
     ...style,
     ...(height && { height, display: "flex", alignItems: "center", justifyContent: "center" }),
     ...(trunc && { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }),
@@ -63,7 +68,8 @@ const getRow = (
   wallet: WalletDivision,
   symbolCurrency: CurrencySymbol,
   isEditing: boolean,
-  setTempRebalancing: React.Dispatch<React.SetStateAction<RebalancingCoins>>
+  setTempRebalancing: React.Dispatch<React.SetStateAction<RebalancingCoins>>,
+  showToast: (message: string, type: ToastType) => void
 ) => {
   const {
     symbolAndName,
@@ -80,8 +86,6 @@ const getRow = (
     typology,
     keyElement,
   } = coin;
-
-  const { showToast } = useToast();
 
   const color = index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
 
@@ -104,15 +108,25 @@ const getRow = (
     setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, coins: Number(coins) } : e)));
   };
 
+  const onRemoveCoins = () => {
+    setTempRebalancing((state) => state.filter((e) => keyElement !== e.keyElement));
+  };
+
   return [
     isEditing ? (
-      <TypologyDropdown
-        options={typologyDrodpownOptions}
-        value={currentTypology ? currentTypology : null}
-        onChange={(e: any) => {
-          onEditTypology(e.value.typology);
-        }}
-      />
+      <div style={{ position: "relative" }}>
+        <div style={{ position: "absolute", top: 10, left: -25 }}>
+          <Icon name="remove_circle" color={removeColor} style={{ cursor: "pointer" }} onClick={onRemoveCoins} />
+        </div>
+        <TypologyDropdown
+          options={typologyDrodpownOptions}
+          value={currentTypology ? currentTypology : null}
+          onChange={(e: any) => {
+            onEditTypology(e.value.typology);
+          }}
+          key={`coin-table-${keyElement}-typology-editing`}
+        />
+      </div>
     ) : (
       <LabelCell
         textColor={colorTypologyText?.color || "black"}
@@ -138,6 +152,7 @@ const getRow = (
             showToast("Non puoi inserire una percentuale di allocazione negativa", "error");
           }
         }}
+        key={`coin-table-${keyElement}-allocation-editing`}
       />
     ) : (
       <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} />
@@ -162,6 +177,7 @@ const getRow = (
             showToast("Non puoi avere un numero negativo di monete", "error");
           }
         }}
+        key={`coin-table-${keyElement}-coins-editing`}
       />
     ) : (
       <LabelCell color={color} value={coins} key={`coin-table-${keyElement}-holding-token`} />
@@ -185,23 +201,17 @@ const reorderCoins = (coins: RebalancingCoins, wallet: WalletDivision) => {
   return [...sortedByTypology, ...noTypologyCoins];
 };
 
-export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: WalletDivision; symbolCurrency: CurrencySymbol; setRebalancingCoins: (rebalancingCoins: RebalancingCoins) => void }> = ({
-  rebalancingCoins,
-  wallet,
-  symbolCurrency,
-  setRebalancingCoins,
-}) => {
+export const GridCoinsPanel: FC<{
+  rebalancingCoins: RebalancingCoins;
+  wallet: WalletDivision;
+  symbolCurrency: CurrencySymbol;
+  setRebalancingCoins: (rebalancingCoins: RebalancingCoins) => void;
+  detailedCoinsLoading: boolean;
+}> = ({ rebalancingCoins, wallet, symbolCurrency, setRebalancingCoins, detailedCoinsLoading }) => {
   const [isEditing, setEditing] = useState(false);
   const [tempRebalancing, setTempRebalancing] = useState(reorderCoins(rebalancingCoins, wallet));
-  // @ts-ignore
-  const coinsData: any[] = tempRebalancing.reduce((r, coinData, index) => {
-    return [...r, ...getRow(coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing)];
-  }, []);
 
-  const normalizeAndSetCoins = () => {
-    const normalizedCoins = tempRebalancing.map((e) => ({ ...e, allocationPercentage: e.allocationPercentage || 0, coins: e.coins || 0 }));
-    setRebalancingCoins(normalizedCoins);
-  };
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (!isEditing) {
@@ -209,12 +219,22 @@ export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: Wa
     }
   }, [rebalancingCoins, isEditing, wallet]);
 
+  // @ts-ignore
+  const coinsData: any[] = tempRebalancing.reduce((r, coinData, index) => {
+    return [...r, ...getRow(coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing, showToast)];
+  }, []);
+
+  const normalizeAndSetCoins = () => {
+    const normalizedCoins = tempRebalancing.map((e) => ({ ...e, allocationPercentage: e.allocationPercentage || 0, coins: e.coins || 0 }));
+    setRebalancingCoins(normalizedCoins);
+  };
+
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between", maxWidth: 1285 }}>
         <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
         <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
-          <WarningCoinAllocation wallet={wallet} coins={rebalancingCoins} />
+          {!detailedCoinsLoading && <WarningCoinAllocation wallet={wallet} coins={rebalancingCoins} />}
           <Button
             onClick={() => {
               if (isEditing) {
@@ -230,7 +250,19 @@ export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: Wa
         </div>
       </div>
       <Spacer size={20} />
-      <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />
+      {detailedCoinsLoading ? (
+        <Placeholder height={1000} width={1285} />
+      ) : (
+        <>
+          <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />
+          {!tempRebalancing.length && (
+            <>
+              <Spacer size={20} />
+              <Typography variant="body">Inserisci almeno una moneta</Typography>
+            </>
+          )}
+        </>
+      )}
     </>
   );
 };

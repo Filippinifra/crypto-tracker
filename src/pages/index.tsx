@@ -47,7 +47,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const { wallet, setWallet, loading: walletLoading } = useWallet();
   const { totalVest, setTotalVest, loading: totalVestLoading } = useTotalVest();
   const { prefCurrency, setPrefCurrency } = usePrefCurrency();
-  const { detailedCoins } = useDetailedCoins(personalCoins, prefCurrency);
+  const { detailedCoins, error: detailedCoinsError, loading: detailedCoinsLoading } = useDetailedCoins(personalCoins, prefCurrency);
 
   const addCoin = (coin: AvailableCoin) => {
     const keyElement = uuidv4();
@@ -75,7 +75,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   };
 
   const data = personalCoins && wallet && totalVest;
-  const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading;
+  const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading && !detailedCoinsError;
 
   const symbolCurrency = getSymbolForCurrency(prefCurrency || Currency.EUR) || "€";
 
@@ -120,7 +120,13 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
           />
         </div>
         <Spacer size={40} />
-        <GridCoinsPanel rebalancingCoins={rebalancingCoins} wallet={wallet || []} symbolCurrency={symbolCurrency} setRebalancingCoins={onSetRebalancingCoins} />
+        <GridCoinsPanel
+          rebalancingCoins={rebalancingCoins}
+          wallet={wallet || []}
+          symbolCurrency={symbolCurrency}
+          setRebalancingCoins={onSetRebalancingCoins}
+          detailedCoinsLoading={detailedCoinsLoading}
+        />
       </Layout>
     </LoadErrorHandler>
   );

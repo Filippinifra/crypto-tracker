@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createContext, FC, useCallback, useContext, useState } from "react";
 import { Toast, ToastType } from "types/toastType";
 import { v4 as uuidv4 } from "uuid";
@@ -25,6 +26,12 @@ export const ToastProvider: FC = ({ children }) => {
       return [...state, { message, type, id }];
     });
   }, []);
+
+  useEffect(() => {
+    if (toasts.length > 7) {
+      setToasts((toasts) => toasts.slice(1, toasts.length));
+    }
+  }, [toasts]);
 
   return <ToastContext.Provider value={{ toasts, showToast }}>{children}</ToastContext.Provider>;
 };

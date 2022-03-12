@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { RebalancingCoins } from "types/rebalancingCoins";
 import { WalletDivision } from "types/walletDivision";
 import { errorColor } from "utils/colors";
@@ -25,6 +25,7 @@ export const WarningCoinAllocation: FC<{ coins: RebalancingCoins; wallet: Wallet
         </>
       ),
       correct: !correctPercentage,
+      key: `warning-typology-allocation-${walletTypology}`,
     };
   });
 
@@ -36,7 +37,9 @@ export const WarningCoinAllocation: FC<{ coins: RebalancingCoins; wallet: Wallet
         <div>
           <Typography variant="body">Non hai allocato la giusta percentuale a ogni tipologia:</Typography>
           <Spacer size={10} />
-          {typologyChecksElements.map(({ element }) => element)}
+          {typologyChecksElements.map(({ element, key }) => (
+            <React.Fragment key={key}>{element}</React.Fragment>
+          ))}
         </div>
       }
       placement="top"

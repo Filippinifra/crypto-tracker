@@ -20,6 +20,8 @@ export const redVariationColor = "#8B0000";
 export const tooltipColor = loadingColor;
 export const warningColor = loadingColor;
 
+export const removeColor = errorColor;
+
 export const getPercentageBalanceColor = (value: number) => {
   if (value < 40) {
     return percentageBalanceColors[0];
