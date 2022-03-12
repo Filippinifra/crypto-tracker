@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC, ReactElement } from "react";
 import styled from "styled-components";
 import { shadowStyle } from "components/ShadowStyle";
 
@@ -11,7 +11,7 @@ const Container = styled.div`
   ${shadowStyle}
 `;
 
-export const Grid: FC<{ templateColumns: string; data: any[] }> = ({ templateColumns, data }) => {
+export const Grid: FC<{ templateColumns: string; data: ReactElement<any, any>[] }> = ({ templateColumns, data }) => {
   return (
     <Container
       style={{

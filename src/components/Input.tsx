@@ -1,16 +1,34 @@
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, KeyboardEvent } from "react";
 import styled from "styled-components";
 
-const InputStyled = styled.input``;
+const InputStyled = styled.input`
+  padding: 8px;
+  letter-spacing: 2px;
+  font-size: 12px;
+`;
 
 interface Props {
   type?: string;
   placeholder?: string;
   name?: string;
-  value: any;
+  value: string | number;
   onChange: (e: FormEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
 }
 
-export const Input: FC<Props> = ({ type, placeholder, name, value, onChange }) => {
-  return <InputStyled type={type} placeholder={placeholder} value={value} name={name} onChange={(e) => onChange(e)} />;
+export const Input: FC<Props> = ({ type, placeholder, name, value, onChange, onKeyDown }) => {
+  return (
+    <InputStyled
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      name={name}
+      onChange={(e) => onChange(e)}
+      onKeyDown={(e) => {
+        if (onKeyDown) {
+          onKeyDown(e);
+        }
+      }}
+    />
+  );
 };

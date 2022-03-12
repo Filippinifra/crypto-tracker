@@ -1,6 +1,6 @@
 import { Grid } from "components/Grid";
 import Image from "next/image";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, ReactElement, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
 import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, redVariationColor, removeColor } from "utils/colors";
@@ -9,13 +9,13 @@ import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { WalletDivision } from "types/walletDivision";
 import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
-import { Button } from "components/Button";
 import { TypologyDropdown } from "components/TypologyDropdown";
 import { WarningCoinAllocation } from "components/WarningCoinAllocation";
 import { useToast } from "contexts/ToastContext";
 import { ToastType } from "types/toastType";
 import { Placeholder } from "components/Placeholder";
-import { Icon } from "./Icon";
+import { Icon } from "components/Icon";
+import { EditButtons } from "components/EditButtons";
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,
@@ -32,7 +32,6 @@ const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; he
     boxSizing: "border-box",
     color: textColor,
     alignItems: "center",
-    display: "flex",
     ...style,
     ...(height && { height, display: "flex", alignItems: "center", justifyContent: "center" }),
     ...(trunc && { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }),
@@ -114,7 +113,7 @@ const getRow = (
 
   return [
     isEditing ? (
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative" }} key={`coin-table-${keyElement}-typology-editing-and-deleting`}>
         <div style={{ position: "absolute", top: 10, left: -25 }}>
           <Icon name="remove_circle" color={removeColor} style={{ cursor: "pointer" }} onClick={onRemoveCoins} />
         </div>
@@ -124,7 +123,6 @@ const getRow = (
           onChange={(e: any) => {
             onEditTypology(e.value.typology);
           }}
-          key={`coin-table-${keyElement}-typology-editing`}
         />
       </div>
     ) : (
@@ -133,7 +131,7 @@ const getRow = (
         color={"white"}
         value={typology}
         key={`coin-table-${keyElement}-type`}
-        style={{ fontWeight: 800, border: `5px solid ${colorTypologyText?.color}`, padding: 5 }}
+        style={{ fontWeight: 800, border: `5px solid ${colorTypologyText?.color}`, padding: 5, display: "flex" }}
       />
     ),
     <div style={{ backgroundColor: color, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-image`}>
@@ -144,12 +142,12 @@ const getRow = (
       <Input
         value={allocationPercentage}
         type="number"
-        onChange={(e: any) => {
-          const value = e.currentTarget.value;
-          if (value >= 0) {
-            onEditAllocation(value);
-          } else {
+        onChange={(e: React.FormEvent<HTMLInputElement>) => {
+          const value = Number(e.currentTarget.value);
+          if (value < 0) {
             showToast("Non puoi inserire una percentuale di allocazione negativa", "error");
+          } else {
+            onEditAllocation(value);
           }
         }}
         key={`coin-table-${keyElement}-allocation-editing`}
@@ -169,12 +167,12 @@ const getRow = (
       <Input
         value={coins}
         type="number"
-        onChange={(e: any) => {
-          const value = e.currentTarget.value;
-          if (value >= 0) {
-            onEditCoins(value);
-          } else {
+        onChange={(e: React.FormEvent<HTMLInputElement>) => {
+          const value = Number(e.currentTarget.value);
+          if (value < 0) {
             showToast("Non puoi avere un numero negativo di monete", "error");
+          } else {
+            onEditCoins(value);
           }
         }}
         key={`coin-table-${keyElement}-coins-editing`}
@@ -214,19 +212,29 @@ export const GridCoinsPanel: FC<{
   const { showToast } = useToast();
 
   useEffect(() => {
-    if (!isEditing) {
+    const hasChangedSomething = JSON.stringify(rebalancingCoins) !== JSON.stringify(tempRebalancing);
+
+    if (!hasChangedSomething) {
+      setTempRebalancing(rebalancingCoins);
+    }
+
+    if (!isEditing && hasChangedSomething) {
       setTempRebalancing(reorderCoins(rebalancingCoins, wallet));
     }
   }, [rebalancingCoins, isEditing, wallet]);
 
   // @ts-ignore
-  const coinsData: any[] = tempRebalancing.reduce((r, coinData, index) => {
+  const coinsData: ReactElement<any, any>[] = tempRebalancing.reduce((r, coinData, index) => {
     return [...r, ...getRow(coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing, showToast)];
   }, []);
 
   const normalizeAndSetCoins = () => {
-    const normalizedCoins = tempRebalancing.map((e) => ({ ...e, allocationPercentage: e.allocationPercentage || 0, coins: e.coins || 0 }));
-    setRebalancingCoins(normalizedCoins);
+    const hasChangedSomething = JSON.stringify(rebalancingCoins) !== JSON.stringify(tempRebalancing);
+
+    if (hasChangedSomething) {
+      const normalizedCoins = tempRebalancing.map((e) => ({ ...e, allocationPercentage: e.allocationPercentage || 0, coins: e.coins || 0 }));
+      setRebalancingCoins(normalizedCoins);
+    }
   };
 
   return (
@@ -235,18 +243,21 @@ export const GridCoinsPanel: FC<{
         <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
         <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
           {!detailedCoinsLoading && <WarningCoinAllocation wallet={wallet} coins={rebalancingCoins} />}
-          <Button
-            onClick={() => {
-              if (isEditing) {
-                setEditing(false);
-                normalizeAndSetCoins();
-              } else {
-                setEditing(true);
-              }
+          <EditButtons
+            isEditing={isEditing}
+            onEdit={() => {
+              setEditing(true);
             }}
-          >
-            <Typography variant="body2">{isEditing ? "Salva" : "Modifica"}</Typography>
-          </Button>
+            onSave={() => {
+              setEditing(false);
+              normalizeAndSetCoins();
+              showToast("Modifiche alle monete salvate correttamente", "success");
+            }}
+            onCancel={() => {
+              setEditing(false);
+              showToast("Hai cancellato le modifiche alle monete", "warning");
+            }}
+          />
         </div>
       </div>
       <Spacer size={20} />

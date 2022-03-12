@@ -44,7 +44,7 @@ export const WarningCoinAllocation: FC<{ coins: RebalancingCoins; wallet: Wallet
       }
       placement="top"
     >
-      <Icon style={{ color: errorColor }} name="warning" />
+      <Icon style={{ color: errorColor }} name="warning_amber" />
     </Tooltip>
   ) : null;
 };

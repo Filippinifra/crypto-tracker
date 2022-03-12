@@ -11,7 +11,7 @@ import { GridCoinsPanel } from "components/GridCoinsPanel";
 import { AvailableCoin, AvailableCoins } from "types/availableCoins";
 import { useWallet } from "hooks/useWallet";
 import { useTotalVest } from "hooks/useTotalVest";
-import { VestSummary } from "components/VestSummary";
+import { VestSummaryPanel } from "components/VestSummaryPanel";
 import { DoughnutChart } from "components/DoughnutChart";
 import { pieColors, pieColorsDark } from "utils/colors";
 import { usePrefCurrency } from "hooks/usePrefCurrency";
@@ -90,9 +90,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
       <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: 150 }}>
-            <Typography variant="body">Sommario investimento:</Typography>
-            <Spacer size={20} />
-            <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+            <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             <Spacer size={40} />
             <div style={{ height: "auto" }}>
               <div style={{ position: "relative" }}>
