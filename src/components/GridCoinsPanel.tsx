@@ -14,6 +14,7 @@ import { TypologyDropdown } from "components/TypologyDropdown";
 import { WarningCoinAllocation } from "components/WarningCoinAllocation";
 import { useToast } from "contexts/ToastContext";
 import { ToastType } from "types/toastType";
+import { Placeholder } from "components/Placeholder";
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,
@@ -190,12 +191,13 @@ const reorderCoins = (coins: RebalancingCoins, wallet: WalletDivision) => {
   return [...sortedByTypology, ...noTypologyCoins];
 };
 
-export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: WalletDivision; symbolCurrency: CurrencySymbol; setRebalancingCoins: (rebalancingCoins: RebalancingCoins) => void }> = ({
-  rebalancingCoins,
-  wallet,
-  symbolCurrency,
-  setRebalancingCoins,
-}) => {
+export const GridCoinsPanel: FC<{
+  rebalancingCoins: RebalancingCoins;
+  wallet: WalletDivision;
+  symbolCurrency: CurrencySymbol;
+  setRebalancingCoins: (rebalancingCoins: RebalancingCoins) => void;
+  detailedCoinsLoading: boolean;
+}> = ({ rebalancingCoins, wallet, symbolCurrency, setRebalancingCoins, detailedCoinsLoading }) => {
   const [isEditing, setEditing] = useState(false);
   const [tempRebalancing, setTempRebalancing] = useState(reorderCoins(rebalancingCoins, wallet));
 
@@ -222,7 +224,7 @@ export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: Wa
       <div style={{ display: "flex", justifyContent: "space-between", maxWidth: 1285 }}>
         <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
         <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
-          <WarningCoinAllocation wallet={wallet} coins={rebalancingCoins} />
+          {!detailedCoinsLoading && <WarningCoinAllocation wallet={wallet} coins={rebalancingCoins} />}
           <Button
             onClick={() => {
               if (isEditing) {
@@ -238,7 +240,11 @@ export const GridCoinsPanel: FC<{ rebalancingCoins: RebalancingCoins; wallet: Wa
         </div>
       </div>
       <Spacer size={20} />
-      <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />
+      {detailedCoinsLoading ? (
+        <Placeholder height={1000} width={1285} />
+      ) : (
+        <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />
+      )}
     </>
   );
 };
