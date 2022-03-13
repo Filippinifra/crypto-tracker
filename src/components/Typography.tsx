@@ -17,5 +17,11 @@ const styles: tStyle = {
   body: {
     fontSize: 12,
     letterSpacing: 2,
+    color: "black",
+  },
+  body2: {
+    fontSize: 10,
+    letterSpacing: 2,
+    color: "black",
   },
 };

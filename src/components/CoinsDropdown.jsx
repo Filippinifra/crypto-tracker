@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import Select from "react-select";
-import { shadowStyle } from "./style";
+import { shadowStyle } from "components/ShadowStyle";
 
 export const CoinsDropdown = ({ options, value, onChange, ...others }) => {
   const [input, setInput] = useState("");
@@ -36,8 +36,27 @@ export const CoinsDropdown = ({ options, value, onChange, ...others }) => {
       }}
       options={slicedOptions}
       onInputChange={setInput}
+      placeholder={others.isDisabled ? "Per inserire una moneta finisci di modificare la sezione delle monete" : "Scrivi o scegli una moneta"}
       {...others}
-      styles={{ container: (props) => ({ ...props, border: "1px solid black", ...shadowStyle }), control: () => ({ display: "flex" }) }}
+      styles={{
+        container: (styles, { isDisabled }) => ({
+          border: "1px solid black",
+          backgroundColor: isDisabled ? "#f5f5f5" : "white",
+          cursor: isDisabled ? "not-allowed" : "pointer",
+          ...shadowStyle,
+          ...styles,
+        }),
+        control: () => ({
+          display: "flex",
+        }),
+        option: (styles, { isSelected }) => ({
+          ...styles,
+          backgroundColor: isSelected ? "#CCCCCC" : "white",
+          "&:hover": {
+            backgroundColor: "#EBEBEB",
+          },
+        }),
+      }}
     />
   );
 };

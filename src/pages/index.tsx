@@ -5,17 +5,23 @@ import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { Typography } from "components/Typography";
 import { Spacer } from "components/Spacer";
 import { useDetailedCoins } from "hooks/useDetailedCoins";
-import { GridWallet } from "components/GridWallet";
+import { GridWalletPanel } from "components/GridWalletPanel";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { GridCoins } from "components/GridCoins";
-import { AvailableCoins } from "types/availableCoins";
+import { GridCoinsPanel } from "components/GridCoinsPanel";
+import { AvailableCoin, AvailableCoins } from "types/availableCoins";
 import { useWallet } from "hooks/useWallet";
 import { useTotalVest } from "hooks/useTotalVest";
-import { VestSummary } from "components/VestSummary";
-import { PieChart } from "components/PieChart";
+import { VestSummaryPanel } from "components/VestSummaryPanel";
+import { DoughnutChart } from "components/DoughnutChart";
 import { pieColors, pieColorsDark } from "utils/colors";
 import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { Currency, getSymbolForCurrency } from "types/currency";
+import { getCrossedCoins, toRebalancingCoins } from "utils/coins";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { RebalancingCoins } from "types/rebalancingCoins";
+import { PersonalCoin } from "types/personalCoins";
+import { v4 as uuidv4 } from "uuid";
+import { useToast } from "contexts/ToastContext";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -41,64 +47,104 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const { wallet, setWallet, loading: walletLoading } = useWallet();
   const { totalVest, setTotalVest, loading: totalVestLoading } = useTotalVest();
   const { prefCurrency, setPrefCurrency } = usePrefCurrency();
-  const { detailedCoins } = useDetailedCoins(personalCoins, prefCurrency);
+  const { detailedCoins, error: detailedCoinsError, loading: detailedCoinsLoading } = useDetailedCoins(personalCoins, prefCurrency);
 
-  const addCoin = (coin: any) => {
-    const coinAlreadyExists = personalCoins?.some((existingCoin: any) => existingCoin.id === coin.id);
-    if (!coinAlreadyExists) {
-      setPersonalCoins((coins: any) => [...coins, coin]);
-    }
+  const [isEditingGridCoins, setEditingGridCoins] = useState(false);
+
+  const { showToast } = useToast();
+
+  const addCoin = (coin: AvailableCoin) => {
+    const keyElement = uuidv4();
+    const newCoin: PersonalCoin = { coins: 0, id: coin.id, keyElement, percentage: 0, platform: "", typologyId: "" };
+    setPersonalCoins((coins) => (coins ? [...coins, newCoin] : [newCoin]));
+    showToast("Nuova moneta aggiunta", "success");
   };
 
-  const options = availableCoins?.map((value) => ({ value, label: `${value.symbol.toUpperCase()} // ${value.name} // ${value.id}` }));
+  const options = availableCoins?.filter(({ id }) => id).map((value) => ({ value, label: `${value.symbol.toUpperCase()} // ${value.name} // ${value.id}` }));
 
-  const sumFiatValue = 900;
+  const crossedCoins = useMemo(() => getCrossedCoins(personalCoins || [], detailedCoins || []), [personalCoins, detailedCoins]);
+
+  const sumFiatValue = crossedCoins?.reduce((r, { currentPrice, coins }) => r + (currentPrice || 0) * coins, 0);
 
   const dataChart = {
-    labels: wallet?.map(({ typology }) => typology),
+    labels: wallet?.map(({ typologyName }) => typologyName),
     datasets: [
       {
         label: "Tipologie portafoglio",
         data: wallet?.map(({ percentage }) => percentage),
         backgroundColor: pieColors,
         borderColor: pieColorsDark,
-        borderWidth: 1,
+        borderWidth: 2,
       },
     ],
   };
 
   const data = personalCoins && wallet && totalVest;
-  const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading;
+  const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading && !detailedCoinsError;
 
   const symbolCurrency = getSymbolForCurrency(prefCurrency || Currency.EUR) || "€";
 
+  const rebalancingCoins = toRebalancingCoins(crossedCoins, wallet || [], sumFiatValue);
+
+  const onSetRebalancingCoins = (rebalancingCoins: RebalancingCoins) => {
+    setPersonalCoins(
+      rebalancingCoins.map(({ coins, id, keyElement, allocationPercentage, platform, typologyId }) => ({ coins, id, keyElement, percentage: allocationPercentage, platform, typologyId }))
+    );
+  };
+
+  const removesNotExistingTypologyId = useCallback(() => {
+    const result = personalCoins?.map((pc) => {
+      const isTypologyIdExising = Boolean(wallet?.some(({ typologyId }) => typologyId === pc.typologyId));
+
+      return isTypologyIdExising ? pc : { ...pc, typologyId: "" };
+    });
+
+    if (wallet && JSON.stringify(personalCoins) !== JSON.stringify(result)) {
+      setPersonalCoins(result);
+      showToast("Le monete assegnate a tipologie che sono state rimosse ora hanno una tipologia vuota", "warning");
+    }
+  }, [personalCoins, wallet, setPersonalCoins]);
+
+  useEffect(() => {
+    removesNotExistingTypologyId();
+  }, [wallet, removesNotExistingTypologyId]);
+
   return (
     <LoadErrorHandler data={data} error={error}>
-      <Layout prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency}>
+      <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: 150 }}>
-            <VestSummary totalVest={totalVest || 0} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
-            <Spacer size={30} />
+            <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+            <Spacer size={40} />
             <div style={{ height: "auto" }}>
-              <GridWallet wallet={wallet || []} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+              <GridWalletPanel wallet={wallet || []} setWallet={setWallet} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             </div>
           </div>
-          <PieChart data={dataChart} />
+          <DoughnutChart data={dataChart} />
         </div>
-        <Spacer size={30} />
+        <Spacer size={50} />
         <Typography variant="body">Aggiungi le tue coins:</Typography>
-        <Spacer size={10} />
+        <Spacer size={20} />
         <div style={{ width: 600 }}>
           <CoinsDropdown
             value={null}
             options={options}
-            onChange={(e: { value: any }) => {
+            onChange={(e: { value: AvailableCoin }) => {
               addCoin(e.value);
             }}
+            isDisabled={isEditingGridCoins}
           />
         </div>
-        <Spacer size={30} />
-        <GridCoins data={detailedCoins || []} />
+        <Spacer size={40} />
+        <GridCoinsPanel
+          rebalancingCoins={rebalancingCoins}
+          wallet={wallet || []}
+          symbolCurrency={symbolCurrency}
+          setRebalancingCoins={onSetRebalancingCoins}
+          detailedCoinsLoading={detailedCoinsLoading}
+          isEditing={isEditingGridCoins}
+          setEditing={setEditingGridCoins}
+        />
       </Layout>
     </LoadErrorHandler>
   );

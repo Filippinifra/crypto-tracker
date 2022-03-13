@@ -9,20 +9,27 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@popperjs/core": "^2.11.2",
     "chart.js": "^3.7.1",
     "firebase": "^9.6.7",
+    "framer-motion": "^6.2.8",
     "next": "^12.1.0",
     "react": "17.0.2",
     "react-chartjs-2": "^4.0.1",
     "react-dom": "17.0.2",
+    "react-popper": "^2.2.5",
+    "react-popper-tooltip": "^4.3.1",
     "react-select": "^5.2.2",
     "styled-components": "^5.3.3",
-    "swr": "^1.2.2"
+    "swr": "^1.2.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
     "@types/react": "^17.0.39",
     "@types/styled-components": "^5.1.23",
+    "@types/uuid": "^8.3.4",
     "babel-plugin-styled-components": "^2.0.5",
     "eslint": "8.9.0",
     "eslint-config-next": "12.1.0",

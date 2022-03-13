@@ -1,22 +1,27 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
 import { Currency } from "types/currency";
-import { ChangeCurrencyButton, RefreshButton } from "./Button";
-import { Spacer } from "./Spacer";
+import { PersonalCoins } from "types/personalCoins";
+import { ChangeCurrencyButton } from "components/ChangeCurrencyButton";
+import { RefreshButton } from "components/RefreshButton";
 
 const Wrapper = styled.div`
-  height: 100vh;
-  padding: 20px;
+  padding: 40px;
+  height: auto;
 `;
 
-export const Layout: FC<{ prefCurrency: Currency | undefined; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>> }> = ({ children, prefCurrency, setPrefCurrency }) => {
+export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>>; personalCoins: PersonalCoins }> = ({
+  children,
+  prefCurrency,
+  setPrefCurrency,
+  personalCoins,
+}) => {
   return (
     <Wrapper>
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: 40 }}>
+      <div style={{ display: "flex", justifyContent: "flex-end", gap: 30, position: "fixed", right: 40 }}>
         <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
-        <RefreshButton />
+        <RefreshButton personalCoins={personalCoins} prefCurrency={prefCurrency} />
       </div>
-      <Spacer size={20} />
       {children}
     </Wrapper>
   );
