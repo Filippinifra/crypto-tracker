@@ -5,7 +5,7 @@ import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { Typography } from "components/Typography";
 import { Spacer } from "components/Spacer";
 import { useDetailedCoins } from "hooks/useDetailedCoins";
-import { GridWallet } from "components/GridWallet";
+import { GridWalletPanel } from "components/GridWalletPanel";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { GridCoinsPanel } from "components/GridCoinsPanel";
 import { AvailableCoin, AvailableCoins } from "types/availableCoins";
@@ -51,7 +51,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
 
   const addCoin = (coin: AvailableCoin) => {
     const keyElement = uuidv4();
-    const newCoin: PersonalCoin = { coins: 0, id: coin.id, keyElement, percentage: 0, platform: "", typology: "" };
+    const newCoin: PersonalCoin = { coins: 0, id: coin.id, keyElement, percentage: 0, platform: "", typologyId: "" };
     setPersonalCoins((coins) => (coins ? [...coins, newCoin] : [newCoin]));
   };
 
@@ -62,7 +62,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const sumFiatValue = crossedCoins?.reduce((r, { currentPrice, coins }) => r + (currentPrice || 0) * coins, 0);
 
   const dataChart = {
-    labels: wallet?.map(({ typology }) => typology),
+    labels: wallet?.map(({ typologyId }) => typologyId),
     datasets: [
       {
         label: "Tipologie portafoglio",
@@ -82,7 +82,9 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const rebalancingCoins = toRebalancingCoins(crossedCoins, wallet || [], sumFiatValue);
 
   const onSetRebalancingCoins = (rebalancingCoins: RebalancingCoins) => {
-    setPersonalCoins(rebalancingCoins.map(({ coins, id, keyElement, allocationPercentage, platform, typology }) => ({ coins, id, keyElement, percentage: allocationPercentage, platform, typology })));
+    setPersonalCoins(
+      rebalancingCoins.map(({ coins, id, keyElement, allocationPercentage, platform, typologyId }) => ({ coins, id, keyElement, percentage: allocationPercentage, platform, typologyId }))
+    );
   };
 
   return (
@@ -93,14 +95,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
             <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             <Spacer size={40} />
             <div style={{ height: "auto" }}>
-              <div style={{ position: "relative" }}>
-                <Typography variant="body">Allocazione percentuale portafoglio:</Typography>
-                <div style={{ position: "absolute", right: 0, top: 0 }}>
-                  <WarningWalletAllocation wallet={wallet || []} />
-                </div>
-              </div>
-              <Spacer size={20} />
-              <GridWallet wallet={wallet || []} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+              <GridWalletPanel wallet={wallet || []} setWallet={setWallet} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             </div>
           </div>
           <DoughnutChart data={dataChart} />

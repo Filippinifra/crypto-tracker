@@ -82,21 +82,21 @@ const getRow = (
     rebalancingInFiat,
     rebalancingCoins,
     idealAllocationValue,
-    typology,
+    typologyId,
     keyElement,
   } = coin;
 
   const color = index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
 
-  const colorTypologyText = wallet.find(({ typology: walletTypology }) => walletTypology === typology);
+  const colorTypologyText = wallet.find(({ typologyId: walletTypologyId }) => walletTypologyId === typologyId);
 
-  const typologyDrodpownOptions = wallet.map((e) => ({ label: e.typology, value: e, color: e.color }));
-  const currentTypology = typologyDrodpownOptions.find(({ value: { typology: walletTypology } }) => walletTypology === typology);
+  const typologyDrodpownOptions = wallet.map((e) => ({ label: e.typologyName, value: e, color: e.color }));
+  const currentTypology = typologyDrodpownOptions.find(({ value: { typologyId: walletTypologyId } }) => walletTypologyId === typologyId);
 
   const percentageBalance = !isNaN(balancingPercentage) && isFinite(balancingPercentage) ? `${getSplittedPrice(balancingPercentage, 5, 0)}%` : PLACEHOLDER;
 
-  const onEditTypology = (typology: string) => {
-    setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, typology } : e)));
+  const onEditTypology = (typologyId: string) => {
+    setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, typologyId } : e)));
   };
 
   const onEditAllocation = (allocation: number) => {
@@ -121,7 +121,7 @@ const getRow = (
           options={typologyDrodpownOptions}
           value={currentTypology ? currentTypology : null}
           onChange={(e: any) => {
-            onEditTypology(e.value.typology);
+            onEditTypology(e.value.typologyId);
           }}
         />
       </div>
@@ -129,7 +129,7 @@ const getRow = (
       <LabelCell
         textColor={colorTypologyText?.color || "black"}
         color={"white"}
-        value={typology}
+        value={currentTypology?.value.typologyName || ""}
         key={`coin-table-${keyElement}-type`}
         style={{ fontWeight: 800, border: `5px solid ${colorTypologyText?.color}`, padding: 5, display: "flex" }}
       />
@@ -190,11 +190,11 @@ const getRow = (
 const reorderCoins = (coins: RebalancingCoins, wallet: WalletDivision) => {
   const sortByAllocation = coins.sort(({ allocationPercentage: allocationA }, { allocationPercentage: allocationB }) => allocationB - allocationA);
   // @ts-ignore
-  const sortedByTypology: RebalancingCoins = wallet.reduce((r, { typology: walletTypology }) => {
-    return [...r, ...sortByAllocation.filter(({ typology }) => walletTypology === typology)];
+  const sortedByTypology: RebalancingCoins = wallet.reduce((r, { typologyId: walletTypologyId }) => {
+    return [...r, ...sortByAllocation.filter(({ typologyId }) => walletTypologyId === typologyId)];
   }, []);
 
-  const noTypologyCoins = coins.filter(({ typology }) => typology === "");
+  const noTypologyCoins = coins.filter(({ typologyId }) => typologyId === "");
 
   return [...sortedByTypology, ...noTypologyCoins];
 };

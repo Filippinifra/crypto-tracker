@@ -4,34 +4,34 @@ import { useEffect, useState } from "react";
 
 const tempCoins: WalletDivision = [
   {
-    typology: "Liquidity",
-    percentage: 30,
-    keyElement: "deb967d1-148e-4ea0-bcdc-052e85e686e9",
+    typologyName: "Liquidity",
+    percentage: 50,
+    typologyId: "deb967d1-148e-4ea0-bcdc-052e85e686e9",
   },
   {
-    typology: "Bigs",
-    percentage: 40,
-    keyElement: "09fb2a92-ff9d-4013-8506-0fc96adf1d6f",
+    typologyName: "Bigs",
+    percentage: 25,
+    typologyId: "09fb2a92-ff9d-4013-8506-0fc96adf1d6f",
   },
   {
-    typology: "High cap",
+    typologyName: "High cap",
     percentage: 10,
-    keyElement: "864b535f-f39a-42ed-a5ca-ecd6170a73f2",
+    typologyId: "864b535f-f39a-42ed-a5ca-ecd6170a73f2",
   },
   {
-    typology: "Mid cap",
-    percentage: 10,
-    keyElement: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
+    typologyName: "Mid cap",
+    percentage: 8,
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
   },
   {
-    typology: "Low cap",
-    percentage: 5,
-    keyElement: "f5c213f7-6b1e-4ca3-a8f4-7b8e508076bd",
+    typologyName: "Low cap",
+    percentage: 4,
+    typologyId: "f5c213f7-6b1e-4ca3-a8f4-7b8e508076bd",
   },
   {
-    typology: "Gambling",
-    percentage: 5,
-    keyElement: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
+    typologyName: "Gambling",
+    percentage: 3,
+    typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
   },
 ].map((e, i) => {
   return { ...e, color: pieColorsDark[i] };

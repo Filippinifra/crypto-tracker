@@ -2,7 +2,7 @@ export type RebalancingCoins = RebalancingCoin[];
 
 export interface RebalancingCoin {
   id: string;
-  typology: string;
+  typologyId: string;
   logoUrl: string;
   symbolAndName: string;
   allocationPercentage: number;
