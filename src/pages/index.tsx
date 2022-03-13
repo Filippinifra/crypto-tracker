@@ -18,10 +18,10 @@ import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { Currency, getSymbolForCurrency } from "types/currency";
 import { getCrossedCoins, toRebalancingCoins } from "utils/coins";
 import { useMemo, useState } from "react";
-import { WarningWalletAllocation } from "components/WarningWalletAllocation";
 import { RebalancingCoins } from "types/rebalancingCoins";
 import { PersonalCoin } from "types/personalCoins";
 import { v4 as uuidv4 } from "uuid";
+import { useToast } from "contexts/ToastContext";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -51,10 +51,13 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
 
   const [isEditingGridCoins, setEditingGridCoins] = useState(false);
 
+  const { showToast } = useToast();
+
   const addCoin = (coin: AvailableCoin) => {
     const keyElement = uuidv4();
     const newCoin: PersonalCoin = { coins: 0, id: coin.id, keyElement, percentage: 0, platform: "", typologyId: "" };
     setPersonalCoins((coins) => (coins ? [...coins, newCoin] : [newCoin]));
+    showToast("Nuova moneta aggiunta", "success");
   };
 
   const options = availableCoins?.filter(({ id }) => id).map((value) => ({ value, label: `${value.symbol.toUpperCase()} // ${value.name} // ${value.id}` }));
