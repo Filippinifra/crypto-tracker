@@ -90,7 +90,7 @@ const getRow = (
 
   const colorTypologyText = wallet.find(({ typologyId: walletTypologyId }) => walletTypologyId === typologyId);
 
-  const typologyDrodpownOptions = wallet.map((e) => ({ label: e.typologyName, value: e, color: e.color }));
+  const typologyDrodpownOptions = wallet.map((e) => ({ label: e.typologyName || PLACEHOLDER, value: e, color: e.color }));
   const currentTypology = typologyDrodpownOptions.find(({ value: { typologyId: walletTypologyId } }) => walletTypologyId === typologyId);
 
   const percentageBalance = !isNaN(balancingPercentage) && isFinite(balancingPercentage) ? `${getSplittedPrice(balancingPercentage, 5, 0)}%` : PLACEHOLDER;
