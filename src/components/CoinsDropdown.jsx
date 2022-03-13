@@ -36,14 +36,20 @@ export const CoinsDropdown = ({ options, value, onChange, ...others }) => {
       }}
       options={slicedOptions}
       onInputChange={setInput}
-      placeholder={"Scrivi o scegli una coin"}
+      placeholder={others.isDisabled ? "Per inserire una moneta finisci di modificare la sezione delle monete" : "Scrivi o scegli una moneta"}
       {...others}
       styles={{
-        container: (props) => ({ ...props, border: "1px solid black", ...shadowStyle }),
+        container: (styles, { isDisabled }) => ({
+          border: "1px solid black",
+          backgroundColor: isDisabled ? "#f5f5f5" : "white",
+          cursor: isDisabled ? "not-allowed" : "pointer",
+          ...shadowStyle,
+          ...styles,
+        }),
         control: () => ({
           display: "flex",
         }),
-        option: (styles, { data, isSelected }) => ({
+        option: (styles, { isSelected }) => ({
           ...styles,
           backgroundColor: isSelected ? "#CCCCCC" : "white",
           "&:hover": {

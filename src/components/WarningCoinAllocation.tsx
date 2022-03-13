@@ -8,8 +8,8 @@ import { Typography } from "components/Typography";
 import { Spacer } from "components/Spacer";
 
 export const WarningCoinAllocation: FC<{ coins: RebalancingCoins; wallet: WalletDivision }> = ({ coins, wallet }) => {
-  const typologyChecksElements = wallet.map(({ typology: walletTypology, color }) => {
-    const coinByTipology = coins.filter(({ typology: coinTypology }) => walletTypology === coinTypology);
+  const typologyChecksElements = wallet.map(({ typologyId: walletTypologyId, typologyName, color }) => {
+    const coinByTipology = coins.filter(({ typologyId: coinTypology }) => walletTypologyId === coinTypology);
     const totalPercentageTypology = coinByTipology.reduce((r, { allocationPercentage }) => r + allocationPercentage, 0);
 
     const correctPercentage = totalPercentageTypology === 100;
@@ -18,14 +18,14 @@ export const WarningCoinAllocation: FC<{ coins: RebalancingCoins; wallet: Wallet
       element: (
         <>
           <Typography variant="body">
-            <span style={{ color, fontWeight: 600 }}>{walletTypology}</span>
+            <span style={{ color, fontWeight: 600 }}>{typologyName}</span>
             {`: ${totalPercentageTypology}% (${correctPercentage ? "Giusto" : "Sbagliato"})`}
           </Typography>
           <Spacer size={5} />
         </>
       ),
       correct: !correctPercentage,
-      key: `warning-typology-allocation-${walletTypology}`,
+      key: `warning-typology-allocation-${walletTypologyId}`,
     };
   });
 

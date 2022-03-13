@@ -4,7 +4,7 @@ import { PersonalCoins } from "types/personalCoins";
 const tempCoins: PersonalCoins = [
   {
     id: "terrausd",
-    typology: "Liquidity",
+    typologyId: "deb967d1-148e-4ea0-bcdc-052e85e686e9",
     percentage: 96,
     platform: "Anchor",
     coins: 3272.5,
@@ -12,7 +12,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "usd-coin",
-    typology: "Liquidity",
+    typologyId: "deb967d1-148e-4ea0-bcdc-052e85e686e9",
     percentage: 4,
     platform: "Ledn",
     coins: 129.6,
@@ -20,7 +20,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "bitcoin",
-    typology: "Bigs",
+    typologyId: "09fb2a92-ff9d-4013-8506-0fc96adf1d6f",
     percentage: 50,
     platform: "Binance",
     coins: 0.02092773,
@@ -28,7 +28,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "ethereum",
-    typology: "Bigs",
+    typologyId: "09fb2a92-ff9d-4013-8506-0fc96adf1d6f",
     percentage: 24,
     platform: "Binance",
     coins: 0.21814528,
@@ -36,7 +36,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "ethereum",
-    typology: "Bigs",
+    typologyId: "09fb2a92-ff9d-4013-8506-0fc96adf1d6f",
     percentage: 6,
     platform: "Metamask",
     coins: 0.0415,
@@ -44,7 +44,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "binance-eth",
-    typology: "Bigs",
+    typologyId: "09fb2a92-ff9d-4013-8506-0fc96adf1d6f",
     percentage: 20,
     platform: "Binance",
     coins: 0.05538937,
@@ -52,15 +52,15 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "solana",
-    typology: "High cap",
+    typologyId: "864b535f-f39a-42ed-a5ca-ecd6170a73f2",
     percentage: 25,
     platform: "Binance",
-    coins: 2.0299,
+    coins: 1.0299,
     keyElement: "fde1ea29-a0de-4a73-a4a0-f11b5eeadd0a",
   },
   {
     id: "terra-luna",
-    typology: "High cap",
+    typologyId: "864b535f-f39a-42ed-a5ca-ecd6170a73f2",
     percentage: 25,
     platform: "Terra Station",
     coins: 5,
@@ -68,7 +68,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "polkadot",
-    typology: "High cap",
+    typologyId: "864b535f-f39a-42ed-a5ca-ecd6170a73f2",
     percentage: 25,
     platform: "Binance",
     coins: 10.35394401,
@@ -76,7 +76,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "binancecoin",
-    typology: "High cap",
+    typologyId: "864b535f-f39a-42ed-a5ca-ecd6170a73f2",
     percentage: 25,
     platform: "Binance",
     coins: 0.55146373,
@@ -84,7 +84,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "avalanche-2",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 10,
     platform: "Binance",
     coins: 0.7838337,
@@ -92,7 +92,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "matic-network",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 10,
     platform: "Binance",
     coins: 36.22041551,
@@ -100,7 +100,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "crypto-com-chain",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 9,
     platform: "crypto.com",
     coins: 174,
@@ -108,7 +108,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "algorand",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 9,
     platform: "Binance",
     coins: 53.70874891,
@@ -116,7 +116,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "cosmos",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 10,
     platform: "Binance",
     coins: 1.83816,
@@ -124,7 +124,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "fantom",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 10,
     platform: "Binance",
     coins: 39.98253579,
@@ -132,7 +132,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "tezos",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 10,
     platform: "Binance",
     coins: 15.12292975,
@@ -140,7 +140,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "stellar",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 9,
     platform: "Binance",
     coins: 250.71603237,
@@ -148,7 +148,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "decentraland",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 5,
     platform: "Binance",
     coins: 10.31603183,
@@ -156,7 +156,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "aave",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 9,
     platform: "Binance",
     coins: 0.42551176,
@@ -164,7 +164,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "ftx-token",
-    typology: "Mid cap",
+    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
     percentage: 9,
     platform: "Binance",
     coins: 1.2987,
@@ -172,7 +172,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "bitdao",
-    typology: "Low cap",
+    typologyId: "f5c213f7-6b1e-4ca3-a8f4-7b8e508076bd",
     percentage: 17,
     platform: "Bybit",
     coins: 37.4,
@@ -180,7 +180,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "oasis-network",
-    typology: "Low cap",
+    typologyId: "f5c213f7-6b1e-4ca3-a8f4-7b8e508076bd",
     percentage: 16,
     platform: "Binance",
     coins: 164.835,
@@ -188,7 +188,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "loopring",
-    typology: "Low cap",
+    typologyId: "f5c213f7-6b1e-4ca3-a8f4-7b8e508076bd",
     percentage: 17,
     platform: "Binance",
     coins: 65.95485186,
@@ -196,7 +196,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "audius",
-    typology: "Low cap",
+    typologyId: "f5c213f7-6b1e-4ca3-a8f4-7b8e508076bd",
     percentage: 17,
     platform: "Binance",
     coins: 59.27090064,
@@ -204,7 +204,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "chromaway",
-    typology: "Low cap",
+    typologyId: "f5c213f7-6b1e-4ca3-a8f4-7b8e508076bd",
     percentage: 17,
     platform: "Binance",
     coins: 106.64156523,
@@ -212,7 +212,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "bitpanda-ecosystem-token",
-    typology: "Low cap",
+    typologyId: "f5c213f7-6b1e-4ca3-a8f4-7b8e508076bd",
     percentage: 16,
     platform: "Bitpanda",
     coins: 63.45,
@@ -220,7 +220,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "insure",
-    typology: "Gambling",
+    typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
     percentage: 23,
     platform: "Metamask",
     coins: 8802,
@@ -228,7 +228,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "genie-protocol",
-    typology: "Gambling",
+    typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
     percentage: 5,
     platform: "Metamask",
     coins: 33.1,
@@ -236,7 +236,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "tokemak",
-    typology: "Gambling",
+    typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
     percentage: 24,
     platform: "Mexc",
     coins: 2.08,
@@ -244,7 +244,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "curve-dao-token",
-    typology: "Gambling",
+    typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
     percentage: 24,
     platform: "Binance",
     coins: 21.94541198,
@@ -252,7 +252,7 @@ const tempCoins: PersonalCoins = [
   },
   {
     id: "convex-finance",
-    typology: "Gambling",
+    typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
     percentage: 24,
     platform: "Binance",
     coins: 3.081915,

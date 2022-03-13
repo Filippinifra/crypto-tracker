@@ -14,9 +14,10 @@ interface Props {
   value: string | number;
   onChange: (e: FormEvent<HTMLInputElement>) => void;
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  style?: React.CSSProperties;
 }
 
-export const Input: FC<Props> = ({ type, placeholder, name, value, onChange, onKeyDown }) => {
+export const Input: FC<Props> = ({ type, placeholder, name, value, style, onChange, onKeyDown }) => {
   return (
     <InputStyled
       type={type}
@@ -29,6 +30,7 @@ export const Input: FC<Props> = ({ type, placeholder, name, value, onChange, onK
           onKeyDown(e);
         }
       }}
+      style={style}
     />
   );
 };
