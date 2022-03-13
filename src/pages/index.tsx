@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | u
   try {
     res = await fetch("https://api.coingecko.com/api/v3/coins/list");
   } catch (e) {
-    console.log(["error", e]);
+    console.log(["Error on fetching coinjecko api", e]);
   }
 
   const availableCoins: AvailableCoins | undefined = res ? await res.json() : null;
@@ -103,7 +103,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
       setPersonalCoins(result);
       showToast("Le monete assegnate a tipologie che sono state rimosse ora hanno una tipologia vuota", "warning");
     }
-  }, [personalCoins, wallet, setPersonalCoins]);
+  }, [personalCoins, wallet, setPersonalCoins, showToast]);
 
   useEffect(() => {
     removesNotExistingTypologyId();

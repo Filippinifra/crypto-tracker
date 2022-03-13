@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { shadowStyle } from "components/ShadowStyle";
 import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
+import { useToast } from "contexts/ToastContext";
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -41,12 +42,14 @@ export default function SignUpPage() {
   const { setCurrentUser } = useAuth();
   const router = useRouter();
 
+  const { showToast } = useToast();
+
   const onConfirm = async () => {
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
       setCurrentUser(response.user);
     } catch (error) {
-      console.log(["error on confirm signup", error]);
+      showToast("Errore durante la fase di registrazione", "error");
     }
   };
 
