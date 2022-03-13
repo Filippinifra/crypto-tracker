@@ -9,7 +9,7 @@ import { WarningWalletAllocation } from "components/WarningWalletAllocation";
 import { Spacer } from "components/Spacer";
 import { EditButtons } from "components/EditButtons";
 import { useToast } from "contexts/ToastContext";
-import { Input } from "./Input";
+import { Input } from "components/Input";
 import { ToastType } from "types/toastType";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string; style?: React.CSSProperties }> = ({ value, isTitle, color, style }) => {

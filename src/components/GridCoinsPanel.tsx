@@ -1,6 +1,6 @@
 import { Grid } from "components/Grid";
 import Image from "next/image";
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, { Dispatch, FC, ReactElement, SetStateAction, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
 import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, redVariationColor, removeColor } from "utils/colors";
@@ -205,8 +205,9 @@ export const GridCoinsPanel: FC<{
   symbolCurrency: CurrencySymbol;
   setRebalancingCoins: (rebalancingCoins: RebalancingCoins) => void;
   detailedCoinsLoading: boolean;
-}> = ({ rebalancingCoins, wallet, symbolCurrency, setRebalancingCoins, detailedCoinsLoading }) => {
-  const [isEditing, setEditing] = useState(false);
+  isEditing: boolean;
+  setEditing: Dispatch<SetStateAction<boolean>>;
+}> = ({ rebalancingCoins, wallet, symbolCurrency, setRebalancingCoins, detailedCoinsLoading, isEditing, setEditing }) => {
   const [tempRebalancing, setTempRebalancing] = useState(reorderCoins(rebalancingCoins, wallet));
 
   const { showToast } = useToast();

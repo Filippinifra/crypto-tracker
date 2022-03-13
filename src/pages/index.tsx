@@ -17,7 +17,7 @@ import { pieColors, pieColorsDark } from "utils/colors";
 import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { Currency, getSymbolForCurrency } from "types/currency";
 import { getCrossedCoins, toRebalancingCoins } from "utils/coins";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { WarningWalletAllocation } from "components/WarningWalletAllocation";
 import { RebalancingCoins } from "types/rebalancingCoins";
 import { PersonalCoin } from "types/personalCoins";
@@ -48,6 +48,8 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const { totalVest, setTotalVest, loading: totalVestLoading } = useTotalVest();
   const { prefCurrency, setPrefCurrency } = usePrefCurrency();
   const { detailedCoins, error: detailedCoinsError, loading: detailedCoinsLoading } = useDetailedCoins(personalCoins, prefCurrency);
+
+  const [isEditingGridCoins, setEditingGridCoins] = useState(false);
 
   const addCoin = (coin: AvailableCoin) => {
     const keyElement = uuidv4();
@@ -110,6 +112,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
             onChange={(e: { value: AvailableCoin }) => {
               addCoin(e.value);
             }}
+            isDisabled={isEditingGridCoins}
           />
         </div>
         <Spacer size={40} />
@@ -119,6 +122,8 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
           symbolCurrency={symbolCurrency}
           setRebalancingCoins={onSetRebalancingCoins}
           detailedCoinsLoading={detailedCoinsLoading}
+          isEditing={isEditingGridCoins}
+          setEditing={setEditingGridCoins}
         />
       </Layout>
     </LoadErrorHandler>
