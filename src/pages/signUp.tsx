@@ -61,10 +61,10 @@ export default function SignUpPage() {
             router.push("/signin");
           }}
         >
-          Sono già registrato
+          <Typography variant="body2">Sono già registrato</Typography>
         </Button>
         <BoxWrapper>
-          <Typography variant="body">REGISTRAZIONE</Typography>
+          <Typography variant="title">REGISTRAZIONE</Typography>
           <Spacer size={20} />
           <Typography variant="body">Email</Typography>
           <Spacer size={5} />
@@ -91,7 +91,9 @@ export default function SignUpPage() {
           />
           <Spacer size={30} />
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button onClick={onConfirm}>Registrati</Button>
+            <Button onClick={onConfirm}>
+              <Typography variant="body2">Registrati</Typography>
+            </Button>
           </div>
         </BoxWrapper>
       </BoxesWrapper>

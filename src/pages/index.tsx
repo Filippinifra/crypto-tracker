@@ -22,6 +22,7 @@ import { RebalancingCoins } from "types/rebalancingCoins";
 import { PersonalCoin } from "types/personalCoins";
 import { v4 as uuidv4 } from "uuid";
 import { useToast } from "contexts/ToastContext";
+import { PrivateRoute } from "components/PrivateRoute";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -110,42 +111,44 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   }, [wallet, removesNotExistingTypologyId]);
 
   return (
-    <LoadErrorHandler data={data} error={error}>
-      <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
-        <div style={{ display: "flex" }}>
-          <div style={{ marginRight: 150 }}>
-            <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
-            <Spacer size={40} />
-            <div style={{ height: "auto" }}>
-              <GridWalletPanel wallet={wallet || []} setWallet={setWallet} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+    <PrivateRoute>
+      <LoadErrorHandler data={data} error={error}>
+        <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
+          <div style={{ display: "flex" }}>
+            <div style={{ marginRight: 150 }}>
+              <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+              <Spacer size={40} />
+              <div style={{ height: "auto" }}>
+                <GridWalletPanel wallet={wallet || []} setWallet={setWallet} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+              </div>
             </div>
+            <DoughnutChart data={dataChart} />
           </div>
-          <DoughnutChart data={dataChart} />
-        </div>
-        <Spacer size={50} />
-        <Typography variant="body">Aggiungi le tue coins:</Typography>
-        <Spacer size={20} />
-        <div style={{ width: 600 }}>
-          <CoinsDropdown
-            value={null}
-            options={options}
-            onChange={(e: { value: AvailableCoin }) => {
-              addCoin(e.value);
-            }}
-            isDisabled={isEditingGridCoins}
+          <Spacer size={50} />
+          <Typography variant="body">Aggiungi le tue coins:</Typography>
+          <Spacer size={20} />
+          <div style={{ width: 600 }}>
+            <CoinsDropdown
+              value={null}
+              options={options}
+              onChange={(e: { value: AvailableCoin }) => {
+                addCoin(e.value);
+              }}
+              isDisabled={isEditingGridCoins}
+            />
+          </div>
+          <Spacer size={40} />
+          <GridCoinsPanel
+            rebalancingCoins={rebalancingCoins}
+            wallet={wallet || []}
+            symbolCurrency={symbolCurrency}
+            setRebalancingCoins={onSetRebalancingCoins}
+            detailedCoinsLoading={detailedCoinsLoading}
+            isEditing={isEditingGridCoins}
+            setEditing={setEditingGridCoins}
           />
-        </div>
-        <Spacer size={40} />
-        <GridCoinsPanel
-          rebalancingCoins={rebalancingCoins}
-          wallet={wallet || []}
-          symbolCurrency={symbolCurrency}
-          setRebalancingCoins={onSetRebalancingCoins}
-          detailedCoinsLoading={detailedCoinsLoading}
-          isEditing={isEditingGridCoins}
-          setEditing={setEditingGridCoins}
-        />
-      </Layout>
-    </LoadErrorHandler>
+        </Layout>
+      </LoadErrorHandler>
+    </PrivateRoute>
   );
 }

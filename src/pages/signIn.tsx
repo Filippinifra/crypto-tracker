@@ -61,10 +61,10 @@ export default function SigninPage() {
             router.push("/signup");
           }}
         >
-          Devo ancora registrarmi
+          <Typography variant="body2">Devo ancora registrarmi</Typography>
         </Button>
         <BoxWrapper>
-          <Typography variant="body">ACCESSO</Typography>
+          <Typography variant="title">ACCESSO</Typography>
           <Spacer size={20} />
           <Typography variant="body">Email</Typography>
           <Spacer size={5} />
@@ -91,7 +91,9 @@ export default function SigninPage() {
           />
           <Spacer size={30} />
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button onClick={onConfirm}>Entra</Button>
+            <Button onClick={onConfirm}>
+              <Typography variant="body2">Entra</Typography>
+            </Button>
           </div>
         </BoxWrapper>
       </BoxesWrapper>

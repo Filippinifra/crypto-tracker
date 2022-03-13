@@ -1,7 +1,8 @@
 import { FC } from "react";
 
-export const Typography: FC<{ variant: string; style?: React.CSSProperties }> = ({ children, variant, style, ...others }) => {
+export const Typography: FC<{ variant: "body" | "body2" | "title"; style?: React.CSSProperties }> = ({ children, variant, style, ...others }) => {
   const styleVariant = styles[variant];
+
   return (
     <div style={{ ...styleVariant, ...style }} {...others}>
       {children}
@@ -14,6 +15,11 @@ type tStyle = {
 };
 
 const styles: tStyle = {
+  title: {
+    fontSize: 18,
+    letterSpacing: 2,
+    color: "black",
+  },
   body: {
     fontSize: 12,
     letterSpacing: 2,
