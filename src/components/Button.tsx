@@ -11,6 +11,7 @@ const ButtonStyled = styled.div<{ disabled: boolean }>`
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   background-color: ${({ disabled }) => (disabled ? "#d4d4d3" : "white")};
   height: fit-content;
+  color: black;
 `;
 
 export const Button: FC<{ onClick: () => void; disabled?: boolean }> = ({ children, onClick, disabled = false, ...others }) => {
