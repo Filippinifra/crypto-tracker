@@ -67,7 +67,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
   const sumFiatValue = crossedCoins?.reduce((r, { currentPrice, coins }) => r + (currentPrice || 0) * coins, 0);
 
   const dataChart = {
-    labels: wallet?.map(({ typologyId }) => typologyId),
+    labels: wallet?.map(({ typologyName }) => typologyName),
     datasets: [
       {
         label: "Tipologie portafoglio",
