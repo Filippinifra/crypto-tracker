@@ -101,6 +101,7 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
 
     if (wallet && JSON.stringify(personalCoins) !== JSON.stringify(result)) {
       setPersonalCoins(result);
+      showToast("Le monete assegnate a tipologie che sono state rimosse ora hanno una tipologia vuota", "warning");
     }
   }, [personalCoins, wallet, setPersonalCoins]);
 
