@@ -1,7 +1,7 @@
 import React, { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { WalletDivision, WalletPiece } from "types/walletDivision";
-import { headerGridWalletColor } from "utils/colors";
+import { addColor, headerGridWalletColor, pieColorsDark, removeColor } from "utils/colors";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { Grid } from "components/Grid";
 import { Typography } from "components/Typography";
@@ -11,6 +11,8 @@ import { EditButtons } from "components/EditButtons";
 import { useToast } from "contexts/ToastContext";
 import { Input } from "components/Input";
 import { ToastType } from "types/toastType";
+import { Icon } from "components/Icon";
+import { v4 as uuidv4 } from "uuid";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string; style?: React.CSSProperties }> = ({ value, isTitle, color, style }) => {
   const additionalStyle: React.CSSProperties = {
@@ -60,15 +62,25 @@ const getRow = (
     setTempWallet((walletPieces) => walletPieces.map((wp) => (wp.typologyId === typologyId ? { ...wp, percentage: newPercentage } : wp)));
   };
 
+  const onRemoveWalletPiece = () => {
+    setTempWallet((walletPieces) => walletPieces.filter((wp) => wp.typologyId !== typologyId));
+  };
+
   return [
     isEditing ? (
-      <Input
-        value={typologyName}
-        onChange={(e) => {
-          onChangeTypologyName(e.currentTarget.value);
-        }}
-        key={`wallet-${typologyId}-input`}
-      />
+      <div style={{ position: "relative", width: "100%" }} key={`wallet-${typologyId}-input-and-deleting`}>
+        <div style={{ position: "absolute", top: 10, left: -25 }}>
+          <Icon name="remove_circle" color={removeColor} style={{ cursor: "pointer" }} onClick={onRemoveWalletPiece} />
+        </div>
+        <Input
+          value={typologyName}
+          onChange={(e) => {
+            onChangeTypologyName(e.currentTarget.value);
+          }}
+          key={`wallet-${typologyId}-input`}
+          style={{ width: "-webkit-fill-available" }}
+        />
+      </div>
     ) : (
       <LabelCell color={colorTypology} key={`wallet-${typologyId}`} value={typologyName} style={{ fontWeight: 800, backgroundColor: colorRow }} />
     ),
@@ -115,12 +127,28 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: Dispatch<S
     return [...r, ...getRow(walletDataRow, sumFiatValue, symbolCurrency, index, isEditing, setTempWallet, showToast)];
   }, []);
 
+  const addNewWalletPiece = () => {
+    const id = uuidv4();
+
+    const walletLenght = tempWallet.length;
+
+    setTempWallet((tempWallet) => [...(tempWallet || []), { color: pieColorsDark[walletLenght], percentage: 0, typologyId: id, typologyName: "" }]);
+  };
+
+  const AddWalletPieceIcon: FC = () => {
+    return (
+      <div style={{ padding: 9, display: "flex", alignItems: "center" }}>
+        <Icon name="add_circle" color={addColor} style={{ cursor: "pointer" }} onClick={addNewWalletPiece} />
+      </div>
+    );
+  };
+
   return (
     <>
       <div style={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
         <Typography variant="body">Allocazione portafoglio:</Typography>
         <div style={{ display: "flex", gap: 20 }}>
-          <WarningWalletAllocation wallet={wallet} />
+          {Boolean(tempWallet.length) && <WarningWalletAllocation wallet={tempWallet} />}
           <EditButtons
             isEditing={isEditing}
             onEdit={() => setEditing(true)}
@@ -138,7 +166,13 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: Dispatch<S
         </div>
       </div>
       <Spacer size={20} />
-      <Grid templateColumns={"150px 126px 126px"} data={[...getHeaders(), ...walletData]} />
+      <Grid templateColumns={"150px 126px 126px"} data={[...getHeaders(), ...walletData, ...(isEditing ? [<AddWalletPieceIcon key={`wallet-add-coin`} />] : [])]} />
+      {!tempWallet.length && (
+        <>
+          <Spacer size={20} />
+          <Typography variant="body">Inserisci almeno una tipologia</Typography>
+        </>
+      )}
     </>
   );
 };

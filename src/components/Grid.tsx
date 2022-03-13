@@ -11,7 +11,7 @@ const Container = styled.div`
   ${shadowStyle}
 `;
 
-export const Grid: FC<{ templateColumns: string; data: ReactElement<any, any>[] }> = ({ templateColumns, data }) => {
+export const Grid: FC<{ templateColumns: string; data: (ReactElement<any, any> | Element | FC)[] }> = ({ templateColumns, data }) => {
   return (
     <Container
       style={{

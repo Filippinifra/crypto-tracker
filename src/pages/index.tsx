@@ -17,7 +17,7 @@ import { pieColors, pieColorsDark } from "utils/colors";
 import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { Currency, getSymbolForCurrency } from "types/currency";
 import { getCrossedCoins, toRebalancingCoins } from "utils/coins";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { RebalancingCoins } from "types/rebalancingCoins";
 import { PersonalCoin } from "types/personalCoins";
 import { v4 as uuidv4 } from "uuid";
@@ -91,6 +91,22 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
       rebalancingCoins.map(({ coins, id, keyElement, allocationPercentage, platform, typologyId }) => ({ coins, id, keyElement, percentage: allocationPercentage, platform, typologyId }))
     );
   };
+
+  const removesNotExistingTypologyId = useCallback(() => {
+    const result = personalCoins?.map((pc) => {
+      const isTypologyIdExising = Boolean(wallet?.some(({ typologyId }) => typologyId === pc.typologyId));
+
+      return isTypologyIdExising ? pc : { ...pc, typologyId: "" };
+    });
+
+    if (wallet && JSON.stringify(personalCoins) !== JSON.stringify(result)) {
+      setPersonalCoins(result);
+    }
+  }, [personalCoins, wallet, setPersonalCoins]);
+
+  useEffect(() => {
+    removesNotExistingTypologyId();
+  }, [wallet, removesNotExistingTypologyId]);
 
   return (
     <LoadErrorHandler data={data} error={error}>

@@ -21,6 +21,7 @@ export const tooltipColor = loadingColor;
 export const warningColor = loadingColor;
 
 export const removeColor = errorColor;
+export const addColor = successColor;
 
 export const getPercentageBalanceColor = (value: number) => {
   if (value < 40) {

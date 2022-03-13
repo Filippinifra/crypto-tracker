@@ -243,7 +243,7 @@ export const GridCoinsPanel: FC<{
       <div style={{ display: "flex", justifyContent: "space-between", maxWidth: 1285 }}>
         <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
         <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
-          {!detailedCoinsLoading && <WarningCoinAllocation wallet={wallet} coins={rebalancingCoins} />}
+          {!detailedCoinsLoading && <WarningCoinAllocation wallet={wallet} coins={tempRebalancing} />}
           <EditButtons
             isEditing={isEditing}
             onEdit={() => {
