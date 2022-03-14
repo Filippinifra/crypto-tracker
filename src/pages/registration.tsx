@@ -11,6 +11,7 @@ import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "contexts/ToastContext";
 import { RoutesHandler } from "components/RoutesHandler";
+import { validateMail, validatePassword } from "utils/validation";
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -68,9 +69,9 @@ const SignupPage = () => {
           <BoxWrapper>
             <form>
               <Typography variant="title">REGISTRAZIONE</Typography>
-              <Spacer size={20} />
+              <Spacer size={40} />
               <Typography variant="body">Email</Typography>
-              <Spacer size={5} />
+              <Spacer size={10} />
               <Input
                 type="text"
                 placeholder="Inserisci la email"
@@ -81,9 +82,13 @@ const SignupPage = () => {
                 }}
                 autocomplete={"email"}
               />
-              <Spacer size={15} />
-              <Typography variant="body">Password</Typography>
               <Spacer size={5} />
+              <Typography variant="error" style={{ height: 10 }}>
+                {!email || validateMail(email) ? "" : "Email non valida"}
+              </Typography>
+              <Spacer size={25} />
+              <Typography variant="body">Password</Typography>
+              <Spacer size={10} />
               <Input
                 type="password"
                 value={password}
@@ -94,9 +99,13 @@ const SignupPage = () => {
                 }}
                 autocomplete={"password"}
               />
-              <Spacer size={30} />
+              <Spacer size={5} />
+              <Typography variant="error" style={{ height: 10 }}>
+                {!password || validatePassword(password) ? "" : "Almeno 6 caratteri"}
+              </Typography>
+              <Spacer size={40} />
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button onClick={onConfirm}>
+                <Button onClick={onConfirm} disabled={!validateMail(email) || !validatePassword(password)}>
                   <Typography variant="body2">Registrati</Typography>
                 </Button>
               </div>

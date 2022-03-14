@@ -1,6 +1,7 @@
 import { FC } from "react";
+import { errorColor } from "utils/colors";
 
-export const Typography: FC<{ variant: "body" | "body2" | "title"; style?: React.CSSProperties }> = ({ children, variant, style, ...others }) => {
+export const Typography: FC<{ variant: "body" | "body2" | "title" | "error"; style?: React.CSSProperties }> = ({ children, variant, style, ...others }) => {
   const styleVariant = styles[variant];
 
   return (
@@ -30,5 +31,9 @@ const styles: tStyle = {
     fontSize: 10,
     letterSpacing: 2,
     color: "black",
+  },
+  error: {
+    fontSize: 8,
+    color: errorColor,
   },
 };
