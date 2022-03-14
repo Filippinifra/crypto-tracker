@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "contexts/AuthContext";
 import { auth } from "utils/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Button } from "components/Button";
 import { Typography } from "components/Typography";
 import { Input } from "components/Input";
@@ -10,7 +10,7 @@ import { shadowStyle } from "components/ShadowStyle";
 import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "contexts/ToastContext";
-import { PrivateRoute } from "components/PrivateRoute";
+import { RoutesHandler } from "components/RoutesHandler";
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -37,7 +37,7 @@ const BoxWrapper = styled.div`
   ${shadowStyle};
 `;
 
-const SigninPage = () => {
+const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setCurrentUser } = useAuth();
@@ -47,27 +47,27 @@ const SigninPage = () => {
 
   const onConfirm = async () => {
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
+      const response = await createUserWithEmailAndPassword(auth, email, password);
       setCurrentUser(response.user);
     } catch (error) {
-      showToast("Errore durante la fase di accesso", "error");
+      showToast("Errore durante la fase di registrazione", "error");
     }
   };
 
   return (
-    <PrivateRoute>
+    <RoutesHandler>
       <PageWrapper>
         <BoxesWrapper>
           <Button
             onClick={() => {
-              router.push("/signup");
+              router.push("/login");
             }}
           >
-            <Typography variant="body2">Devo ancora registrarmi</Typography>
+            <Typography variant="body2">Accesso</Typography>
           </Button>
           <BoxWrapper>
             <form>
-              <Typography variant="title">ACCESSO</Typography>
+              <Typography variant="title">REGISTRAZIONE</Typography>
               <Spacer size={20} />
               <Typography variant="body">Email</Typography>
               <Spacer size={5} />
@@ -79,6 +79,7 @@ const SigninPage = () => {
                 onChange={(e) => {
                   setEmail(e.currentTarget.value);
                 }}
+                autocomplete={"email"}
               />
               <Spacer size={15} />
               <Typography variant="body">Password</Typography>
@@ -91,19 +92,20 @@ const SigninPage = () => {
                 onChange={(e) => {
                   setPassword(e.currentTarget.value);
                 }}
+                autocomplete={"password"}
               />
               <Spacer size={30} />
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button onClick={onConfirm}>
-                  <Typography variant="body2">Entra</Typography>
+                  <Typography variant="body2">Registrati</Typography>
                 </Button>
               </div>
             </form>
           </BoxWrapper>
         </BoxesWrapper>
       </PageWrapper>
-    </PrivateRoute>
+    </RoutesHandler>
   );
 };
 
-export default SigninPage;
+export default SignupPage;

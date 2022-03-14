@@ -19,6 +19,7 @@ const styles: tStyle = {
     fontSize: 18,
     letterSpacing: 2,
     color: "black",
+    fontWeight: 600,
   },
   body: {
     fontSize: 12,

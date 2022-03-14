@@ -22,7 +22,7 @@ import { RebalancingCoins } from "types/rebalancingCoins";
 import { PersonalCoin } from "types/personalCoins";
 import { v4 as uuidv4 } from "uuid";
 import { useToast } from "contexts/ToastContext";
-import { PrivateRoute } from "components/PrivateRoute";
+import { RoutesHandler } from "components/RoutesHandler";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -108,10 +108,12 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
 
   useEffect(() => {
     removesNotExistingTypologyId();
+
+    return () => removesNotExistingTypologyId();
   }, [wallet, removesNotExistingTypologyId]);
 
   return (
-    <PrivateRoute>
+    <RoutesHandler>
       <LoadErrorHandler data={data} error={error}>
         <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
           <div style={{ display: "flex" }}>
@@ -149,7 +151,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
           />
         </Layout>
       </LoadErrorHandler>
-    </PrivateRoute>
+    </RoutesHandler>
   );
 };
 
