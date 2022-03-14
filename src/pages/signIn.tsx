@@ -10,6 +10,7 @@ import { shadowStyle } from "components/ShadowStyle";
 import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "contexts/ToastContext";
+import { PrivateRoute } from "components/PrivateRoute";
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -36,7 +37,7 @@ const BoxWrapper = styled.div`
   ${shadowStyle};
 `;
 
-export default function SigninPage() {
+const SigninPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setCurrentUser } = useAuth();
@@ -54,49 +55,53 @@ export default function SigninPage() {
   };
 
   return (
-    <PageWrapper>
-      <BoxesWrapper>
-        <Button
-          onClick={() => {
-            router.push("/signup");
-          }}
-        >
-          <Typography variant="body2">Devo ancora registrarmi</Typography>
-        </Button>
-        <BoxWrapper>
-          <Typography variant="title">ACCESSO</Typography>
-          <Spacer size={20} />
-          <Typography variant="body">Email</Typography>
-          <Spacer size={5} />
-          <Input
-            type="text"
-            placeholder="Inserisci la email"
-            name="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.currentTarget.value);
+    <PrivateRoute>
+      <PageWrapper>
+        <BoxesWrapper>
+          <Button
+            onClick={() => {
+              router.push("/signup");
             }}
-          />
-          <Spacer size={15} />
-          <Typography variant="body">Password</Typography>
-          <Spacer size={5} />
-          <Input
-            type="password"
-            value={password}
-            placeholder="Inserisci la password"
-            name="psw"
-            onChange={(e) => {
-              setPassword(e.currentTarget.value);
-            }}
-          />
-          <Spacer size={30} />
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button onClick={onConfirm}>
-              <Typography variant="body2">Entra</Typography>
-            </Button>
-          </div>
-        </BoxWrapper>
-      </BoxesWrapper>
-    </PageWrapper>
+          >
+            <Typography variant="body2">Devo ancora registrarmi</Typography>
+          </Button>
+          <BoxWrapper>
+            <Typography variant="title">ACCESSO</Typography>
+            <Spacer size={20} />
+            <Typography variant="body">Email</Typography>
+            <Spacer size={5} />
+            <Input
+              type="text"
+              placeholder="Inserisci la email"
+              name="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.currentTarget.value);
+              }}
+            />
+            <Spacer size={15} />
+            <Typography variant="body">Password</Typography>
+            <Spacer size={5} />
+            <Input
+              type="password"
+              value={password}
+              placeholder="Inserisci la password"
+              name="psw"
+              onChange={(e) => {
+                setPassword(e.currentTarget.value);
+              }}
+            />
+            <Spacer size={30} />
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Button onClick={onConfirm}>
+                <Typography variant="body2">Entra</Typography>
+              </Button>
+            </div>
+          </BoxWrapper>
+        </BoxesWrapper>
+      </PageWrapper>
+    </PrivateRoute>
   );
-}
+};
+
+export default SigninPage;

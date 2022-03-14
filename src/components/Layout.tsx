@@ -7,6 +7,7 @@ import { RefreshButton } from "components/RefreshButton";
 import { Button } from "components/Button";
 import { useAuth } from "contexts/AuthContext";
 import { Typography } from "components/Typography";
+import { auth } from "utils/firebase";
 
 const Wrapper = styled.div`
   padding: 40px;
@@ -26,6 +27,7 @@ export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetS
       <div style={{ display: "flex", justifyContent: "flex-end", gap: 30, position: "fixed", right: 40 }}>
         <Button
           onClick={() => {
+            auth.signOut();
             setCurrentUser(undefined);
           }}
         >

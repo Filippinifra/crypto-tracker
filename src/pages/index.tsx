@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | u
   };
 };
 
-export default function Home({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>) {
+const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { personalCoins, setPersonalCoins, loading: coinsLoading } = usePersonalCoins();
   const { wallet, setWallet, loading: walletLoading } = useWallet();
   const { totalVest, setTotalVest, loading: totalVestLoading } = useTotalVest();
@@ -151,4 +151,6 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
       </LoadErrorHandler>
     </PrivateRoute>
   );
-}
+};
+
+export default Home;
