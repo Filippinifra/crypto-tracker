@@ -9,7 +9,7 @@ const ButtonStyled = styled.div<{ disabled: boolean }>`
   ${shadowStyle}
   font-size: 14px;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-  background-color: ${({ disabled }) => (disabled ? "#d4d4d3" : "white")};
+  background-color: ${({ disabled }) => (disabled ? "#e3e3e3" : "white")};
   height: fit-content;
   color: black;
 `;
