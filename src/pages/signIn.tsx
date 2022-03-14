@@ -66,37 +66,39 @@ const SigninPage = () => {
             <Typography variant="body2">Devo ancora registrarmi</Typography>
           </Button>
           <BoxWrapper>
-            <Typography variant="title">ACCESSO</Typography>
-            <Spacer size={20} />
-            <Typography variant="body">Email</Typography>
-            <Spacer size={5} />
-            <Input
-              type="text"
-              placeholder="Inserisci la email"
-              name="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.currentTarget.value);
-              }}
-            />
-            <Spacer size={15} />
-            <Typography variant="body">Password</Typography>
-            <Spacer size={5} />
-            <Input
-              type="password"
-              value={password}
-              placeholder="Inserisci la password"
-              name="psw"
-              onChange={(e) => {
-                setPassword(e.currentTarget.value);
-              }}
-            />
-            <Spacer size={30} />
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Button onClick={onConfirm}>
-                <Typography variant="body2">Entra</Typography>
-              </Button>
-            </div>
+            <form>
+              <Typography variant="title">ACCESSO</Typography>
+              <Spacer size={20} />
+              <Typography variant="body">Email</Typography>
+              <Spacer size={5} />
+              <Input
+                type="text"
+                placeholder="Inserisci la email"
+                name="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.currentTarget.value);
+                }}
+              />
+              <Spacer size={15} />
+              <Typography variant="body">Password</Typography>
+              <Spacer size={5} />
+              <Input
+                type="password"
+                value={password}
+                placeholder="Inserisci la password"
+                name="psw"
+                onChange={(e) => {
+                  setPassword(e.currentTarget.value);
+                }}
+              />
+              <Spacer size={30} />
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button onClick={onConfirm}>
+                  <Typography variant="body2">Entra</Typography>
+                </Button>
+              </div>
+            </form>
           </BoxWrapper>
         </BoxesWrapper>
       </PageWrapper>

@@ -3,10 +3,6 @@ import { useRouter } from "next/router";
 import { LoadErrorHandler } from "components/LoadErrorHandler";
 
 export const PrivateRoute = ({ children }) => {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
   const router = useRouter();
   const { currentUser } = useAuth();
 
