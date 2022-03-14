@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { KeyboardEvent, useState } from "react";
 import { useAuth } from "contexts/AuthContext";
 import { auth } from "utils/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -43,8 +43,8 @@ const SigninPage = () => {
   const [password, setPassword] = useState("");
   const { setCurrentUser } = useAuth();
   const router = useRouter();
-
   const { showToast } = useToast();
+  const disabled = !validateMail(email) || !validatePassword(password);
 
   const onConfirm = async () => {
     try {
@@ -52,6 +52,12 @@ const SigninPage = () => {
       setCurrentUser(response.user);
     } catch (error) {
       showToast("Errore durante la fase di accesso", "error");
+    }
+  };
+
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && !disabled) {
+      onConfirm();
     }
   };
 
@@ -81,6 +87,7 @@ const SigninPage = () => {
                   setEmail(e.currentTarget.value);
                 }}
                 autocomplete={"email"}
+                onKeyDown={handleKeyPress}
               />
               <Spacer size={5} />
               <Typography variant="error" style={{ height: 10 }}>
@@ -98,6 +105,7 @@ const SigninPage = () => {
                   setPassword(e.currentTarget.value);
                 }}
                 autocomplete={"password"}
+                onKeyDown={handleKeyPress}
               />
               <Spacer size={5} />
               <Typography variant="error" style={{ height: 10 }}>
@@ -105,7 +113,7 @@ const SigninPage = () => {
               </Typography>
               <Spacer size={40} />
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button onClick={onConfirm} disabled={!validateMail(email) || !validatePassword(password)}>
+                <Button onClick={onConfirm} disabled={disabled}>
                   <Typography variant="body2">Entra</Typography>
                 </Button>
               </div>
