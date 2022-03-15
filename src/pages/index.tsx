@@ -23,6 +23,7 @@ import { PersonalCoin } from "types/personalCoins";
 import { v4 as uuidv4 } from "uuid";
 import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
+import { useResponsive } from "hooks/useResponsive";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -49,7 +50,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   const { totalVest, setTotalVest, loading: totalVestLoading } = useTotalVest();
   const { prefCurrency, setPrefCurrency } = usePrefCurrency();
   const { detailedCoins, error: detailedCoinsError, loading: detailedCoinsLoading } = useDetailedCoins(personalCoins, prefCurrency);
-
+  const getResponsiveValue = useResponsive();
   const [isEditingGridCoins, setEditingGridCoins] = useState(false);
 
   const { showToast } = useToast();
@@ -116,20 +117,21 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
     <RoutesHandler>
       <LoadErrorHandler data={data} error={error}>
         <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
-          <div style={{ display: "flex" }}>
-            <div style={{ marginRight: 150 }}>
+          <div style={{ display: "flex", flexDirection: getResponsiveValue(["column", "column", "row"]), alignItems: getResponsiveValue(["center", "center", ""]) }}>
+            <div style={{ marginRight: getResponsiveValue([0, 0, 150]) }}>
               <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
               <Spacer size={40} />
               <div style={{ height: "auto" }}>
                 <GridWalletPanel wallet={wallet || []} setWallet={setWallet} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
               </div>
             </div>
+            {getResponsiveValue([true, true, false]) && <Spacer size={40} />}
             <DoughnutChart data={dataChart} />
           </div>
           <Spacer size={50} />
           <Typography variant="body">Aggiungi le tue coins:</Typography>
           <Spacer size={20} />
-          <div style={{ width: 600 }}>
+          <div style={{ width: getResponsiveValue(["100%", "100%", "600px"]) }}>
             <CoinsDropdown
               value={null}
               options={options}
