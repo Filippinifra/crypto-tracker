@@ -11,7 +11,7 @@ import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
 import { TypologyDropdown } from "components/TypologyDropdown";
 import { WarningCoinAllocation } from "components/WarningCoinAllocation";
-import { useToast } from "contexts/ToastContext";
+import { useToast } from "hooks/useToast";
 import { ToastType } from "types/toastType";
 import { Placeholder } from "components/Placeholder";
 import { Icon } from "components/Icon";
@@ -265,7 +265,7 @@ export const GridCoinsPanel: FC<{
       {detailedCoinsLoading ? (
         <Placeholder height={1000} width={1285} />
       ) : (
-        <>
+        <div style={{ width: "100%", overflow: "scroll", padding: "5px 5px 0" }}>
           <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />
           {!tempRebalancing.length && (
             <>
@@ -273,7 +273,7 @@ export const GridCoinsPanel: FC<{
               <Typography variant="body">Inserisci almeno una moneta</Typography>
             </>
           )}
-        </>
+        </div>
       )}
     </>
   );

@@ -6,7 +6,7 @@ import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { Typography } from "components/Typography";
 import { Spacer } from "components/Spacer";
 import { Input } from "components/Input";
-import { useToast } from "contexts/ToastContext";
+import { useToast } from "hooks/useToast";
 import { EditButtons } from "components/EditButtons";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string }> = ({ value, isTitle, color }) => {

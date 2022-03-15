@@ -8,7 +8,7 @@ import { Typography } from "components/Typography";
 import { WarningWalletAllocation } from "components/WarningWalletAllocation";
 import { Spacer } from "components/Spacer";
 import { EditButtons } from "components/EditButtons";
-import { useToast } from "contexts/ToastContext";
+import { useToast } from "hooks/useToast";
 import { Input } from "components/Input";
 import { ToastType } from "types/toastType";
 import { Icon } from "components/Icon";

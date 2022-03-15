@@ -1,4 +1,4 @@
-import { useToast } from "contexts/ToastContext";
+import { useToast } from "hooks/useToast";
 import { Currency, getNameForCurrency } from "types/currency";
 import useSWR from "swr";
 import { PersonalCoins } from "types/personalCoins";

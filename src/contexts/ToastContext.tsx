@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { createContext, FC, useCallback, useContext, useState } from "react";
+import { createContext, FC, useCallback, useState } from "react";
 import { Toast, ToastType } from "types/toastType";
 import { v4 as uuidv4 } from "uuid";
 
@@ -8,9 +8,7 @@ export interface ToastInterface {
   showToast: (message: string, type: ToastType) => void;
 }
 
-const ToastContext = createContext<ToastInterface>({ toasts: [], showToast: () => {} });
-
-export const useToast = () => useContext(ToastContext);
+export const ToastContext = createContext<ToastInterface>({ toasts: [], showToast: () => {} });
 
 export const ToastProvider: FC = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);

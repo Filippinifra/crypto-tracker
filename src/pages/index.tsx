@@ -21,7 +21,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { RebalancingCoins } from "types/rebalancingCoins";
 import { PersonalCoin } from "types/personalCoins";
 import { v4 as uuidv4 } from "uuid";
-import { useToast } from "contexts/ToastContext";
+import { useToast } from "hooks/useToast";
+import { RoutesHandler } from "components/RoutesHandler";
+import { useResponsive } from "hooks/useResponsive";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -29,7 +31,7 @@ export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | u
   try {
     res = await fetch("https://api.coingecko.com/api/v3/coins/list");
   } catch (e) {
-    console.log(["error", e]);
+    console.log(["Error on fetching coinjecko api", e]);
   }
 
   const availableCoins: AvailableCoins | undefined = res ? await res.json() : null;
@@ -42,13 +44,13 @@ export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | u
   };
 };
 
-export default function Home({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>) {
+const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { personalCoins, setPersonalCoins, loading: coinsLoading } = usePersonalCoins();
   const { wallet, setWallet, loading: walletLoading } = useWallet();
   const { totalVest, setTotalVest, loading: totalVestLoading } = useTotalVest();
   const { prefCurrency, setPrefCurrency } = usePrefCurrency();
   const { detailedCoins, error: detailedCoinsError, loading: detailedCoinsLoading } = useDetailedCoins(personalCoins, prefCurrency);
-
+  const getResponsiveValue = useResponsive();
   const [isEditingGridCoins, setEditingGridCoins] = useState(false);
 
   const { showToast } = useToast();
@@ -103,49 +105,56 @@ export default function Home({ availableCoins }: InferGetStaticPropsType<typeof 
       setPersonalCoins(result);
       showToast("Le monete assegnate a tipologie che sono state rimosse ora hanno una tipologia vuota", "warning");
     }
-  }, [personalCoins, wallet, setPersonalCoins]);
+  }, [personalCoins, wallet, setPersonalCoins, showToast]);
 
   useEffect(() => {
     removesNotExistingTypologyId();
+
+    return () => removesNotExistingTypologyId();
   }, [wallet, removesNotExistingTypologyId]);
 
   return (
-    <LoadErrorHandler data={data} error={error}>
-      <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
-        <div style={{ display: "flex" }}>
-          <div style={{ marginRight: 150 }}>
-            <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
-            <Spacer size={40} />
-            <div style={{ height: "auto" }}>
-              <GridWalletPanel wallet={wallet || []} setWallet={setWallet} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+    <RoutesHandler>
+      <LoadErrorHandler data={data} error={error}>
+        <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
+          <div style={{ display: "flex", flexDirection: getResponsiveValue(["column", "column", "row"]), alignItems: getResponsiveValue(["center", "center", ""]) }}>
+            <div style={{ marginRight: getResponsiveValue([0, 0, 150]) }}>
+              <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+              <Spacer size={40} />
+              <div style={{ height: "auto" }}>
+                <GridWalletPanel wallet={wallet || []} setWallet={setWallet} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+              </div>
             </div>
+            {getResponsiveValue([true, true, false]) && <Spacer size={40} />}
+            <DoughnutChart data={dataChart} />
           </div>
-          <DoughnutChart data={dataChart} />
-        </div>
-        <Spacer size={50} />
-        <Typography variant="body">Aggiungi le tue coins:</Typography>
-        <Spacer size={20} />
-        <div style={{ width: 600 }}>
-          <CoinsDropdown
-            value={null}
-            options={options}
-            onChange={(e: { value: AvailableCoin }) => {
-              addCoin(e.value);
-            }}
-            isDisabled={isEditingGridCoins}
+          <Spacer size={50} />
+          <Typography variant="body">Aggiungi le tue coins:</Typography>
+          <Spacer size={20} />
+          <div style={{ width: getResponsiveValue(["100%", "100%", "600px"]) }}>
+            <CoinsDropdown
+              value={null}
+              options={options}
+              onChange={(e: { value: AvailableCoin }) => {
+                addCoin(e.value);
+              }}
+              isDisabled={isEditingGridCoins}
+            />
+          </div>
+          <Spacer size={40} />
+          <GridCoinsPanel
+            rebalancingCoins={rebalancingCoins}
+            wallet={wallet || []}
+            symbolCurrency={symbolCurrency}
+            setRebalancingCoins={onSetRebalancingCoins}
+            detailedCoinsLoading={detailedCoinsLoading}
+            isEditing={isEditingGridCoins}
+            setEditing={setEditingGridCoins}
           />
-        </div>
-        <Spacer size={40} />
-        <GridCoinsPanel
-          rebalancingCoins={rebalancingCoins}
-          wallet={wallet || []}
-          symbolCurrency={symbolCurrency}
-          setRebalancingCoins={onSetRebalancingCoins}
-          detailedCoinsLoading={detailedCoinsLoading}
-          isEditing={isEditingGridCoins}
-          setEditing={setEditingGridCoins}
-        />
-      </Layout>
-    </LoadErrorHandler>
+        </Layout>
+      </LoadErrorHandler>
+    </RoutesHandler>
   );
-}
+};
+
+export default Home;
