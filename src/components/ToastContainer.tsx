@@ -1,5 +1,5 @@
 import { Toast } from "components/Toast";
-import { useToast } from "contexts/ToastContext";
+import { useToast } from "hooks/useToast";
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";

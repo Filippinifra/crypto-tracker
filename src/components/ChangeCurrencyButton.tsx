@@ -2,7 +2,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { Currency, getSymbolForCurrency } from "types/currency";
 import { Button } from "components/Button";
 import { Typography } from "components/Typography";
-import { useToast } from "contexts/ToastContext";
+import { useToast } from "hooks/useToast";
 
 export const ChangeCurrencyButton: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>> }> = ({ prefCurrency, setPrefCurrency }) => {
   const { showToast } = useToast();

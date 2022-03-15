@@ -21,7 +21,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { RebalancingCoins } from "types/rebalancingCoins";
 import { PersonalCoin } from "types/personalCoins";
 import { v4 as uuidv4 } from "uuid";
-import { useToast } from "contexts/ToastContext";
+import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {

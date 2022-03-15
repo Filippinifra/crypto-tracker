@@ -5,7 +5,7 @@ import { PersonalCoins } from "types/personalCoins";
 import { ChangeCurrencyButton } from "components/ChangeCurrencyButton";
 import { RefreshButton } from "components/RefreshButton";
 import { Button } from "components/Button";
-import { useAuth } from "contexts/AuthContext";
+import { useAuth } from "hooks/useAuth";
 import { Typography } from "components/Typography";
 import { auth } from "utils/firebase";
 

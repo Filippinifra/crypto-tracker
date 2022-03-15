@@ -1,5 +1,5 @@
 import { KeyboardEvent, useState } from "react";
-import { useAuth } from "contexts/AuthContext";
+import { useAuth } from "hooks/useAuth";
 import { auth } from "utils/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Button } from "components/Button";
@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { shadowStyle } from "components/ShadowStyle";
 import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
-import { useToast } from "contexts/ToastContext";
+import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
 import { validateMail, validatePassword } from "utils/validation";
 

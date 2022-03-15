@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, createContext, FC, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, createContext, FC, Dispatch, SetStateAction } from "react";
 import { auth } from "utils/firebase";
 import { User } from "firebase/auth";
 import { UserData } from "types/userData";
@@ -17,8 +17,6 @@ export const AuthContext = createContext<Authentication>({
   userData: { coins: [] },
   setUserData: () => undefined,
 });
-
-export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider: FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | undefined | null>(undefined);

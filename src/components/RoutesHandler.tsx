@@ -1,4 +1,4 @@
-import { useAuth } from "contexts/AuthContext";
+import { useAuth } from "hooks/useAuth";
 import { useRouter } from "next/router";
 import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { FC } from "react";

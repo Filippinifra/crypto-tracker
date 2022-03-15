@@ -11,7 +11,7 @@ import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
 import { TypologyDropdown } from "components/TypologyDropdown";
 import { WarningCoinAllocation } from "components/WarningCoinAllocation";
-import { useToast } from "contexts/ToastContext";
+import { useToast } from "hooks/useToast";
 import { ToastType } from "types/toastType";
 import { Placeholder } from "components/Placeholder";
 import { Icon } from "components/Icon";
