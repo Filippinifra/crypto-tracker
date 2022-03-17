@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 export const useDimensions = () => {
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -15,7 +15,7 @@ export const useDimensions = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
       });
-  }, []);
+  }, [window]);
 
   return {
     isSmallWidth: width < 600,
