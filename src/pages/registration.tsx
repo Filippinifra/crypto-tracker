@@ -28,6 +28,8 @@ const BoxesWrapper = styled.div`
   align-items: flex-end;
   flex-direction: column;
   gap: 20px;
+  justify-content: center;
+  padding: 40px;
 `;
 
 const BoxWrapper = styled.div`
@@ -35,6 +37,7 @@ const BoxWrapper = styled.div`
   border: 1px solid gray;
   text-align: center;
   width: 100%;
+  box-sizing: border-box;
   ${shadowStyle};
 `;
 
