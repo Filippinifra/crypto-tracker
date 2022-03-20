@@ -13,6 +13,7 @@ import { Input } from "components/Input";
 import { ToastType } from "types/toastType";
 import { Icon } from "components/Icon";
 import { v4 as uuidv4 } from "uuid";
+import { useResponsive } from "hooks/useResponsive";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string; style?: React.CSSProperties }> = ({ value, isTitle, color, style }) => {
   const additionalStyle: React.CSSProperties = {
@@ -114,6 +115,7 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: Dispatch<S
   const [tempWallet, setTempWallet] = useState(wallet);
   const [isEditing, setEditing] = useState(false);
 
+  const { getResponsiveValue } = useResponsive();
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -166,7 +168,11 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: Dispatch<S
         </div>
       </div>
       <Spacer size={20} />
-      <Grid templateColumns={"150px 126px 126px"} data={[...getHeaders(), ...walletData, ...(isEditing ? [<AddWalletPieceIcon key={`wallet-add-coin`} />] : [])]} />
+      <Grid
+        templateColumns={getResponsiveValue(["1fr 1fr 1fr", "150px 126px 126px", "150px 126px 126px"])}
+        fullWidth={getResponsiveValue([true, false, false])}
+        data={[...getHeaders(), ...walletData, ...(isEditing ? [<AddWalletPieceIcon key={`wallet-add-coin`} />] : [])]}
+      />
       {!tempWallet.length && (
         <>
           <Spacer size={20} />

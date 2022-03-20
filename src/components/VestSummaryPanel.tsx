@@ -8,6 +8,7 @@ import { Spacer } from "components/Spacer";
 import { Input } from "components/Input";
 import { useToast } from "hooks/useToast";
 import { EditButtons } from "components/EditButtons";
+import { useResponsive } from "hooks/useResponsive";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string }> = ({ value, isTitle, color }) => {
   const style: React.CSSProperties = { width: "100%", backgroundColor: color || (isTitle ? vestColor : "white"), padding: 10, boxSizing: "border-box" };
@@ -28,6 +29,7 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: Dispatch<Se
   const [isEditing, setEditing] = useState(false);
   const [tempTotalVest, setTempTotalVest] = useState(totalVest);
   const { showToast } = useToast();
+  const { getResponsiveValue } = useResponsive();
 
   const profit = sumFiatValue - totalVest;
   const percentageProfit = 100 / (totalVest / profit);
@@ -84,7 +86,8 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: Dispatch<Se
       </div>
       <Spacer size={20} />
       <Grid
-        templateColumns={"200px 200px"}
+        templateColumns={getResponsiveValue(["1fr 1fr", "200px 200px", "200px 200px"])}
+        fullWidth={getResponsiveValue([true, false, false])}
         data={[
           <LabelCell value={"Totale investito"} key={"total-vest-title"} isTitle />,
           isEditing ? (

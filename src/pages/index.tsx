@@ -118,7 +118,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
       <LoadErrorHandler data={data} error={error}>
         <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
           <div style={{ display: "flex", flexDirection: getResponsiveValue(["column", "column", "row"]), alignItems: getResponsiveValue(["center", "center", ""]) }}>
-            <div style={{ marginRight: getResponsiveValue([0, 0, 150]) }}>
+            <div style={{ marginRight: getResponsiveValue([0, 0, 150]), ...(getResponsiveValue([true, false, false]) && { width: "100%" }) }}>
               <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
               <Spacer size={40} />
               <div style={{ height: "auto" }}>
