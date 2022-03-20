@@ -50,7 +50,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   const { totalVest, setTotalVest, loading: totalVestLoading } = useTotalVest();
   const { prefCurrency, setPrefCurrency } = usePrefCurrency();
   const { detailedCoins, error: detailedCoinsError, loading: detailedCoinsLoading } = useDetailedCoins(personalCoins, prefCurrency);
-  const getResponsiveValue = useResponsive();
+  const { getResponsiveValue } = useResponsive();
   const [isEditingGridCoins, setEditingGridCoins] = useState(false);
 
   const { showToast } = useToast();
@@ -131,7 +131,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
           <Spacer size={50} />
           <Typography variant="body">Aggiungi le tue coins:</Typography>
           <Spacer size={20} />
-          <div style={{ width: getResponsiveValue(["100%", "100%", "600px"]) }}>
+          <div style={{ width: getResponsiveValue(["auto", "100%", "600px"]), margin: 6 }}>
             <CoinsDropdown
               value={null}
               options={options}
