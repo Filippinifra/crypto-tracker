@@ -14,6 +14,7 @@ const MyApp = ({ Component, pageProps }) => {
         <Head>
           <style>{"@import url('https://fonts.googleapis.com/css2?family=Quicksand&family=Roboto:wght@400;500;700;900&display=swap');"}</style>
           <style>{"@import url('https://fonts.googleapis.com/icon?family=Material+Icons');"}</style>
+          <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no" />
         </Head>
         <Component {...pageProps} />
         <style global jsx>{`
