@@ -9,6 +9,7 @@ import { useAuth } from "hooks/useAuth";
 import { Typography } from "components/Typography";
 import { auth } from "utils/firebase";
 import { useResponsive } from "hooks/useResponsive";
+import { Spacer } from "./Spacer";
 
 const Wrapper = styled.div`
   height: auto;
@@ -37,6 +38,7 @@ export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetS
         <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
         <RefreshButton personalCoins={personalCoins} prefCurrency={prefCurrency} />
       </div>
+      {getResponsiveValue([true, true, false]) && <Spacer size={50} />}
       {children}
     </Wrapper>
   );
