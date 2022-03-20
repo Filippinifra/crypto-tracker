@@ -20,7 +20,6 @@ const ButtonsWrapper = styled.div`
   justify-content: flex-end;
   gap: 30px;
   position: fixed;
-  right: 40px;
   z-index: 99999;
 `;
 
@@ -35,7 +34,7 @@ export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetS
 
   return (
     <Wrapper style={{ padding: `40px ${getResponsiveValue([8, 15, 40])}px` }}>
-      <ButtonsWrapper>
+      <ButtonsWrapper style={{ right: getResponsiveValue([8, 15, 40]) }}>
         <Button
           onClick={() => {
             auth.signOut();
