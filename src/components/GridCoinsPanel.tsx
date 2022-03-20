@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { Dispatch, FC, ReactElement, SetStateAction, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
-import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, redVariationColor, removeColor } from "utils/colors";
+import { getFiatRebalanceColor, getPercentageBalanceColor, greenVariationColor, headerGridCoinColors, important24hChangeColor, redVariationColor, removeColor } from "utils/colors";
 import { Typography } from "components/Typography";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { WalletDivision } from "types/walletDivision";
@@ -158,7 +158,7 @@ const getRow = (
     <LabelCell color={color} value={`${getSplittedPrice(idealAllocationValue)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-for-perc`} />,
     <LabelCell color={color} value={`${getSplittedPrice(price)}${symbolCurrency}`} key={`coin-table-${keyElement}-price`} />,
     <LabelCell
-      color={color}
+      color={priceChangePercentage24h >= 10 ? important24hChangeColor : color}
       textColor={priceChangePercentage24h < 0 ? redVariationColor : greenVariationColor}
       value={`${getSplittedPrice(priceChangePercentage24h, 3, 2, true)}%`}
       key={`coin-table-${keyElement}-price-variation`}
