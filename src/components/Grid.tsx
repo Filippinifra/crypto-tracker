@@ -11,11 +11,12 @@ const Container = styled.div`
   ${shadowStyle}
 `;
 
-export const Grid: FC<{ templateColumns: string; data: (ReactElement<any, any> | Element | FC)[] }> = ({ templateColumns, data }) => {
+export const Grid: FC<{ fullWidth?: boolean; templateColumns: string; data: (ReactElement<any, any> | Element | FC)[] }> = ({ fullWidth, templateColumns, data }) => {
   return (
     <Container
       style={{
         gridTemplateColumns: templateColumns,
+        ...(fullWidth && { width: "100%" }),
       }}
     >
       {data?.map((e) => e)}
