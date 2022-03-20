@@ -15,6 +15,15 @@ const Wrapper = styled.div`
   height: auto;
 `;
 
+const ButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 30px;
+  position: fixed;
+  right: 40px;
+  z-index: 99999;
+`;
+
 export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>>; personalCoins: PersonalCoins }> = ({
   children,
   prefCurrency,
@@ -26,7 +35,7 @@ export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetS
 
   return (
     <Wrapper style={{ padding: `40px ${getResponsiveValue([8, 15, 40])}px` }}>
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: 30, position: "fixed", right: 40 }}>
+      <ButtonsWrapper>
         <Button
           onClick={() => {
             auth.signOut();
@@ -37,7 +46,7 @@ export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetS
         </Button>
         <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
         <RefreshButton personalCoins={personalCoins} prefCurrency={prefCurrency} />
-      </div>
+      </ButtonsWrapper>
       {getResponsiveValue([true, true, false]) && <Spacer size={50} />}
       {children}
     </Wrapper>
