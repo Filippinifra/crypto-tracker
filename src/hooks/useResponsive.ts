@@ -17,5 +17,5 @@ export const useResponsive = () => {
     [isSmallWidth, isMediumWidth]
   );
 
-  return calculateValue;
+  return { getResponsiveValue: calculateValue };
 };
