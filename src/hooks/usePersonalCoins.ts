@@ -221,23 +221,15 @@ const tempCoins: PersonalCoins = [
   {
     id: "insure",
     typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
-    percentage: 23,
+    percentage: 25,
     platform: "Metamask",
     coins: 8802,
     keyElement: "818c0ef8-1f46-4aa0-a47b-a772eb9d034b",
   },
   {
-    id: "genie-protocol",
-    typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
-    percentage: 5,
-    platform: "Metamask",
-    coins: 33.1,
-    keyElement: "e3d046e4-f201-495e-a81b-0cd34599a43b",
-  },
-  {
     id: "tokemak",
     typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
-    percentage: 24,
+    percentage: 25,
     platform: "Mexc",
     coins: 2.08,
     keyElement: "fd570449-15a0-4f04-bb19-238cf785e07e",
@@ -245,7 +237,7 @@ const tempCoins: PersonalCoins = [
   {
     id: "curve-dao-token",
     typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
-    percentage: 24,
+    percentage: 25,
     platform: "Binance",
     coins: 21.94541198,
     keyElement: "cf0d4c42-f802-4cb7-81d7-0f7be9b5ddaf",
@@ -253,7 +245,7 @@ const tempCoins: PersonalCoins = [
   {
     id: "convex-finance",
     typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
-    percentage: 24,
+    percentage: 25,
     platform: "Binance",
     coins: 3.081915,
     keyElement: "b6186943-dd6b-48c8-a109-eed89216a155",
