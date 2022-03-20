@@ -265,7 +265,7 @@ export const GridCoinsPanel: FC<{
       {detailedCoinsLoading ? (
         <Placeholder height={1000} width={1285} />
       ) : (
-        <div style={{ width: "100%", overflow: "scroll", padding: "5px 5px 0" }}>
+        <div style={{ width: "auto", overflow: "scroll", padding: "5px 0 0 5px" }}>
           <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />
           {!tempRebalancing.length && (
             <>
