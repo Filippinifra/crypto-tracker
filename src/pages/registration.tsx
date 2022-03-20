@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
 import { validateMail, validatePassword } from "utils/validation";
+import { useResponsive } from "hooks/useResponsive";
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -33,7 +34,7 @@ const BoxesWrapper = styled.div`
 `;
 
 const BoxWrapper = styled.div`
-  padding: 40px 20px;
+  padding: 40px 0;
   border: 1px solid gray;
   text-align: center;
   width: 100%;
@@ -48,6 +49,7 @@ const SignupPage = () => {
   const router = useRouter();
   const { showToast } = useToast();
   const disabled = !validateMail(email) || !validatePassword(password);
+  const { getResponsiveValue } = useResponsive();
 
   const onConfirm = async () => {
     try {
@@ -67,7 +69,7 @@ const SignupPage = () => {
   return (
     <RoutesHandler>
       <PageWrapper>
-        <BoxesWrapper>
+        <BoxesWrapper style={{ maxWidth: getResponsiveValue([300, 400, 500]) }}>
           <Button
             onClick={() => {
               router.push("/login");
