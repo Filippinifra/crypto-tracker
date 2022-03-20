@@ -20,6 +20,8 @@ export const redVariationColor = "#8B0000";
 export const tooltipColor = loadingColor;
 export const warningColor = loadingColor;
 
+export const important24hChangeColor = loadingColor;
+
 export const removeColor = errorColor;
 export const addColor = successColor;
 
