@@ -168,11 +168,13 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: Dispatch<S
         </div>
       </div>
       <Spacer size={20} />
-      <Grid
-        templateColumns={getResponsiveValue(["1fr 1fr 1fr", "150px 126px 126px", "150px 126px 126px"])}
-        fullWidth={getResponsiveValue([true, false, false])}
-        data={[...getHeaders(), ...walletData, ...(isEditing ? [<AddWalletPieceIcon key={`wallet-add-coin`} />] : [])]}
-      />
+      <div style={{ padding: "0 0 0 5px" }}>
+        <Grid
+          templateColumns={getResponsiveValue(["1fr 1fr 1fr", "150px 126px 126px", "150px 126px 126px"])}
+          fullWidth={getResponsiveValue([true, false, false])}
+          data={[...getHeaders(), ...walletData, ...(isEditing ? [<AddWalletPieceIcon key={`wallet-add-coin`} />] : [])]}
+        />
+      </div>
       {!tempWallet.length && (
         <>
           <Spacer size={20} />
