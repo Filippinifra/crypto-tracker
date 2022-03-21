@@ -9,6 +9,7 @@ export interface Authentication {
   setCurrentUser: Dispatch<SetStateAction<User | undefined | null>>;
   userData: UserData;
   setUserData: Dispatch<SetStateAction<UserData>>;
+  isLoadingUser: boolean;
 }
 
 export const AuthContext = createContext<Authentication>({
@@ -16,6 +17,7 @@ export const AuthContext = createContext<Authentication>({
   setCurrentUser: () => undefined,
   userData: { coins: [] },
   setUserData: () => undefined,
+  isLoadingUser: false,
 });
 
 export const AuthProvider: FC = ({ children }) => {
@@ -48,5 +50,5 @@ export const AuthProvider: FC = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  return <AuthContext.Provider value={{ currentUser, setCurrentUser, userData, setUserData }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ currentUser, setCurrentUser, userData, setUserData, isLoadingUser: currentUser === undefined }}>{children}</AuthContext.Provider>;
 };
