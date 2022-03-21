@@ -5,10 +5,14 @@ import { FC } from "react";
 
 const PublicAndPrivateRouter: FC = ({ children }) => {
   const router = useRouter();
-  const { currentUser } = useAuth();
+  const { currentUser, isLoadingUser } = useAuth();
 
   const publicRoutes = ["/login", "/registration"];
   const isPublicRoute = publicRoutes.some((r) => r === router.pathname);
+
+  if (isLoadingUser) {
+    return <LoadErrorHandler data={null} error={null} />;
+  }
 
   if (!currentUser && !isPublicRoute) {
     if (typeof window !== "undefined") {
