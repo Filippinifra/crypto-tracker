@@ -11,13 +11,17 @@ const PublicAndPrivateRouter: FC = ({ children }) => {
   const isPublicRoute = publicRoutes.some((r) => r === router.pathname);
 
   if (!currentUser && !isPublicRoute) {
-    router.replace("/login");
-    return null;
+    if (typeof window !== "undefined") {
+      router.replace("/login");
+    }
+    return <LoadErrorHandler data={null} error={null} />;
   }
 
   if (currentUser && isPublicRoute) {
-    router.replace("/");
-    return null;
+    if (typeof window !== "undefined") {
+      router.replace("/");
+    }
+    return <LoadErrorHandler data={null} error={null} />;
   }
 
   return (

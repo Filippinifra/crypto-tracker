@@ -1,8 +1,10 @@
-import { useRouter } from "next/router";
+import { LoadErrorHandler } from "components/LoadErrorHandler";
+import Router from "next/router";
 
 export default function NotFoundPage() {
-  const router = useRouter();
-  router.replace("/");
+  if (typeof window !== "undefined") {
+    Router.replace("/");
+  }
 
-  return null;
+  return <LoadErrorHandler data={null} error={null} />;
 }
