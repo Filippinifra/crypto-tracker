@@ -85,35 +85,37 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: Dispatch<Se
         />
       </div>
       <Spacer size={20} />
-      <Grid
-        templateColumns={getResponsiveValue(["1fr 1fr", "200px 200px", "200px 200px"])}
-        fullWidth={getResponsiveValue([true, false, false])}
-        data={[
-          <LabelCell value={"Totale investito"} key={"total-vest-title"} isTitle />,
-          isEditing ? (
-            <Input
-              value={tempTotalVest}
-              type="number"
-              onChange={(e: FormEvent<HTMLInputElement>) => {
-                const value = Number(e.currentTarget.value);
-                if (value >= 0) {
-                  setTempTotalVest(value);
-                } else {
-                  showToast("Non puoi aver investito un numero negativo di denaro", "error");
-                }
-              }}
-              onKeyDown={handleKeyDown}
-              key={"total-vest-input"}
-            />
-          ) : (
-            <LabelCell value={`${totalVest}${symbolCurrency}`} key={"total-vest"} />
-          ),
-          <LabelCell value={"Controvalore ora"} key={"fiat-sum-value-title"} isTitle />,
-          <LabelCell value={`${getSplittedPrice(sumFiatValue, 5, 0)}${symbolCurrency}`} key={"fiat-sum-value"} />,
-          <LabelCell value={"Guadagno / perdita"} key={"profit-title"} isTitle />,
-          <LabelCell color={getVestSummaryColor(profit)} value={profitResultLabel} key={"profit"} />,
-        ]}
-      />
+      <div style={{ padding: "0 0 0 5px" }}>
+        <Grid
+          templateColumns={getResponsiveValue(["1fr 1fr", "200px 200px", "200px 200px"])}
+          fullWidth={getResponsiveValue([true, false, false])}
+          data={[
+            <LabelCell value={"Totale investito"} key={"total-vest-title"} isTitle />,
+            isEditing ? (
+              <Input
+                value={tempTotalVest}
+                type="number"
+                onChange={(e: FormEvent<HTMLInputElement>) => {
+                  const value = Number(e.currentTarget.value);
+                  if (value >= 0) {
+                    setTempTotalVest(value);
+                  } else {
+                    showToast("Non puoi aver investito un numero negativo di denaro", "error");
+                  }
+                }}
+                onKeyDown={handleKeyDown}
+                key={"total-vest-input"}
+              />
+            ) : (
+              <LabelCell value={`${totalVest}${symbolCurrency}`} key={"total-vest"} />
+            ),
+            <LabelCell value={"Controvalore ora"} key={"fiat-sum-value-title"} isTitle />,
+            <LabelCell value={`${getSplittedPrice(sumFiatValue, 5, 0)}${symbolCurrency}`} key={"fiat-sum-value"} />,
+            <LabelCell value={"Guadagno / perdita"} key={"profit-title"} isTitle />,
+            <LabelCell color={getVestSummaryColor(profit)} value={profitResultLabel} key={"profit"} />,
+          ]}
+        />
+      </div>
     </>
   );
 };

@@ -117,8 +117,8 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
     <RoutesHandler>
       <LoadErrorHandler data={data} error={error}>
         <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
-          <div style={{ display: "flex", flexDirection: getResponsiveValue(["column", "column", "row"]), alignItems: getResponsiveValue(["center", "center", ""]) }}>
-            <div style={{ marginRight: getResponsiveValue([0, 0, 150]), ...(getResponsiveValue([true, false, false]) && { width: "100%" }) }}>
+          <div style={{ display: "flex", flexDirection: getResponsiveValue(["column", "column", "row"]), alignItems: getResponsiveValue(["center", "", ""]) }}>
+            <div style={{ marginRight: getResponsiveValue([0, 0, 150]), width: getResponsiveValue(["100%", "fit-content", "auto"]) }}>
               <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
               <Spacer size={40} />
               <div style={{ height: "auto" }}>
@@ -131,7 +131,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
           <Spacer size={50} />
           <Typography variant="body">Aggiungi le tue coins:</Typography>
           <Spacer size={20} />
-          <div style={{ width: getResponsiveValue(["auto", "100%", "600px"]), margin: 6 }}>
+          <div style={{ width: getResponsiveValue(["auto", "550px", "600px"]), margin: "6px 0 0 6px" }}>
             <CoinsDropdown
               value={null}
               options={options}

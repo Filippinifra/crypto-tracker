@@ -8,6 +8,7 @@ const Container = styled.div`
   display: grid;
   border: 1px solid ${colorGrid};
   width: fit-content;
+  box-sizing: border-box;
   ${shadowStyle}
 `;
 
