@@ -17,26 +17,26 @@ export const vestSummaryColors = ["#ff4c4c", "#ff9999", "#f3fae5", "#b0dc4c"];
 export const greenVariationColor = "#006400";
 export const redVariationColor = "#8B0000";
 
-export const tooltipColor = loadingColor;
-export const warningColor = loadingColor;
+export const tooltipColor = "#f3ea5f";
+export const warningColor = "#f3ea5f";
 
-export const important24hChangeColor = loadingColor;
+export const important24hChangeColors = ["#f2efc2", "#f3ea5f"];
 
-export const removeColor = errorColor;
-export const addColor = successColor;
+export const removeColor = "#ff3f3f";
+export const addColor = "#8fce00";
 
 export const getPercentageBalanceColor = (value: number) => {
   if (value < 40) {
     return percentageBalanceColors[0];
-  } else if (value >= 40 && value <= 59) {
+  } else if (value < 60) {
     return percentageBalanceColors[1];
-  } else if (value >= 60 && value <= 79) {
+  } else if (value < 80) {
     return percentageBalanceColors[2];
-  } else if (value >= 80 && value <= 120) {
+  } else if (value < 120) {
     return percentageBalanceColors[3];
-  } else if (value >= 121 && value <= 140) {
+  } else if (value < 140) {
     return percentageBalanceColors[4];
-  } else if (value >= 141 && value <= 160) {
+  } else if (value < 160) {
     return percentageBalanceColors[5];
   } else {
     return percentageBalanceColors[6];
@@ -46,11 +46,11 @@ export const getPercentageBalanceColor = (value: number) => {
 export const getFiatRebalanceColor = (value: number) => {
   if (value < -200) {
     return fiatRebalanceColors[0];
-  } else if (value >= -200 && value <= -50) {
+  } else if (value < -50) {
     return fiatRebalanceColors[1];
-  } else if (value >= -50 && value <= 50) {
+  } else if (value < 50) {
     return fiatRebalanceColors[2];
-  } else if (value >= 50 && value <= 200) {
+  } else if (value < 200) {
     return fiatRebalanceColors[3];
   } else {
     return fiatRebalanceColors[4];
@@ -66,5 +66,19 @@ export const getVestSummaryColor = (value: number) => {
     return vestSummaryColors[2];
   } else {
     return vestSummaryColors[3];
+  }
+};
+
+export const getPriceChangeColor = (priceChange24: number, defaultColor: string) => {
+  if (priceChange24 < -10) {
+    return important24hChangeColors[1];
+  } else if (priceChange24 < -5) {
+    return important24hChangeColors[0];
+  } else if (priceChange24 < 5) {
+    return defaultColor;
+  } else if (priceChange24 < 10) {
+    return important24hChangeColors[0];
+  } else {
+    return important24hChangeColors[1];
   }
 };
