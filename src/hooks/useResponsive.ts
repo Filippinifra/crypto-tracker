@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useDimensions } from "./useDimensions";
+import { useDimensions } from "hooks/useDimensions";
 
 export const useResponsive = () => {
   const { isSmallWidth, isMediumWidth } = useDimensions();

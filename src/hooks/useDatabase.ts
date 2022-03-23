@@ -1,41 +1,29 @@
+import { WalletDivisionDTO } from "types/walletDivision";
 import { database } from "utils/firebase";
 import { child, get, ref, set } from "firebase/database";
 import { Paths } from "types/paths";
 import { PersonalCoins } from "types/personalCoins";
 import { User } from "firebase/auth";
+import { TotalVest } from "types/totalVest";
 
 export const useDatabase = (currentUser: User | undefined) => {
   const mainPath = "Users/" + currentUser?.uid + "/";
 
-  const setCoins = (data: PersonalCoins) => {
-    setDatabase(data, "coin");
-  };
+  const getCoins = () => getDatabase("coins");
 
-  const setDatabase = (data: any, path: Paths) => {
-    if (currentUser) {
-      try {
-        set(ref(database, mainPath + path), data);
-      } catch (error) {
-        console.log(["on set db error", error]);
-      }
-    }
-  };
+  const getWallet = () => getDatabase("wallet");
 
-  const getDatabase = async (path: Paths) => {
-    if (currentUser) {
-      try {
-        const response = await get(child(ref(database), mainPath + path));
-        if (response.exists()) {
-          return response.val();
-        } else {
-          return {};
-        }
-      } catch (error) {
-        console.log(["on get db error", error]);
-      }
-    }
-    return null;
-  };
+  const getVesting = () => getDatabase("vesting");
 
-  return { setCoins, getDatabase };
+  const setCoins = (data: PersonalCoins) => setDatabase(data, "coins");
+
+  const setWallet = (data: WalletDivisionDTO) => setDatabase(data, "wallet");
+
+  const setVesting = (data: TotalVest) => setDatabase(data, "vesting");
+
+  const setDatabase = (data: any, path: Paths) => set(ref(database, mainPath + path), data);
+
+  const getDatabase = async (path: Paths) => get(child(ref(database), mainPath + path));
+
+  return { getCoins, getWallet, getVesting, setCoins, setWallet, setVesting };
 };

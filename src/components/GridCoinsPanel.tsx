@@ -252,7 +252,6 @@ export const GridCoinsPanel: FC<{
             onSave={() => {
               setEditing(false);
               normalizeAndSetCoins();
-              showToast("Modifiche alle monete salvate correttamente", "success");
             }}
             onCancel={() => {
               setEditing(false);

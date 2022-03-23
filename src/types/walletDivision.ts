@@ -6,3 +6,11 @@ export interface WalletPiece {
   percentage: number;
   color: string;
 }
+
+export type WalletDivisionDTO = WalletPieceDTO[];
+
+export interface WalletPieceDTO {
+  typologyName: string;
+  typologyId: string;
+  percentage: number;
+}

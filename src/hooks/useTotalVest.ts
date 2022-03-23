@@ -1,18 +1,51 @@
 import { useEffect, useState } from "react";
 import { TotalVest } from "types/totalVest";
-
-const tempTotalVest: TotalVest = 3000;
+import { useAuth } from "hooks/useAuth";
+import { useDatabase } from "hooks/useDatabase";
+import { useToast } from "hooks/useToast";
 
 export const useTotalVest = () => {
   const [totalVest, setTotalVest] = useState<TotalVest>();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setTotalVest(tempTotalVest);
-      setLoading(false);
-    }, 1000);
-  }, [setTotalVest, setLoading]);
+  const { currentUser } = useAuth();
+  const { getVesting: getVestingDB, setVesting: setVestingDB } = useDatabase(currentUser || undefined);
 
-  return { totalVest, setTotalVest, loading };
+  const { showToast } = useToast();
+
+  const updateDatabase = async (newVesting: TotalVest) => {
+    try {
+      await setVestingDB(newVesting);
+      setTotalVest(newVesting);
+      showToast("Modifiche relative al totale investito salvate correttamente", "success");
+    } catch {
+      showToast("Modifiche relative al totale investito non salvate", "error");
+    }
+  };
+
+  const getInitialVest = async () => {
+    try {
+      const response = await getVestingDB();
+      const vest = response.val();
+      setTotalVest(vest || 0);
+    } catch {
+      showToast("Errore nel caricare il totale investito", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      getInitialVest();
+    }
+  }, [currentUser]);
+
+  return {
+    totalVest,
+    setTotalVest: (newVesting: TotalVest) => {
+      updateDatabase(newVesting);
+    },
+    loading,
+  };
 };

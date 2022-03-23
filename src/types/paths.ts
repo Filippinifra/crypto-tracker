@@ -1,1 +1,1 @@
-export type Paths = "coin";
+export type Paths = "coins" | "wallet" | "vesting";

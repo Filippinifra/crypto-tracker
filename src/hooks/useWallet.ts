@@ -1,52 +1,57 @@
+import { useAuth } from "hooks/useAuth";
 import { pieColorsDark } from "utils/colors";
-import { WalletDivision } from "types/walletDivision";
+import { WalletDivision, WalletDivisionDTO } from "types/walletDivision";
 import { useEffect, useState } from "react";
-
-const tempCoins: WalletDivision = [
-  {
-    typologyName: "Liquidity",
-    percentage: 30,
-    typologyId: "deb967d1-148e-4ea0-bcdc-052e85e686e9",
-  },
-  {
-    typologyName: "Bigs",
-    percentage: 30,
-    typologyId: "09fb2a92-ff9d-4013-8506-0fc96adf1d6f",
-  },
-  {
-    typologyName: "High cap",
-    percentage: 20,
-    typologyId: "864b535f-f39a-42ed-a5ca-ecd6170a73f2",
-  },
-  {
-    typologyName: "Mid cap",
-    percentage: 10,
-    typologyId: "2e18de78-7db1-42b3-8dba-9094689aaeb5",
-  },
-  {
-    typologyName: "Low cap",
-    percentage: 5,
-    typologyId: "f5c213f7-6b1e-4ca3-a8f4-7b8e508076bd",
-  },
-  {
-    typologyName: "Gambling",
-    percentage: 5,
-    typologyId: "ac34932d-ab2a-4f45-b0ea-e769b80bf96f",
-  },
-].map((e, i) => {
-  return { ...e, color: pieColorsDark[i] };
-});
+import { useDatabase } from "hooks/useDatabase";
+import { useToast } from "hooks/useToast";
 
 export const useWallet = () => {
-  const [wallet, setWallet] = useState<WalletDivision>();
+  const [wallet, setWallet] = useState<WalletDivisionDTO>();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setWallet(tempCoins);
-      setLoading(false);
-    }, 1000);
-  }, [setWallet, setLoading]);
+  const { currentUser } = useAuth();
+  const { getWallet: getWalletDB, setWallet: setWalletDB } = useDatabase(currentUser || undefined);
 
-  return { wallet, setWallet, loading };
+  const { showToast } = useToast();
+
+  const updateDatabase = async (newWallet: WalletDivision) => {
+    try {
+      const finalWallet: WalletDivisionDTO = newWallet.map(({ percentage, typologyId, typologyName }) => ({ percentage, typologyId, typologyName }));
+      await setWalletDB(finalWallet);
+      setWallet(finalWallet);
+      showToast("Modifiche relative all'allocazione del portafoglio salvate correttamente", "success");
+    } catch {
+      showToast("Modifiche relative all'allocazione del portafoglio non salvate", "error");
+    }
+  };
+
+  const getInitialWallet = async () => {
+    try {
+      const response = await getWalletDB();
+      const wallet = response.val();
+      setWallet(wallet || []);
+    } catch {
+      showToast("Errore nel caricare il portafoglio", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      getInitialWallet();
+    }
+  }, [currentUser]);
+
+  const walletWithColors = wallet?.map((e, i) => {
+    return { ...e, color: pieColorsDark[i] };
+  });
+
+  return {
+    wallet: walletWithColors,
+    setWallet: (newWallet: WalletDivision) => {
+      updateDatabase(newWallet);
+    },
+    loading,
+  };
 };

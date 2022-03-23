@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { WalletDivision, WalletPiece } from "types/walletDivision";
 import { addColor, headerGridWalletColor, pieColorsDark, removeColor } from "utils/colors";
@@ -106,7 +106,7 @@ const getRow = (
   ];
 };
 
-export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: Dispatch<SetStateAction<WalletDivision | undefined>>; sumFiatValue: number; symbolCurrency: CurrencySymbol }> = ({
+export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet: WalletDivision) => void; sumFiatValue: number; symbolCurrency: CurrencySymbol }> = ({
   wallet,
   setWallet,
   sumFiatValue,
@@ -119,10 +119,10 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: Dispatch<S
   const { showToast } = useToast();
 
   useEffect(() => {
-    if (wallet) {
+    if (wallet && !isEditing) {
       setTempWallet(wallet);
     }
-  }, [wallet]);
+  }, [wallet, isEditing]);
 
   // @ts-ignore
   const walletData: React.ReactElement<any, any>[] = tempWallet.reduce((r, walletDataRow, index) => {
@@ -153,11 +153,12 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: Dispatch<S
           {Boolean(tempWallet.length) && <WarningWalletAllocation wallet={tempWallet} />}
           <EditButtons
             isEditing={isEditing}
-            onEdit={() => setEditing(true)}
+            onEdit={() => {
+              setEditing(true);
+            }}
             onSave={() => {
               setWallet(tempWallet);
               setEditing(false);
-              showToast("Modifiche relative all'allocazione del portafoglio salvate correttamente", "success");
             }}
             onCancel={() => {
               setTempWallet(wallet);

@@ -1,5 +1,5 @@
 import { Grid } from "components/Grid";
-import { Dispatch, FC, FormEvent, KeyboardEvent, SetStateAction, useEffect, useState } from "react";
+import { FC, FormEvent, KeyboardEvent, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
 import { getVestSummaryColor, vestColor } from "utils/colors";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
@@ -9,6 +9,7 @@ import { Input } from "components/Input";
 import { useToast } from "hooks/useToast";
 import { EditButtons } from "components/EditButtons";
 import { useResponsive } from "hooks/useResponsive";
+import { TotalVest } from "types/totalVest";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string }> = ({ value, isTitle, color }) => {
   const style: React.CSSProperties = { width: "100%", backgroundColor: color || (isTitle ? vestColor : "white"), padding: 10, boxSizing: "border-box" };
@@ -20,7 +21,7 @@ const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string 
   );
 };
 
-export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: Dispatch<SetStateAction<number | undefined>>; sumFiatValue: number; symbolCurrency: CurrencySymbol }> = ({
+export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: (newVesting: TotalVest) => void; sumFiatValue: number; symbolCurrency: CurrencySymbol }> = ({
   totalVest,
   setTotalVest,
   sumFiatValue,
@@ -71,7 +72,6 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: Dispatch<Se
             setEditing(false);
             if (tempTotalVest) {
               setTotalVest(tempTotalVest);
-              showToast("Modifiche salvate correttamente al valore investito", "success");
             } else {
               setTempTotalVest(totalVest);
               showToast("Non puoi inserire 0 come valore investito", "error");

@@ -9,7 +9,7 @@ import { useAuth } from "hooks/useAuth";
 import { Typography } from "components/Typography";
 import { auth } from "utils/firebase";
 import { useResponsive } from "hooks/useResponsive";
-import { Spacer } from "./Spacer";
+import { Spacer } from "components/Spacer";
 
 const Wrapper = styled.div`
   height: auto;

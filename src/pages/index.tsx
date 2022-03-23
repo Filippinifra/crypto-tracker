@@ -13,7 +13,6 @@ import { useWallet } from "hooks/useWallet";
 import { useTotalVest } from "hooks/useTotalVest";
 import { VestSummaryPanel } from "components/VestSummaryPanel";
 import { DoughnutChart } from "components/DoughnutChart";
-import { pieColors, pieColorsDark } from "utils/colors";
 import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { Currency, getSymbolForCurrency } from "types/currency";
 import { getCrossedCoins, toRebalancingCoins } from "utils/coins";
@@ -24,6 +23,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
 import { useResponsive } from "hooks/useResponsive";
+import { pieColors, pieColorsDark } from "utils/colors";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -58,7 +58,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   const addCoin = (coin: AvailableCoin) => {
     const keyElement = uuidv4();
     const newCoin: PersonalCoin = { coins: 0, id: coin.id, keyElement, percentage: 0, platform: "", typologyId: "" };
-    setPersonalCoins((coins) => (coins ? [...coins, newCoin] : [newCoin]));
+    setPersonalCoins(personalCoins ? [...personalCoins, newCoin] : [newCoin]);
     showToast("Nuova moneta aggiunta", "success");
   };
 
@@ -67,6 +67,19 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   const crossedCoins = useMemo(() => getCrossedCoins(personalCoins || [], detailedCoins || []), [personalCoins, detailedCoins]);
 
   const sumFiatValue = crossedCoins?.reduce((r, { currentPrice, coins }) => r + (currentPrice || 0) * coins, 0);
+
+  const data = Boolean(Boolean(personalCoins) && Boolean(wallet) && totalVest !== undefined);
+  const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading && !detailedCoinsError;
+
+  const symbolCurrency = getSymbolForCurrency(prefCurrency || Currency.EUR) || "€";
+
+  const rebalancingCoins = toRebalancingCoins(crossedCoins, wallet || [], sumFiatValue);
+
+  const onSetRebalancingCoins = (rebalancingCoins: RebalancingCoins) => {
+    setPersonalCoins(
+      rebalancingCoins.map(({ coins, id, keyElement, allocationPercentage, platform, typologyId }) => ({ coins, id, keyElement, percentage: allocationPercentage, platform, typologyId }))
+    );
+  };
 
   const dataChart = {
     labels: wallet?.map(({ typologyName }) => typologyName),
@@ -81,19 +94,6 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
     ],
   };
 
-  const data = personalCoins && wallet && totalVest;
-  const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading && !detailedCoinsError;
-
-  const symbolCurrency = getSymbolForCurrency(prefCurrency || Currency.EUR) || "€";
-
-  const rebalancingCoins = toRebalancingCoins(crossedCoins, wallet || [], sumFiatValue);
-
-  const onSetRebalancingCoins = (rebalancingCoins: RebalancingCoins) => {
-    setPersonalCoins(
-      rebalancingCoins.map(({ coins, id, keyElement, allocationPercentage, platform, typologyId }) => ({ coins, id, keyElement, percentage: allocationPercentage, platform, typologyId }))
-    );
-  };
-
   const removesNotExistingTypologyId = useCallback(() => {
     const result = personalCoins?.map((pc) => {
       const isTypologyIdExising = Boolean(wallet?.some(({ typologyId }) => typologyId === pc.typologyId));
@@ -101,7 +101,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
       return isTypologyIdExising ? pc : { ...pc, typologyId: "" };
     });
 
-    if (wallet && JSON.stringify(personalCoins) !== JSON.stringify(result)) {
+    if (wallet && JSON.stringify(personalCoins) !== JSON.stringify(result) && result) {
       setPersonalCoins(result);
       showToast("Le monete assegnate a tipologie che sono state rimosse ora hanno una tipologia vuota", "warning");
     }
