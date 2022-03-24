@@ -4,12 +4,9 @@ import { Currency } from "types/currency";
 import { PersonalCoins } from "types/personalCoins";
 import { ChangeCurrencyButton } from "components/ChangeCurrencyButton";
 import { RefreshButton } from "components/RefreshButton";
-import { Button } from "components/Button";
-import { useAuth } from "hooks/useAuth";
-import { Typography } from "components/Typography";
-import { auth } from "utils/firebase";
 import { useResponsive } from "hooks/useResponsive";
 import { Spacer } from "components/Spacer";
+import { LogoutButton } from "./LogoutButton";
 
 const Wrapper = styled.div`
   height: auto;
@@ -29,20 +26,12 @@ export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetS
   setPrefCurrency,
   personalCoins,
 }) => {
-  const { setCurrentUser } = useAuth();
   const { getResponsiveValue } = useResponsive();
 
   return (
     <Wrapper style={{ padding: `40px ${getResponsiveValue([8, 15, 40])}px` }}>
       <ButtonsWrapper style={{ right: getResponsiveValue([8, 15, 40]) }}>
-        <Button
-          onClick={() => {
-            auth.signOut();
-            setCurrentUser(undefined);
-          }}
-        >
-          <Typography variant="body2">Esci</Typography>
-        </Button>
+        <LogoutButton />
         <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
         <RefreshButton personalCoins={personalCoins} prefCurrency={prefCurrency} />
       </ButtonsWrapper>

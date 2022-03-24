@@ -3,10 +3,10 @@ import { Typography } from "components/Typography";
 import styled from "styled-components";
 import { shadowStyle } from "components/ShadowStyle";
 import { Spacer } from "components/Spacer";
-import { useRouter } from "next/router";
-import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
 import { useResponsive } from "hooks/useResponsive";
+import { ReloadPageButton } from "components/ReloadPageButton";
+import { LogoutButton } from "components/LogoutButton";
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -27,7 +27,7 @@ const BoxesWrapper = styled.div`
 `;
 
 const BoxWrapper = styled.div`
-  padding: 40px 0;
+  padding: 40px 20px;
   border: 1px solid gray;
   text-align: center;
   width: 100%;
@@ -37,21 +37,22 @@ const BoxWrapper = styled.div`
 
 const ConfirmationPage = () => {
   const { currentUser } = useAuth();
-  const router = useRouter();
-  const { showToast } = useToast();
   const { getResponsiveValue } = useResponsive();
 
   return (
     <RoutesHandler>
       <PageWrapper>
         <BoxesWrapper style={{ maxWidth: getResponsiveValue([300, 400, 500]) }}>
+          <div style={{ display: "flex", gap: 20 }}>
+            <ReloadPageButton />
+            <LogoutButton />
+          </div>
           <BoxWrapper>
             <Typography variant="title">CONFERMA EMAIL</Typography>
             <Spacer size={40} />
-            <Typography variant="body">
-              Ti abbiamo inviato una mail di conferma all'indirizzo
-              {currentUser?.email}
-            </Typography>
+            <Typography variant="body">Ti abbiamo inviato una mail di conferma all'indirizzo</Typography>
+            <Spacer size={20} />
+            <Typography variant="body">{currentUser?.email}</Typography>
           </BoxWrapper>
         </BoxesWrapper>
       </PageWrapper>
