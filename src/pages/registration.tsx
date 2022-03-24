@@ -1,7 +1,10 @@
 import { KeyboardEvent, useState } from "react";
 import { useAuth } from "hooks/useAuth";
 import { auth } from "utils/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { Button } from "components/Button";
 import { Typography } from "components/Typography";
 import { Input } from "components/Input";
@@ -53,8 +56,13 @@ const SignupPage = () => {
 
   const onConfirm = async () => {
     try {
-      const response = await createUserWithEmailAndPassword(auth, email, password);
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       setCurrentUser(response.user);
+      sendEmailVerification(response.user);
     } catch (error) {
       showToast("Errore durante la fase di registrazione", "error");
     }
@@ -114,7 +122,9 @@ const SignupPage = () => {
               />
               <Spacer size={5} />
               <Typography variant="error" style={{ height: 10 }}>
-                {!password || validatePassword(password) ? "" : "Almeno 6 caratteri"}
+                {!password || validatePassword(password)
+                  ? ""
+                  : "Almeno 6 caratteri"}
               </Typography>
               <Spacer size={40} />
               <div style={{ display: "flex", justifyContent: "center" }}>

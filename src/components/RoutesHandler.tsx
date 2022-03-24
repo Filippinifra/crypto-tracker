@@ -9,6 +9,7 @@ const PublicAndPrivateRouter: FC = ({ children }) => {
 
   const publicRoutes = ["/login", "/registration"];
   const isPublicRoute = publicRoutes.some((r) => r === router.pathname);
+  const isConfirmationPath = router.pathname === "/confirmation";
 
   if (isLoadingUser) {
     return <LoadErrorHandler data={null} error={null} />;
@@ -21,7 +22,17 @@ const PublicAndPrivateRouter: FC = ({ children }) => {
     return <LoadErrorHandler data={null} error={null} />;
   }
 
-  if (currentUser && isPublicRoute) {
+  if (currentUser && !currentUser?.emailVerified && !isConfirmationPath) {
+    if (typeof window !== "undefined") {
+      router.replace("/confirmation");
+    }
+    return <LoadErrorHandler data={null} error={null} />;
+  }
+
+  if (
+    (currentUser && isPublicRoute) ||
+    (currentUser?.emailVerified && isConfirmationPath)
+  ) {
     if (typeof window !== "undefined") {
       router.replace("/");
     }
