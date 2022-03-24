@@ -86,7 +86,7 @@ const getRow = ({
           onChangeTypologyName(e.currentTarget.value);
         }}
         key={`wallet-${typologyId}-input`}
-        style={{ width: "100%" }}
+        style={{ width: "-webkit-fill-available" }}
       />
     ) : (
       <LabelCell color={colorTypology} key={`wallet-${typologyId}`} value={typologyName} style={{ fontWeight: 800, backgroundColor: colorRow }} />
