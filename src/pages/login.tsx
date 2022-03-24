@@ -11,7 +11,7 @@ import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
-import { validateMail, validatePassword } from "utils/validation";
+import { getCorrectErrorLabel, validateMail, validatePassword } from "utils/validation";
 import { useResponsive } from "hooks/useResponsive";
 
 const PageWrapper = styled.div`
@@ -113,9 +113,7 @@ const SigninPage = () => {
               />
               <Spacer size={5} />
               <Typography variant="error" style={{ height: 10 }}>
-                {!password || validatePassword(password)
-                  ? ""
-                  : "Almeno 6 caratteri"}
+                {!password || validatePassword(password) ? "" : getCorrectErrorLabel(password)}
               </Typography>
               <Spacer size={40} />
               <div style={{ display: "flex", justifyContent: "center" }}>

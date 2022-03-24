@@ -1,10 +1,7 @@
 import { KeyboardEvent, useState } from "react";
 import { useAuth } from "hooks/useAuth";
 import { auth } from "utils/firebase";
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { Button } from "components/Button";
 import { Typography } from "components/Typography";
 import { Input } from "components/Input";
@@ -14,7 +11,7 @@ import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
-import { validateMail, validatePassword } from "utils/validation";
+import { getCorrectErrorLabel, validateMail, validatePassword } from "utils/validation";
 import { useResponsive } from "hooks/useResponsive";
 
 const PageWrapper = styled.div`
@@ -56,11 +53,7 @@ const SignupPage = () => {
 
   const onConfirm = async () => {
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const response = await createUserWithEmailAndPassword(auth, email, password);
       setCurrentUser(response.user);
       sendEmailVerification(response.user);
     } catch (error) {
@@ -122,9 +115,7 @@ const SignupPage = () => {
               />
               <Spacer size={5} />
               <Typography variant="error" style={{ height: 10 }}>
-                {!password || validatePassword(password)
-                  ? ""
-                  : "Almeno 6 caratteri"}
+                {!password || validatePassword(password) ? "" : getCorrectErrorLabel(password)}
               </Typography>
               <Spacer size={40} />
               <div style={{ display: "flex", justifyContent: "center" }}>
