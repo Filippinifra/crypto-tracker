@@ -58,18 +58,27 @@ const getHeaders = () => {
     <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={"Bilanciamento percentuale"} key={`coin-table-perc-balancing`} />,
     <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={"Sbilanciamento valore"} key={`coin-table-value-balancing`} />,
     <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={"Numero coin per ribilancio"} key={`coin-table-coin-balancing`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={" "} key={`coin-table-coin-icons`} />,
   ];
 };
 
-const getRow = (
-  coin: RebalancingCoin,
-  index: number,
-  wallet: WalletDivision,
-  symbolCurrency: CurrencySymbol,
-  isEditing: boolean,
-  setTempRebalancing: React.Dispatch<React.SetStateAction<RebalancingCoins>>,
-  showToast: (message: string, type: ToastType) => void
-) => {
+const getRow = ({
+  coin,
+  index,
+  wallet,
+  symbolCurrency,
+  isEditing,
+  setTempRebalancing,
+  showToast,
+}: {
+  coin: RebalancingCoin;
+  index: number;
+  wallet: WalletDivision;
+  symbolCurrency: CurrencySymbol;
+  isEditing: boolean;
+  setTempRebalancing: React.Dispatch<React.SetStateAction<RebalancingCoins>>;
+  showToast: (message: string, type: ToastType) => void;
+}) => {
   const {
     symbolAndName,
     logoUrl,
@@ -113,18 +122,14 @@ const getRow = (
 
   return [
     isEditing ? (
-      <div style={{ position: "relative" }} key={`coin-table-${keyElement}-typology-editing-and-deleting`}>
-        <div style={{ position: "absolute", top: 10, left: -25 }}>
-          <Icon name="remove_circle" color={removeColor} style={{ cursor: "pointer" }} onClick={onRemoveCoins} />
-        </div>
-        <TypologyDropdown
-          options={typologyDrodpownOptions}
-          value={currentTypology ? currentTypology : null}
-          onChange={(e: any) => {
-            onEditTypology(e.value.typologyId);
-          }}
-        />
-      </div>
+      <TypologyDropdown
+        options={typologyDrodpownOptions}
+        value={currentTypology ? currentTypology : null}
+        onChange={(e: any) => {
+          onEditTypology(e.value.typologyId);
+        }}
+        key={`coin-table-${keyElement}-typology-editing`}
+      />
     ) : (
       <LabelCell
         textColor={colorTypologyText?.color || "black"}
@@ -184,6 +189,13 @@ const getRow = (
     <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={percentageBalance} key={`coin-table-${keyElement}-perc-balancing`} />,
     <LabelCell color={getFiatRebalanceColor(rebalancingInFiat)} value={`${getSplittedPrice(rebalancingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-balancing`} />,
     <LabelCell color={color} value={getSplittedPrice(rebalancingCoins)} key={`coin-table-${keyElement}-coin-balancing`} />,
+    isEditing ? (
+      <div style={{ backgroundColor: color, height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-delete-icon`}>
+        <Icon name="delete" color={removeColor} style={{ cursor: "pointer" }} onClick={onRemoveCoins} />
+      </div>
+    ) : (
+      <div style={{ backgroundColor: color }} key={`coin-table-${keyElement}-empty-space`}></div>
+    ),
   ];
 };
 
@@ -226,7 +238,7 @@ export const GridCoinsPanel: FC<{
 
   // @ts-ignore
   const coinsData: ReactElement<any, any>[] = tempRebalancing.reduce((r, coinData, index) => {
-    return [...r, ...getRow(coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing, showToast)];
+    return [...r, ...getRow({ coin: coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing, showToast })];
   }, []);
 
   const normalizeAndSetCoins = () => {
@@ -240,7 +252,7 @@ export const GridCoinsPanel: FC<{
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "space-between", maxWidth: 1285 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", maxWidth: 1310 }}>
         <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
         <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
           {!detailedCoinsLoading && <WarningCoinAllocation wallet={wallet} coins={tempRebalancing} />}
@@ -262,16 +274,18 @@ export const GridCoinsPanel: FC<{
       </div>
       <Spacer size={20} />
       {detailedCoinsLoading ? (
-        <Placeholder height={1000} width={1285} />
+        <Placeholder height={1000} width={1310} />
       ) : (
         <div style={{ width: "auto", overflow: "scroll", padding: "5px 0 0 5px" }}>
-          <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px"} data={[...getHeaders(), ...coinsData]} />
+          <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px 20px"} data={[...getHeaders(), ...coinsData]} />
           {!tempRebalancing.length && (
             <>
               <Spacer size={20} />
               <Typography variant="body">Inserisci almeno una moneta</Typography>
             </>
           )}
+          {/* KEEP This to allow dropdown to have space to be opened for last one coin */}
+          {isEditing && <Spacer size={40 * wallet.length} />}
         </div>
       )}
     </>
