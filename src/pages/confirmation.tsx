@@ -50,7 +50,7 @@ const ConfirmationPage = () => {
           <BoxWrapper>
             <Typography variant="title">CONFERMA EMAIL</Typography>
             <Spacer size={40} />
-            <Typography variant="body">Ti abbiamo inviato una mail di conferma all'indirizzo</Typography>
+            <Typography variant="body">{"Ti abbiamo inviato una mail di conferma all'indirizzo email"}</Typography>
             <Spacer size={20} />
             <Typography variant="body">{currentUser?.email}</Typography>
           </BoxWrapper>

@@ -6,7 +6,7 @@ import { ChangeCurrencyButton } from "components/ChangeCurrencyButton";
 import { RefreshButton } from "components/RefreshButton";
 import { useResponsive } from "hooks/useResponsive";
 import { Spacer } from "components/Spacer";
-import { LogoutButton } from "./LogoutButton";
+import { LogoutButton } from "components/LogoutButton";
 
 const Wrapper = styled.div`
   height: auto;

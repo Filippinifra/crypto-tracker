@@ -13,6 +13,7 @@ import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
 import { getCorrectErrorLabel, validateMail, validatePassword } from "utils/validation";
 import { useResponsive } from "hooks/useResponsive";
+import { loginPath } from "utils/paths";
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -73,7 +74,7 @@ const SignupPage = () => {
         <BoxesWrapper style={{ maxWidth: getResponsiveValue([300, 400, 500]) }}>
           <Button
             onClick={() => {
-              router.push("/login");
+              router.push(loginPath);
             }}
           >
             <Typography variant="body2">Accesso</Typography>
