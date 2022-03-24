@@ -4,7 +4,7 @@ export const validatePassword = (password: string) => atLeast6Chars(password) &&
 export const atLeast6Chars = (value: string) => value.length >= 6;
 export const existsNumber = (value: string) => /\d/.test(value);
 export const existsUppercaseAndLowercase = (value: string) => /(?=.*?[A-Z])/.test(value) && /(?=.*?[a-z])/.test(value);
-export const existsSpecialChar = (value: string) => /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(value);
+export const existsSpecialChar = (value: string) => /(?=.*?[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/.test(value);
 
 export const getCorrectErrorLabel = (password: string): string | undefined => {
   if (!atLeast6Chars(password)) {
