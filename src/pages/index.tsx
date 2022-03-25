@@ -24,6 +24,7 @@ import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
 import { useResponsive } from "hooks/useResponsive";
 import { pieColors, pieColorsDark } from "utils/colors";
+import { useAuth } from "hooks/useAuth";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -52,6 +53,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   const { detailedCoins, error: detailedCoinsError, loading: detailedCoinsLoading } = useDetailedCoins(personalCoins, prefCurrency);
   const { getResponsiveValue } = useResponsive();
   const [isEditingGridCoins, setEditingGridCoins] = useState(false);
+  const { currentUser } = useAuth();
 
   const { showToast } = useToast();
 
@@ -117,6 +119,13 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
     <RoutesHandler>
       <LoadErrorHandler data={data} error={error}>
         <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
+          <Typography variant="body">
+            {"Ciao "}
+            <Typography variant="body" style={{ fontWeight: 600 }} component="span">
+              {currentUser?.email}
+            </Typography>
+          </Typography>
+          <Spacer size={50} />
           <div style={{ display: "flex", flexDirection: getResponsiveValue(["column", "column", "row"]), alignItems: getResponsiveValue(["center", "", ""]) }}>
             <div style={{ marginRight: getResponsiveValue([0, 0, 150]), width: getResponsiveValue(["100%", "fit-content", "auto"]) }}>
               <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
