@@ -1,6 +1,5 @@
 import { PersonalCoins } from "types/personalCoins";
 import { DetailedCoins } from "types/detailedCoins";
-import { DetailedCoinsAPI } from "types/api/detailedCoinsAPI";
 import { WalletDivision } from "types/walletDivision";
 import { RebalancingCoins } from "types/rebalancingCoins";
 import { CrossedCoins } from "types/crossedCoins";
@@ -38,18 +37,6 @@ export const toRebalancingCoins = (crossedCoins: CrossedCoins, walletDivision: W
     };
   });
 };
-
-export const toDetailedCoin = (detailedCoins: DetailedCoinsAPI): DetailedCoins =>
-  detailedCoins
-    ? detailedCoins.map(({ id, symbol, name, image, current_price, price_change_percentage_24h }) => ({
-        id,
-        symbol,
-        name,
-        image,
-        currentPrice: current_price,
-        priceChangePercentage24h: price_change_percentage_24h,
-      }))
-    : [];
 
 type ExcludesFalse = <T>(x: T | false) => x is T;
 

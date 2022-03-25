@@ -3,6 +3,7 @@ import { PersonalCoins } from "types/personalCoins";
 import { useAuth } from "hooks/useAuth";
 import { useDatabase } from "hooks/useDatabase";
 import { useToast } from "hooks/useToast";
+import { toPersonalCoins } from "mappers/toPersonalCoins";
 
 export const usePersonalCoins = () => {
   const [personalCoins, setPersonalCoins] = useState<PersonalCoins>();
@@ -42,7 +43,7 @@ export const usePersonalCoins = () => {
   }, [currentUser]);
 
   return {
-    personalCoins,
+    personalCoins: personalCoins ? toPersonalCoins(personalCoins) : undefined,
     setPersonalCoins: (newCoins: PersonalCoins) => {
       updateDatabase(newCoins);
     },

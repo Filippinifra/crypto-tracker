@@ -1,10 +1,10 @@
-import { WalletDivisionDTO } from "types/walletDivision";
 import { database } from "utils/firebase";
 import { child, get, ref, set } from "firebase/database";
 import { Paths } from "types/paths";
-import { PersonalCoins } from "types/personalCoins";
-import { User } from "firebase/auth";
-import { TotalVest } from "types/totalVest";
+import { WalletDivisionDTO } from "types/api/walletDivisionAPI";
+import { TotalVestDTO } from "types/api/totalVestAPI";
+import { PersonalCoinsDTO } from "types/api/personalCoinsAPI";
+import { User } from "types/user";
 
 export const useDatabase = (currentUser: User | undefined) => {
   const mainPath = "Users/" + currentUser?.uid + "/";
@@ -15,11 +15,11 @@ export const useDatabase = (currentUser: User | undefined) => {
 
   const getVesting = () => getDatabase("vesting");
 
-  const setCoins = (data: PersonalCoins) => setDatabase(data, "coins");
+  const setCoins = (data: PersonalCoinsDTO) => setDatabase(data, "coins");
 
   const setWallet = (data: WalletDivisionDTO) => setDatabase(data, "wallet");
 
-  const setVesting = (data: TotalVest) => setDatabase(data, "vesting");
+  const setVesting = (data: TotalVestDTO) => setDatabase(data, "vesting");
 
   const setDatabase = (data: any, path: Paths) => set(ref(database, mainPath + path), data);
 

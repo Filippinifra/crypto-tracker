@@ -1,9 +1,10 @@
 import { useAuth } from "hooks/useAuth";
-import { pieColorsDark } from "utils/colors";
-import { WalletDivision, WalletDivisionDTO } from "types/walletDivision";
+import { WalletDivision } from "types/walletDivision";
 import { useEffect, useState } from "react";
 import { useDatabase } from "hooks/useDatabase";
 import { useToast } from "hooks/useToast";
+import { WalletDivisionDTO } from "types/api/walletDivisionAPI";
+import { toWallet } from "mappers/toWallet";
 
 export const useWallet = () => {
   const [wallet, setWallet] = useState<WalletDivisionDTO>();
@@ -18,7 +19,7 @@ export const useWallet = () => {
     try {
       const finalWallet: WalletDivisionDTO = newWallet.map(({ percentage, typologyId, typologyName }) => ({ percentage, typologyId, typologyName }));
       await setWalletDB(finalWallet);
-      setWallet(finalWallet);
+      setWallet(newWallet);
       showToast("Modifiche relative all'allocazione del portafoglio salvate correttamente", "success");
     } catch {
       showToast("Modifiche relative all'allocazione del portafoglio non salvate", "error");
@@ -28,7 +29,7 @@ export const useWallet = () => {
   const getInitialWallet = async () => {
     try {
       const response = await getWalletDB();
-      const wallet = response.val();
+      const wallet: WalletDivisionDTO = response.val();
       setWallet(wallet || []);
     } catch {
       showToast("Errore nel caricare il portafoglio", "error");
@@ -43,12 +44,8 @@ export const useWallet = () => {
     }
   }, [currentUser]);
 
-  const walletWithColors = wallet?.map((e, i) => {
-    return { ...e, color: pieColorsDark[i] };
-  });
-
   return {
-    wallet: walletWithColors,
+    wallet: wallet ? toWallet(wallet) : undefined,
     setWallet: (newWallet: WalletDivision) => {
       updateDatabase(newWallet);
     },

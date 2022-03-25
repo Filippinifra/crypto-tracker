@@ -1,6 +1,6 @@
-export type DetailedCoinsAPI = DetailedCoinAPI[];
+export type DetailedCoinsDTO = DetailedCoin[];
 
-export interface DetailedCoinAPI {
+interface DetailedCoin {
   id: string;
   symbol: string;
   name: string;

@@ -285,7 +285,7 @@ export const GridCoinsPanel: FC<{
             </>
           )}
           {/* KEEP This to allow dropdown to have space to be opened for last one coin */}
-          {isEditing && <Spacer size={40 * wallet.length} />}
+          {isEditing && <Spacer size={40 * wallet.length + 50} />}
         </div>
       )}
     </>

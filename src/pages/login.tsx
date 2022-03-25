@@ -14,6 +14,7 @@ import { RoutesHandler } from "components/RoutesHandler";
 import { getCorrectErrorLabel, validateMail, validatePassword } from "utils/validation";
 import { useResponsive } from "hooks/useResponsive";
 import { registrationPath } from "utils/paths";
+import { toUser } from "mappers/toUser";
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -54,7 +55,7 @@ const SigninPage = () => {
   const onConfirm = async () => {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      setCurrentUser(response.user);
+      setCurrentUser(toUser(response.user));
     } catch (error) {
       showToast("Errore durante la fase di accesso", "error");
     }

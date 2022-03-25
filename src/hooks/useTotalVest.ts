@@ -3,9 +3,11 @@ import { TotalVest } from "types/totalVest";
 import { useAuth } from "hooks/useAuth";
 import { useDatabase } from "hooks/useDatabase";
 import { useToast } from "hooks/useToast";
+import { TotalVestDTO } from "types/api/totalVestAPI";
+import { toTotalVest } from "mappers/toTotalVest";
 
 export const useTotalVest = () => {
-  const [totalVest, setTotalVest] = useState<TotalVest>();
+  const [totalVest, setTotalVest] = useState<TotalVestDTO>();
   const [loading, setLoading] = useState(true);
 
   const { currentUser } = useAuth();
@@ -42,7 +44,7 @@ export const useTotalVest = () => {
   }, [currentUser]);
 
   return {
-    totalVest,
+    totalVest: totalVest ? toTotalVest(totalVest) : 0,
     setTotalVest: (newVesting: TotalVest) => {
       updateDatabase(newVesting);
     },

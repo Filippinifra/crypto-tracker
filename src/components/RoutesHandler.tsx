@@ -23,14 +23,14 @@ const PublicAndPrivateRouter: FC = ({ children }) => {
     return <LoadErrorHandler data={null} error={null} />;
   }
 
-  if (currentUser && !currentUser?.emailVerified && !isConfirmationPath) {
+  if (currentUser && !currentUser?.verified && !isConfirmationPath) {
     if (isBrowser) {
       router.replace(confirmationPath);
     }
     return <LoadErrorHandler data={null} error={null} />;
   }
 
-  if ((currentUser && isPublicRoute) || (currentUser?.emailVerified && isConfirmationPath)) {
+  if ((currentUser && isPublicRoute) || (currentUser?.verified && isConfirmationPath)) {
     if (isBrowser) {
       router.replace(homePath);
     }
