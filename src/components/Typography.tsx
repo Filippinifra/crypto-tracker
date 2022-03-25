@@ -1,13 +1,14 @@
 import { FC } from "react";
 import { errorColor } from "utils/colors";
 
-export const Typography: FC<{ variant: "body" | "body2" | "title" | "error"; style?: React.CSSProperties }> = ({ children, variant, style, ...others }) => {
+export const Typography: FC<{ variant: "body" | "body2" | "title" | "error"; style?: React.CSSProperties; component?: string }> = ({ children, variant, style, component, ...others }) => {
   const styleVariant = styles[variant];
+  const Component = (component || "div") as any;
 
   return (
-    <div style={{ ...styleVariant, ...style }} {...others}>
+    <Component style={{ ...styleVariant, ...style }} {...others}>
       {children}
-    </div>
+    </Component>
   );
 };
 
