@@ -12,7 +12,6 @@ import { AvailableCoin, AvailableCoins } from "types/availableCoins";
 import { useWallet } from "hooks/useWallet";
 import { useTotalVest } from "hooks/useTotalVest";
 import { VestSummaryPanel } from "components/VestSummaryPanel";
-import { DoughnutChart } from "components/DoughnutChart";
 import { usePrefCurrency } from "hooks/usePrefCurrency";
 import { Currency, getSymbolForCurrency } from "types/currency";
 import { getCrossedCoins, toRebalancingCoins } from "utils/coins";
@@ -23,8 +22,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
 import { useResponsive } from "hooks/useResponsive";
-import { pieColors, pieColorsDark } from "utils/colors";
 import { useAuth } from "hooks/useAuth";
+import { DoughnutCompleteChart } from "components/DoughnutCompleteChart";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -83,19 +82,6 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
     );
   };
 
-  const dataChart = {
-    labels: wallet?.map(({ typologyName }) => typologyName),
-    datasets: [
-      {
-        label: "Tipologie portafoglio",
-        data: wallet?.map(({ percentage }) => percentage),
-        backgroundColor: pieColors,
-        borderColor: pieColorsDark,
-        borderWidth: 2,
-      },
-    ],
-  };
-
   const removesNotExistingTypologyId = useCallback(() => {
     const result = personalCoins?.map((pc) => {
       const isTypologyIdExising = Boolean(wallet?.some(({ typologyId }) => typologyId === pc.typologyId));
@@ -135,7 +121,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
               </div>
             </div>
             {getResponsiveValue([true, true, false]) && <Spacer size={40} />}
-            {Boolean(wallet?.length) && <DoughnutChart wallet={wallet || []} />}
+            {Boolean(wallet?.length) && <DoughnutCompleteChart personalCoins={personalCoins || []} wallet={wallet || []} />}
           </div>
           <Spacer size={50} />
           <Typography variant="body">Aggiungi le tue coins:</Typography>

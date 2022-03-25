@@ -3,7 +3,7 @@ import { ResponsiveSunburst } from "@nivo/sunburst";
 import { WalletDivision } from "types/walletDivision";
 import { PersonalCoin, PersonalCoins } from "types/personalCoins";
 
-export const DoughnutChart: FC<{ wallet: WalletDivision; personalCoins: PersonalCoins }> = ({ wallet, personalCoins }) => {
+export const DoughnutCompleteChart: FC<{ wallet: WalletDivision; personalCoins: PersonalCoins }> = ({ wallet, personalCoins }) => {
   const data = useMemo(
     () => ({
       name: "nivo",
