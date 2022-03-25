@@ -135,7 +135,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
               </div>
             </div>
             {getResponsiveValue([true, true, false]) && <Spacer size={40} />}
-            {Boolean(wallet?.length) && <DoughnutChart data={dataChart} />}
+            {Boolean(wallet?.length) && <DoughnutChart wallet={wallet || []} />}
           </div>
           <Spacer size={50} />
           <Typography variant="body">Aggiungi le tue coins:</Typography>
