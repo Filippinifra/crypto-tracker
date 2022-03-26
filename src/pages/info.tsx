@@ -1,12 +1,14 @@
+import { Button } from "components/Button";
 import { Spacer } from "components/Spacer";
 import { Typography } from "components/Typography";
+import { useResponsive } from "hooks/useResponsive";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { FC } from "react";
 import styled from "styled-components";
 import { registrationPath } from "utils/paths";
 
 const Wrapper = styled.div`
-  padding: 60px 50px;
   max-width: 700px;
   margin: 0px auto;
 `;
@@ -29,8 +31,11 @@ const ScreenImage: FC<{ src: string; style?: React.CSSProperties; width?: number
 };
 
 export default function InfoPage() {
+  const { getResponsiveValue } = useResponsive();
+  const router = useRouter();
+
   return (
-    <Wrapper>
+    <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>
       <div style={{ width: "100%", textAlign: "center" }}>
         <Typography variant="title">Benvenuto!</Typography>
       </div>
@@ -192,6 +197,18 @@ export default function InfoPage() {
       <Spacer size={30} />
       <Typography variant="body">Non ci resta perciò che augurarti buon ribilanciamento! A presto!</Typography>
       <Spacer size={30} />
+      <Typography variant="body">
+        Puoi contattarci a{" "}
+        <BoldLabel>
+          <a href="mailto:master.gunner96@yahoo.com" style={{ color: "black" }}>
+            master.gunner96@yahoo.com
+          </a>
+        </BoldLabel>
+      </Typography>
+      <Spacer size={30} />
+      <div style={{ width: "100%", textAlign: "center" }}>
+        <Button onClick={() => router.push("/")}>{"Home/Login"}</Button>
+      </div>
     </Wrapper>
   );
 }
