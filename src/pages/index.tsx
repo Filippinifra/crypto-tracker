@@ -54,6 +54,8 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   const [isEditingGridCoins, setEditingGridCoins] = useState(false);
   const { currentUser } = useAuth();
 
+  const showDoughnut = Boolean(wallet?.length) && Boolean(personalCoins?.length) && personalCoins?.some(({ typologyId, percentage }) => Boolean(typologyId) && Boolean(percentage));
+
   const { showToast } = useToast();
 
   const addCoin = (coin: AvailableCoin) => {
@@ -121,7 +123,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
               </div>
             </div>
             {getResponsiveValue([true, true, false]) && <Spacer size={40} />}
-            {Boolean(wallet?.length) && <DoughnutCompleteChart personalCoins={personalCoins || []} wallet={wallet || []} />}
+            {showDoughnut && <DoughnutCompleteChart personalCoins={personalCoins || []} wallet={wallet || []} />}
           </div>
           <Spacer size={50} />
           <Typography variant="body">Aggiungi le tue coins:</Typography>
