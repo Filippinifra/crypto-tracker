@@ -1,6 +1,6 @@
 import { database } from "utils/firebase";
 import { child, get, ref, set } from "firebase/database";
-import { Paths } from "types/paths";
+import { DatabasePaths } from "types/databasePaths";
 import { WalletDivisionDTO } from "types/api/walletDivisionAPI";
 import { TotalVestDTO } from "types/api/totalVestAPI";
 import { PersonalCoinsDTO } from "types/api/personalCoinsAPI";
@@ -21,9 +21,9 @@ export const useDatabase = (currentUser: User | undefined) => {
 
   const setVesting = (data: TotalVestDTO) => setDatabase(data, "vesting");
 
-  const setDatabase = (data: any, path: Paths) => set(ref(database, mainPath + path), data);
+  const setDatabase = (data: any, path: DatabasePaths) => set(ref(database, mainPath + path), data);
 
-  const getDatabase = async (path: Paths) => get(child(ref(database), mainPath + path));
+  const getDatabase = async (path: DatabasePaths) => get(child(ref(database), mainPath + path));
 
   return { getCoins, getWallet, getVesting, setCoins, setWallet, setVesting };
 };

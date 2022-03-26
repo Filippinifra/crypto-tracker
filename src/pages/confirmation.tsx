@@ -7,6 +7,7 @@ import { RoutesHandler } from "components/RoutesHandler";
 import { useResponsive } from "hooks/useResponsive";
 import { ReloadPageButton } from "components/ReloadPageButton";
 import { LogoutButton } from "components/LogoutButton";
+import { InfoButton } from "components/InfoButton";
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -44,6 +45,7 @@ const ConfirmationPage = () => {
       <PageWrapper>
         <BoxesWrapper style={{ maxWidth: getResponsiveValue([300, 400, 500]) }}>
           <div style={{ display: "flex", gap: 20 }}>
+            <InfoButton />
             <ReloadPageButton />
             <LogoutButton />
           </div>

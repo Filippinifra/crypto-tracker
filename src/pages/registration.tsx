@@ -15,6 +15,7 @@ import { getCorrectErrorLabel, validateMail, validatePassword } from "utils/vali
 import { useResponsive } from "hooks/useResponsive";
 import { loginPath } from "utils/paths";
 import { toUser } from "mappers/toUser";
+import { InfoButton } from "components/InfoButton";
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -73,13 +74,16 @@ const SignupPage = () => {
     <RoutesHandler>
       <PageWrapper>
         <BoxesWrapper style={{ maxWidth: getResponsiveValue([300, 400, 500]) }}>
-          <Button
-            onClick={() => {
-              router.push(loginPath);
-            }}
-          >
-            <Typography variant="body2">Accesso</Typography>
-          </Button>
+          <div style={{ display: "flex", gap: 20 }}>
+            <InfoButton />
+            <Button
+              onClick={() => {
+                router.push(loginPath);
+              }}
+            >
+              <Typography variant="body2">Accesso</Typography>
+            </Button>
+          </div>
           <BoxWrapper>
             <form>
               <Typography variant="title">REGISTRAZIONE</Typography>

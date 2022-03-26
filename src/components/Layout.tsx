@@ -7,6 +7,7 @@ import { RefreshButton } from "components/RefreshButton";
 import { useResponsive } from "hooks/useResponsive";
 import { Spacer } from "components/Spacer";
 import { LogoutButton } from "components/LogoutButton";
+import { InfoButton } from "components/InfoButton";
 
 const Wrapper = styled.div`
   height: auto;
@@ -31,6 +32,7 @@ export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetS
   return (
     <Wrapper style={{ padding: `40px ${getResponsiveValue([8, 15, 40])}px` }}>
       <ButtonsWrapper style={{ right: getResponsiveValue([8, 15, 40]) }}>
+        <InfoButton />
         <LogoutButton />
         <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
         <RefreshButton personalCoins={personalCoins} prefCurrency={prefCurrency} />
