@@ -6,3 +6,4 @@ export const infoPath = "/info";
 
 export const unloggedPaths = [loginPath, registrationPath];
 export const loggedPaths = [homePath, confirmationPath];
+export const logAndUnlogPaths = [infoPath];

@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { FC } from "react";
 import { isBrowser } from "utils/browser";
-import { confirmationPath, homePath, loginPath, unloggedPaths } from "utils/paths";
+import { confirmationPath, homePath, logAndUnlogPaths, loginPath, unloggedPaths } from "utils/paths";
 
 const PublicAndPrivateRouter: FC = ({ children }) => {
   const router = useRouter();
   const { currentUser, isLoadingUser } = useAuth();
 
-  const isPublicRoute = unloggedPaths.some((r) => r === router.pathname);
+  const isPublicRoute = [...logAndUnlogPaths, ...unloggedPaths].some((r) => r === router.pathname);
   const isConfirmationPath = router.pathname === confirmationPath;
 
   if (isLoadingUser) {
