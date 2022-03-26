@@ -24,7 +24,7 @@ const ScreenImage: FC<{ src: string; style?: React.CSSProperties; width?: number
     <div style={{ display: "flex", flexDirection: "column", width: width || "100%", alignItems: "center", ...style }}>
       <Typography variant="body2">Screenshot</Typography>
       <div style={{ border: "1px dotted red" }}>
-        <Image src={src} />
+        <Image src={src} alt="" />
       </div>
     </div>
   );
@@ -54,7 +54,7 @@ export default function InfoPage() {
       <Typography variant="body">
         Se non sai ancora cosa è il ribilanciamento di un portafoglio puoi leggere qualcosa in più{" "}
         <BoldLabel>
-          <a href="https://thecryptogateway.it/investimento-cosa-vuol-dire-ribilanciamento-del-portafoglio/" target={"_blank"} style={{ color: "black" }}>
+          <a href="https://thecryptogateway.it/investimento-cosa-vuol-dire-ribilanciamento-del-portafoglio/" rel="noreferrer" target={"_blank"} style={{ color: "black" }}>
             qui
           </a>
         </BoldLabel>{" "}
@@ -64,9 +64,11 @@ export default function InfoPage() {
       <Typography variant="body">
         Il tool che ti stiamo per presentare ti darà la possibilità di:
         <br />
-        <br />- salvare il totale di denaro investito fino ad oggi e calcolare in tempo reale perdita/guadagno in base alle criptovalute che possiedi <br />
-        <br />- strutturare un tuo portafoglio creando più "tipologie" di rischio e dedicando per ogni fetta la percentuale che riterrai più opportuna <br />
-        <br />- tracciare manualmente le criptovalute che possiedi: il numero di monete, la tipologia di appartenenza e l'allocazione dedicata alla moneta
+        <br />- salvare il totale di denaro investito fino ad oggi e calcolare in tempo reale perdita/guadagno in base alle criptovalute che possiedi
+        <br />
+        <br />- strutturare un tuo portafoglio creando più &quot;tipologie&quot; di rischio e dedicando per ogni fetta la percentuale che riterrai più opportuna
+        <br />
+        <br />- tracciare manualmente le criptovalute che possiedi: il numero di monete, la tipologia di appartenenza e l&apos;allocazione dedicata alla moneta
       </Typography>
       <Spacer size={30} />
       <Typography variant="body">
@@ -101,7 +103,7 @@ export default function InfoPage() {
       <Typography variant="body">Il primo passo per iniziare a sfruttare le funzionalità della piattaforma è quello di avere bene in mente come strutturare un portafoglio.</Typography>
       <Spacer size={30} />
       <Typography variant="body">
-        Come saprai è bene strutturare un portafoglio suddividendolo in tipologie di rischio, e allocando per ciascuna tipologia un'adeguata percentuale sul totale.
+        Come saprai è bene strutturare un portafoglio suddividendolo in tipologie di rischio, e allocando per ciascuna tipologia un&apos;adeguata percentuale sul totale.
       </Typography>
       <Spacer size={30} />
       <Typography variant="body">Ogni investitore ha una sua strategia! È importante capirla al più presto per mantenerla nel tempo e non agire con la pancia (ma con la testa).</Typography>
@@ -109,7 +111,7 @@ export default function InfoPage() {
       <Typography variant="body">
         Se desideri leggere qualcosa in più riguardo a come strutturare un portafoglio ti consigliamo di leggere{" "}
         <BoldLabel>
-          <a href="https://thecryptogateway.it/costruzione-del-portafoglio-di-investimento/" target={"_blank"} style={{ color: "black" }}>
+          <a href="https://thecryptogateway.it/costruzione-del-portafoglio-di-investimento/" rel="noreferrer" target={"_blank"} style={{ color: "black" }}>
             questo articolo
           </a>
         </BoldLabel>{" "}
@@ -119,7 +121,7 @@ export default function InfoPage() {
       <Typography variant="body">
         Clicca{" "}
         <BoldLabel>
-          <a href={registrationPath} target={"_blank"} style={{ color: "black" }}>
+          <a href={registrationPath} target={"_blank"} rel="noreferrer" style={{ color: "black" }}>
             qui
           </a>
         </BoldLabel>{" "}
@@ -160,8 +162,8 @@ export default function InfoPage() {
       <ScreenImage src={require("images/add-coins.png")} />
       <Spacer size={30} />
       <Typography variant="body">
-        Ora è arrivato il momento di modificare le monete: per ognuna scegli la tipologia di appartenenza, l'allocazione percentuale rispetto la tipologia (e non rispetto l'intero portafoglio) e il
-        numero di monete che possiedi.
+        Ora è arrivato il momento di modificare le monete: per ognuna scegli la tipologia di appartenenza, l&apos;allocazione percentuale rispetto la tipologia (e non rispetto l&apos;intero
+        portafoglio) e il numero di monete che possiedi.
       </Typography>
       <Spacer size={30} />
       <ScreenImage src={require("images/edit-coins.png")} />
@@ -174,7 +176,7 @@ export default function InfoPage() {
         Come vedi ci sono 3 colonne.
         <br />
         <br />- La prima colonna identifica quanto una moneta è bilanciata. Nella prima riga USDC è bilanciata al 45%, il che vuol dire che possiedi solamente il 45% di monete USDC che dovresti
-        possedere per avere l'asset bilanciato.
+        possedere per avere l&apos;asset bilanciato.
         <br />
         <br />- La seconda colonna identifica quanto sei sbilanciato in valore euro/dollaro. Nella prima riga USDC è sbilanciato di 108.85€, il che vuol dire che per ribilanciare la posizione dovresti
         comprare un totale di USDC per un controvalore di 108.85€.
