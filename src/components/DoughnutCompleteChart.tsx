@@ -2,8 +2,11 @@ import React, { FC, useMemo } from "react";
 import { ResponsiveSunburst } from "@nivo/sunburst";
 import { WalletDivision } from "types/walletDivision";
 import { PersonalCoin, PersonalCoins } from "types/personalCoins";
+import { useResponsive } from "hooks/useResponsive";
 
 export const DoughnutCompleteChart: FC<{ wallet: WalletDivision; personalCoins: PersonalCoins }> = ({ wallet, personalCoins }) => {
+  const { getCustomResponsiveValue } = useResponsive();
+
   const data = useMemo(
     () => ({
       name: "nivo",
@@ -40,8 +43,16 @@ export const DoughnutCompleteChart: FC<{ wallet: WalletDivision; personalCoins: 
     [wallet, personalCoins]
   );
 
+  const dimensionValue = getCustomResponsiveValue([
+    [1200, 500],
+    [1050, 400],
+    [950, 300],
+    [800, 400],
+    [450, 300],
+  ]);
+
   return (
-    <div style={{ width: 300, height: 300 }}>
+    <div style={{ width: dimensionValue, height: dimensionValue }}>
       <ResponsiveSunburst
         data={data}
         margin={{ top: 10, right: 10, bottom: 10, left: 10 }}

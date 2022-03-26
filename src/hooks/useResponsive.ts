@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useDimensions } from "hooks/useDimensions";
 
 export const useResponsive = () => {
-  const { isSmallWidth, isMediumWidth } = useDimensions();
+  const { isSmallWidth, isMediumWidth, width } = useDimensions();
 
   const calculateValue = useCallback(
     ([smallValue, mediumValue, largeValue]: any[]) => {
@@ -17,5 +17,13 @@ export const useResponsive = () => {
     [isSmallWidth, isMediumWidth]
   );
 
-  return { getResponsiveValue: calculateValue };
+  const getCustomResponsiveValue = useCallback(
+    (descendantsStairsValue: [viewPort: number, value: any][]) => {
+      const stair = descendantsStairsValue.find(([viewPort]) => viewPort < width);
+      return stair ? stair?.[1] : descendantsStairsValue[descendantsStairsValue.length - 1][1];
+    },
+    [width]
+  );
+
+  return { getResponsiveValue: calculateValue, getCustomResponsiveValue };
 };
