@@ -48,7 +48,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   const { personalCoins, setPersonalCoins, loading: coinsLoading } = usePersonalCoins();
   const { wallet, setWallet, loading: walletLoading } = useWallet();
   const { totalVest, setTotalVest, loading: totalVestLoading } = useTotalVest();
-  const { prefCurrency, setPrefCurrency } = usePrefCurrency();
+  const { prefCurrency, setPrefCurrency, loading: prefCurrencyLoading } = usePrefCurrency();
   const { detailedCoins, error: detailedCoinsError, loading: detailedCoinsLoading } = useDetailedCoins(personalCoins, prefCurrency);
   const { getResponsiveValue } = useResponsive();
   const [isEditingGridCoins, setEditingGridCoins] = useState(false);
@@ -71,9 +71,9 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
 
   const sumFiatValue = crossedCoins?.reduce((r, { currentPrice, coins }) => r + (currentPrice || 0) * coins, 0);
 
-  const data = Boolean(Boolean(personalCoins) && Boolean(wallet) && totalVest !== undefined);
-  const loading = !coinsLoading && !walletLoading && !totalVestLoading;
-  const error = !personalCoins && !wallet && !totalVest && !detailedCoinsError && loading;
+  const data = Boolean(Boolean(personalCoins) && Boolean(wallet) && totalVest !== undefined && prefCurrency !== undefined);
+  const loading = !coinsLoading && !walletLoading && !totalVestLoading && !prefCurrencyLoading;
+  const error = !personalCoins && !wallet && !totalVest && !prefCurrencyLoading && !detailedCoinsError && loading;
 
   const symbolCurrency = getSymbolForCurrency(prefCurrency);
 

@@ -1,1 +1,3 @@
-export type PrefCurrencyDTO = number;
+import { Currency } from "types/currency";
+
+export type PrefCurrencyDTO = Currency;
