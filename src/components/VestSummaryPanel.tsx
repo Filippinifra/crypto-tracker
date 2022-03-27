@@ -93,8 +93,8 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: (newVesting
             <LabelCell value={"Totale investito"} key={"total-vest-title"} isTitle />,
             isEditing ? (
               <Input
-                value={tempTotalVest}
                 type="number"
+                value={tempTotalVest || ""}
                 onChange={(e: FormEvent<HTMLInputElement>) => {
                   const value = Number(e.currentTarget.value);
                   if (value >= 0) {

@@ -93,7 +93,7 @@ const getRow = ({
     ),
     isEditing ? (
       <Input
-        value={percentage}
+        value={percentage || ""}
         onChange={(e) => {
           const value = Number(e.currentTarget.value);
           if (value < 0) {

@@ -145,7 +145,7 @@ const getRow = ({
     <LabelCell color={color} value={symbolAndName} key={`coin-table-${keyElement}-name`} />,
     isEditing ? (
       <Input
-        value={allocationPercentage}
+        value={allocationPercentage || ""}
         type="number"
         onChange={(e: React.FormEvent<HTMLInputElement>) => {
           const value = Number(e.currentTarget.value);
@@ -170,7 +170,7 @@ const getRow = ({
     />,
     isEditing ? (
       <Input
-        value={coins}
+        value={coins || ""}
         type="number"
         onChange={(e: React.FormEvent<HTMLInputElement>) => {
           const value = Number(e.currentTarget.value);
