@@ -72,7 +72,8 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   const sumFiatValue = crossedCoins?.reduce((r, { currentPrice, coins }) => r + (currentPrice || 0) * coins, 0);
 
   const data = Boolean(Boolean(personalCoins) && Boolean(wallet) && totalVest !== undefined);
-  const error = !personalCoins && !coinsLoading && !wallet && !walletLoading && !totalVest && !totalVestLoading && !detailedCoinsError;
+  const loading = !coinsLoading && !walletLoading && !totalVestLoading;
+  const error = !personalCoins && !wallet && !totalVest && !detailedCoinsError && loading;
 
   const symbolCurrency = getSymbolForCurrency(prefCurrency || Currency.EUR) || "€";
 
@@ -98,10 +99,12 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   }, [personalCoins, wallet, setPersonalCoins, showToast]);
 
   useEffect(() => {
-    removesNotExistingTypologyId();
+    if (!loading && !error) {
+      removesNotExistingTypologyId();
+    }
 
     return () => removesNotExistingTypologyId();
-  }, [wallet, removesNotExistingTypologyId]);
+  }, [wallet, loading, error, removesNotExistingTypologyId]);
 
   return (
     <RoutesHandler>
