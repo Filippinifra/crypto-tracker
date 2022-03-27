@@ -36,7 +36,7 @@ export const DoughnutCompleteChart: FC<{ wallet: WalletDivision; personalCoins: 
         return {
           name: typologyName,
           color,
-          children: noMultipleTypologyCoins.map(({ percentage, id }) => ({ name: id, loc: percentage * walletPercentage })),
+          children: noMultipleTypologyCoins.map(({ percentage, id }) => ({ name: id, loc: percentage * walletPercentage })).sort(({ loc: loc1 }, { loc: loc2 }) => loc2 - loc1),
         };
       }),
     }),
