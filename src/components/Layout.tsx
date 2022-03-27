@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import styled from "styled-components";
 import { Currency } from "types/currency";
 import { PersonalCoins } from "types/personalCoins";
@@ -21,12 +21,7 @@ const ButtonsWrapper = styled.div`
   z-index: 99999;
 `;
 
-export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>>; personalCoins: PersonalCoins }> = ({
-  children,
-  prefCurrency,
-  setPrefCurrency,
-  personalCoins,
-}) => {
+export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: (newCurrency: Currency) => void; personalCoins: PersonalCoins }> = ({ children, prefCurrency, setPrefCurrency, personalCoins }) => {
   const { getResponsiveValue } = useResponsive();
 
   return (

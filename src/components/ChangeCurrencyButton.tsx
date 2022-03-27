@@ -1,17 +1,12 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import { Currency, getSymbolForCurrency } from "types/currency";
 import { Button } from "components/Button";
 import { Typography } from "components/Typography";
-import { useToast } from "hooks/useToast";
 
-export const ChangeCurrencyButton: FC<{ prefCurrency: Currency; setPrefCurrency: Dispatch<SetStateAction<Currency | undefined>> }> = ({ prefCurrency, setPrefCurrency }) => {
-  const { showToast } = useToast();
-
+export const ChangeCurrencyButton: FC<{ prefCurrency: Currency; setPrefCurrency: (newCurrency: Currency) => void }> = ({ prefCurrency, setPrefCurrency }) => {
   const changeCurrency = () => {
     const newCurrency = prefCurrency === Currency.EUR ? Currency.USD : Currency.EUR;
     setPrefCurrency(newCurrency);
-    showToast(`La valuta è stata cambiata in ${Currency[newCurrency]}`, "success");
-    showToast(`Attenzione! È necessario cambiare manualmente il totale investito in ${Currency[newCurrency]}`, "warning");
   };
 
   return prefCurrency !== undefined ? (

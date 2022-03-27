@@ -16,5 +16,5 @@ const currencyNameMap = new Map<Currency, CurrencyName>([
   [Currency.USD, "usd"],
 ]);
 
-export const getSymbolForCurrency = (currency: Currency): CurrencySymbol | undefined => currencySymbolMap.get(currency);
-export const getNameForCurrency = (currency: Currency): CurrencyName | undefined => currencyNameMap.get(currency);
+export const getSymbolForCurrency = (currency: Currency): CurrencySymbol => currencySymbolMap.get(currency) || "€";
+export const getNameForCurrency = (currency: Currency): CurrencyName => currencyNameMap.get(currency) || "eur";

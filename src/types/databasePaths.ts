@@ -1,1 +1,1 @@
-export type DatabasePaths = "coins" | "wallet" | "vesting";
+export type DatabasePaths = "coins" | "wallet" | "vesting" | "currency";

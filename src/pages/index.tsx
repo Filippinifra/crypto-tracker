@@ -75,7 +75,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   const loading = !coinsLoading && !walletLoading && !totalVestLoading;
   const error = !personalCoins && !wallet && !totalVest && !detailedCoinsError && loading;
 
-  const symbolCurrency = getSymbolForCurrency(prefCurrency || Currency.EUR) || "€";
+  const symbolCurrency = getSymbolForCurrency(prefCurrency);
 
   const rebalancingCoins = toRebalancingCoins(crossedCoins, wallet || [], sumFiatValue);
 
@@ -109,7 +109,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   return (
     <RoutesHandler>
       <LoadErrorHandler data={data} error={error}>
-        <Layout prefCurrency={prefCurrency || Currency.EUR} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
+        <Layout prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
           <Typography variant="body">
             {"Ciao "}
             <Typography variant="body" style={{ fontWeight: 600 }} component="span">
