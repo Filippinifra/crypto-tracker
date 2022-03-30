@@ -42,7 +42,7 @@ const BoxWrapper = styled.div`
   ${shadowStyle};
 `;
 
-const SigninPage = () => {
+const RecoverPasswordPage = () => {
   const [email, setEmail] = useState("");
   const router = useRouter();
   const { showToast } = useToast();
@@ -112,4 +112,4 @@ const SigninPage = () => {
   );
 };
 
-export default SigninPage;
+export default RecoverPasswordPage;
