@@ -10,11 +10,10 @@ import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
-import { getCorrectPasswordErrorLabel, validateMail, validatePassword } from "utils/validation";
+import { getCorrectPasswordErrorLabel, validatePassword } from "utils/validation";
 import { useResponsive } from "hooks/useResponsive";
 import { loginPath } from "utils/paths";
 import { InfoButton } from "components/InfoButton";
-import { useLocation, useSearchParams } from "react-router-dom";
 
 const PageWrapper = styled.div`
   width: 100%;

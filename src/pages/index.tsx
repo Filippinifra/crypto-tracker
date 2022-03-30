@@ -13,7 +13,7 @@ import { useWallet } from "hooks/useWallet";
 import { useTotalVest } from "hooks/useTotalVest";
 import { VestSummaryPanel } from "components/VestSummaryPanel";
 import { usePrefCurrency } from "hooks/usePrefCurrency";
-import { Currency, getSymbolForCurrency } from "types/currency";
+import { getSymbolForCurrency } from "types/currency";
 import { getCrossedCoins, toRebalancingCoins } from "utils/coins";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { RebalancingCoins } from "types/rebalancingCoins";
