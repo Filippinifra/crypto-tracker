@@ -1,10 +1,7 @@
 import { KeyboardEvent, useState } from "react";
 import { useAuth } from "hooks/useAuth";
 import { auth } from "utils/firebase";
-import {
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Button } from "components/Button";
 import { Typography } from "components/Typography";
 import { Input } from "components/Input";
@@ -14,13 +11,9 @@ import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
-import {
-  getCorrectErrorLabel,
-  validateMail,
-  validatePassword,
-} from "utils/validation";
+import { getCorrectErrorLabel, validateMail, validatePassword } from "utils/validation";
 import { useResponsive } from "hooks/useResponsive";
-import { registrationPath } from "utils/paths";
+import { recoverPasswordPath, registrationPath } from "utils/paths";
 import { toUser } from "mappers/toUser";
 import { InfoButton } from "components/InfoButton";
 
@@ -54,7 +47,6 @@ const BoxWrapper = styled.div`
 const SigninPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordChange, setPasswordChange] = useState(false);
   const { setCurrentUser } = useAuth();
   const router = useRouter();
   const { showToast } = useToast();
@@ -70,75 +62,13 @@ const SigninPage = () => {
     }
   };
 
-  const onPasswordReset = async () => {
-    try {
-      await sendPasswordResetEmail(auth, email);
-      showToast(
-        "Controlla la tua casella di posta per recuperare la password",
-        "success"
-      );
-      setEmail("");
-      setPasswordChange(false);
-    } catch (error) {
-      showToast("Errore durante il recupero della password", "error");
-    }
-  };
-
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && !disabled) {
       onConfirm();
     }
   };
 
-  return passwordChange ? (
-    <RoutesHandler>
-      <PageWrapper>
-        <BoxesWrapper style={{ maxWidth: getResponsiveValue([300, 400, 500]) }}>
-          <div style={{ display: "flex", gap: 20 }}>
-            <InfoButton />
-            <Button
-              onClick={() => {
-                setPasswordChange(false);
-              }}
-            >
-              <Typography variant="body2">Accesso</Typography>
-            </Button>
-          </div>
-          <BoxWrapper>
-            <form>
-              <Typography variant="title">Recupero Password</Typography>
-              <Spacer size={40} />
-              <Typography variant="body">Email</Typography>
-              <Spacer size={10} />
-              <Input
-                type="text"
-                placeholder="Inserisci la email"
-                name="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.currentTarget.value);
-                }}
-                autocomplete={"email"}
-                onKeyDown={handleKeyPress}
-              />
-              <Spacer size={5} />
-              <Typography variant="error" style={{ height: 10 }}>
-                {!email || validateMail(email) ? "" : "Email non valida"}
-              </Typography>
-              <Spacer size={25} />
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button onClick={onPasswordReset}>
-                  <Typography variant="body2">
-                    Invia Mail di Recupero
-                  </Typography>
-                </Button>
-              </div>
-            </form>
-          </BoxWrapper>
-        </BoxesWrapper>
-      </PageWrapper>
-    </RoutesHandler>
-  ) : (
+  return (
     <RoutesHandler>
       <PageWrapper>
         <BoxesWrapper style={{ maxWidth: getResponsiveValue([300, 400, 500]) }}>
@@ -189,21 +119,19 @@ const SigninPage = () => {
               />
               <Spacer size={5} />
               <Typography variant="error" style={{ height: 10 }}>
-                {!password || validatePassword(password)
-                  ? ""
-                  : getCorrectErrorLabel(password)}
+                {!password || validatePassword(password) ? "" : getCorrectErrorLabel(password)}
               </Typography>
               <Spacer size={20} />
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button
-                  onClick={() => {
-                    setPasswordChange(true);
-                  }}
-                >
-                  <Typography variant="body2">Recupera Password</Typography>
-                </Button>
+              <div
+                onClick={() => {
+                  router.push(recoverPasswordPath);
+                }}
+              >
+                <Typography variant="body2" style={{ cursor: "pointer", textDecoration: "underline" }}>
+                  Recupera Password
+                </Typography>
               </div>
-              <Spacer size={20} />
+              <Spacer size={30} />
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button onClick={onConfirm} disabled={disabled}>
                   <Typography variant="body2">Entra</Typography>
@@ -218,8 +146,3 @@ const SigninPage = () => {
 };
 
 export default SigninPage;
-
-/* 
-<Button onClick={onPasswordReset}>
-<Typography variant="body2">Recupera Password</Typography>
-</Button> */
