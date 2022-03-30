@@ -58,7 +58,7 @@ const SignupPage = () => {
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
       setCurrentUser(toUser(response.user));
-      sendEmailVerification(response.user);
+      sendEmailVerification(response.user, { url: "https://crypto-tracker-rebalancing.vercel.app" });
     } catch (error) {
       showToast("Errore durante la fase di registrazione", "error");
     }
