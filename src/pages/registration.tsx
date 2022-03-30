@@ -11,7 +11,7 @@ import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "hooks/useToast";
 import { RoutesHandler } from "components/RoutesHandler";
-import { getCorrectErrorLabel, validateMail, validatePassword } from "utils/validation";
+import { getCorrectPasswordErrorLabel, validateMail, validatePassword } from "utils/validation";
 import { useResponsive } from "hooks/useResponsive";
 import { loginPath } from "utils/paths";
 import { toUser } from "mappers/toUser";
@@ -121,7 +121,7 @@ const SignupPage = () => {
               />
               <Spacer size={5} />
               <Typography variant="error" style={{ height: 10 }}>
-                {!password || validatePassword(password) ? "" : getCorrectErrorLabel(password)}
+                {!password || validatePassword(password) ? "" : getCorrectPasswordErrorLabel(password)}
               </Typography>
               <Spacer size={40} />
               <div style={{ display: "flex", justifyContent: "center" }}>
