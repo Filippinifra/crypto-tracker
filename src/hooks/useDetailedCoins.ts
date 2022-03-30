@@ -22,10 +22,10 @@ export const useDetailedCoins = (coins: PersonalCoins | undefined, prefCurrency:
     const newData = await mutate();
 
     if (JSON.stringify(newData) !== JSON.stringify(previousData)) {
-      showToast("I dati sono stati ricaricati", "success");
+      showToast("I prezzi sono stati aggiornati", "success");
       setPreviousData(newData);
     } else {
-      showToast("I dati sono già aggiornati", "warning");
+      showToast("I prezzi sono già aggiornati", "warning");
     }
   };
 

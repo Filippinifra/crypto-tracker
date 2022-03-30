@@ -15,7 +15,7 @@ export const RefreshButton: FC<{ personalCoins: PersonalCoins; prefCurrency: Cur
       }}
       disabled={!personalCoins.length}
     >
-      <Typography variant="body2">Ricarica</Typography>
+      <Typography variant="body2">Aggiorna prezzi</Typography>
     </Button>
   );
 };

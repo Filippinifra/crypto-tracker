@@ -16,7 +16,6 @@ const Wrapper = styled.div`
 const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: 30px;
   position: fixed;
   z-index: 99999;
 `;
@@ -26,7 +25,7 @@ export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: (newCurrency:
 
   return (
     <Wrapper style={{ padding: `40px ${getResponsiveValue([8, 15, 40])}px` }}>
-      <ButtonsWrapper style={{ right: getResponsiveValue([8, 15, 40]) }}>
+      <ButtonsWrapper style={{ right: getResponsiveValue([8, 15, 40]), gap: getResponsiveValue([20, 25, 30]) }}>
         <InfoButton />
         <LogoutButton />
         <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
