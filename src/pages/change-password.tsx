@@ -7,7 +7,6 @@ import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "hooks/useToast";
-import { RoutesHandler } from "components/RoutesHandler";
 import { getCorrectPasswordErrorLabel, validatePassword } from "utils/validation";
 import { loginPath } from "utils/paths";
 import { InfoButton } from "components/InfoButton";
@@ -38,48 +37,46 @@ const SigninPage = () => {
   };
 
   return (
-    <RoutesHandler>
-      <CenteredBoxPageLayout
-        headerButtons={
-          <>
-            <InfoButton />
-            <Button
-              onClick={() => {
-                router.push(loginPath);
-              }}
-            >
-              <Typography variant="body2">Torna alla pagina di accesso</Typography>
-            </Button>
-          </>
-        }
-      >
-        <Typography variant="title">CAMBIO PASSWORD</Typography>
-        <Spacer size={40} />
-        <Typography variant="body">Nuova password</Typography>
-        <Spacer size={10} />
-        <Input
-          type="password"
-          placeholder="Inserisci la nuova password"
-          name="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.currentTarget.value);
-          }}
-          autocomplete={"password"}
-          onKeyDown={handleKeyPress}
-        />
-        <Spacer size={5} />
-        <Typography variant="error" style={{ height: 10 }}>
-          {!password || validatePassword(password) ? "" : getCorrectPasswordErrorLabel(password)}
-        </Typography>
-        <Spacer size={25} />
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Button onClick={onPasswordReset} disabled={disabled}>
-            <Typography variant="body2">Conferma nuova password</Typography>
+    <CenteredBoxPageLayout
+      headerButtons={
+        <>
+          <InfoButton />
+          <Button
+            onClick={() => {
+              router.push(loginPath);
+            }}
+          >
+            <Typography variant="body2">Torna alla pagina di accesso</Typography>
           </Button>
-        </div>
-      </CenteredBoxPageLayout>
-    </RoutesHandler>
+        </>
+      }
+    >
+      <Typography variant="title">CAMBIO PASSWORD</Typography>
+      <Spacer size={40} />
+      <Typography variant="body">Nuova password</Typography>
+      <Spacer size={10} />
+      <Input
+        type="password"
+        placeholder="Inserisci la nuova password"
+        name="password"
+        value={password}
+        onChange={(e) => {
+          setPassword(e.currentTarget.value);
+        }}
+        autocomplete={"password"}
+        onKeyDown={handleKeyPress}
+      />
+      <Spacer size={5} />
+      <Typography variant="error" style={{ height: 10 }}>
+        {!password || validatePassword(password) ? "" : getCorrectPasswordErrorLabel(password)}
+      </Typography>
+      <Spacer size={25} />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Button onClick={onPasswordReset} disabled={disabled}>
+          <Typography variant="body2">Conferma nuova password</Typography>
+        </Button>
+      </div>
+    </CenteredBoxPageLayout>
   );
 };
 

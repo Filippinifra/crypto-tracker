@@ -8,7 +8,6 @@ import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "hooks/useToast";
-import { RoutesHandler } from "components/RoutesHandler";
 import { getCorrectPasswordErrorLabel, validateMail, validatePassword } from "utils/validation";
 import { loginPath } from "utils/paths";
 import { toUser } from "mappers/toUser";
@@ -40,68 +39,66 @@ const SignupPage = () => {
   };
 
   return (
-    <RoutesHandler>
-      <CenteredBoxPageLayout
-        headerButtons={
-          <>
-            <InfoButton />
-            <Button
-              onClick={() => {
-                router.push(loginPath);
-              }}
-            >
-              <Typography variant="body2">Accesso</Typography>
-            </Button>
-          </>
-        }
-      >
-        <form>
-          <Typography variant="title">REGISTRAZIONE</Typography>
-          <Spacer size={40} />
-          <Typography variant="body">Email</Typography>
-          <Spacer size={10} />
-          <Input
-            type="text"
-            placeholder="Inserisci la email"
-            name="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.currentTarget.value);
+    <CenteredBoxPageLayout
+      headerButtons={
+        <>
+          <InfoButton />
+          <Button
+            onClick={() => {
+              router.push(loginPath);
             }}
-            autocomplete={"email"}
-            onKeyDown={handleKeyPress}
-          />
-          <Spacer size={5} />
-          <Typography variant="error" style={{ height: 10 }}>
-            {!email || validateMail(email) ? "" : "Email non valida"}
-          </Typography>
-          <Spacer size={25} />
-          <Typography variant="body">Password</Typography>
-          <Spacer size={10} />
-          <Input
-            type="password"
-            value={password}
-            placeholder="Inserisci la password"
-            name="psw"
-            onChange={(e) => {
-              setPassword(e.currentTarget.value);
-            }}
-            autocomplete={"password"}
-            onKeyDown={handleKeyPress}
-          />
-          <Spacer size={5} />
-          <Typography variant="error" style={{ height: 10 }}>
-            {!password || validatePassword(password) ? "" : getCorrectPasswordErrorLabel(password)}
-          </Typography>
-          <Spacer size={40} />
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button onClick={onConfirm} disabled={disabled}>
-              <Typography variant="body2">Registrati</Typography>
-            </Button>
-          </div>
-        </form>
-      </CenteredBoxPageLayout>
-    </RoutesHandler>
+          >
+            <Typography variant="body2">Accesso</Typography>
+          </Button>
+        </>
+      }
+    >
+      <form>
+        <Typography variant="title">REGISTRAZIONE</Typography>
+        <Spacer size={40} />
+        <Typography variant="body">Email</Typography>
+        <Spacer size={10} />
+        <Input
+          type="text"
+          placeholder="Inserisci la email"
+          name="email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.currentTarget.value);
+          }}
+          autocomplete={"email"}
+          onKeyDown={handleKeyPress}
+        />
+        <Spacer size={5} />
+        <Typography variant="error" style={{ height: 10 }}>
+          {!email || validateMail(email) ? "" : "Email non valida"}
+        </Typography>
+        <Spacer size={25} />
+        <Typography variant="body">Password</Typography>
+        <Spacer size={10} />
+        <Input
+          type="password"
+          value={password}
+          placeholder="Inserisci la password"
+          name="psw"
+          onChange={(e) => {
+            setPassword(e.currentTarget.value);
+          }}
+          autocomplete={"password"}
+          onKeyDown={handleKeyPress}
+        />
+        <Spacer size={5} />
+        <Typography variant="error" style={{ height: 10 }}>
+          {!password || validatePassword(password) ? "" : getCorrectPasswordErrorLabel(password)}
+        </Typography>
+        <Spacer size={40} />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button onClick={onConfirm} disabled={disabled}>
+            <Typography variant="body2">Registrati</Typography>
+          </Button>
+        </div>
+      </form>
+    </CenteredBoxPageLayout>
   );
 };
 

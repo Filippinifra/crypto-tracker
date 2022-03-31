@@ -20,7 +20,6 @@ import { RebalancingCoins } from "types/rebalancingCoins";
 import { PersonalCoin } from "types/personalCoins";
 import { v4 as uuidv4 } from "uuid";
 import { useToast } from "hooks/useToast";
-import { RoutesHandler } from "components/RoutesHandler";
 import { useResponsive } from "hooks/useResponsive";
 import { useAuth } from "hooks/useAuth";
 import { DoughnutCompleteChart } from "components/DoughnutCompleteChart";
@@ -107,53 +106,51 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
   }, [wallet, loading, error, removesNotExistingTypologyId]);
 
   return (
-    <RoutesHandler>
-      <LoadErrorHandler data={data} error={error}>
-        <Layout prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
-          <Typography variant="body">
-            {"Ciao "}
-            <Typography variant="body" style={{ fontWeight: 600 }} component="span">
-              {currentUser?.email}
-            </Typography>
+    <LoadErrorHandler data={data} error={error}>
+      <Layout prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
+        <Typography variant="body">
+          {"Ciao "}
+          <Typography variant="body" style={{ fontWeight: 600 }} component="span">
+            {currentUser?.email}
           </Typography>
-          <Spacer size={50} />
-          <div style={{ display: "flex", flexDirection: getResponsiveValue(["column", "column", "row"]), alignItems: getResponsiveValue(["center", "", ""]) }}>
-            <div style={{ marginRight: getResponsiveValue([0, 0, 150]), width: getResponsiveValue(["100%", "fit-content", "auto"]) }}>
-              <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
-              <Spacer size={40} />
-              <div style={{ height: "auto" }}>
-                <GridWalletPanel wallet={wallet || []} setWallet={setWallet} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
-              </div>
+        </Typography>
+        <Spacer size={50} />
+        <div style={{ display: "flex", flexDirection: getResponsiveValue(["column", "column", "row"]), alignItems: getResponsiveValue(["center", "", ""]) }}>
+          <div style={{ marginRight: getResponsiveValue([0, 0, 150]), width: getResponsiveValue(["100%", "fit-content", "auto"]) }}>
+            <VestSummaryPanel totalVest={totalVest || 0} setTotalVest={setTotalVest} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
+            <Spacer size={40} />
+            <div style={{ height: "auto" }}>
+              <GridWalletPanel wallet={wallet || []} setWallet={setWallet} sumFiatValue={sumFiatValue || 0} symbolCurrency={symbolCurrency} />
             </div>
-            {getResponsiveValue([true, true, false]) && <Spacer size={40} />}
-            {showDoughnut && <DoughnutCompleteChart personalCoins={personalCoins || []} wallet={wallet || []} />}
           </div>
-          <Spacer size={50} />
-          <Typography variant="body">Aggiungi le tue coins:</Typography>
-          <Spacer size={20} />
-          <div style={{ width: getResponsiveValue(["auto", "550px", "600px"]), margin: "6px 0 0 6px" }}>
-            <CoinsDropdown
-              value={null}
-              options={options}
-              onChange={(e: { value: AvailableCoin }) => {
-                addCoin(e.value);
-              }}
-              isDisabled={isEditingGridCoins}
-            />
-          </div>
-          <Spacer size={40} />
-          <GridCoinsPanel
-            rebalancingCoins={rebalancingCoins}
-            wallet={wallet || []}
-            symbolCurrency={symbolCurrency}
-            setRebalancingCoins={onSetRebalancingCoins}
-            detailedCoinsLoading={detailedCoinsLoading}
-            isEditing={isEditingGridCoins}
-            setEditing={setEditingGridCoins}
+          {getResponsiveValue([true, true, false]) && <Spacer size={40} />}
+          {showDoughnut && <DoughnutCompleteChart personalCoins={personalCoins || []} wallet={wallet || []} />}
+        </div>
+        <Spacer size={50} />
+        <Typography variant="body">Aggiungi le tue coins:</Typography>
+        <Spacer size={20} />
+        <div style={{ width: getResponsiveValue(["auto", "550px", "600px"]), margin: "6px 0 0 6px" }}>
+          <CoinsDropdown
+            value={null}
+            options={options}
+            onChange={(e: { value: AvailableCoin }) => {
+              addCoin(e.value);
+            }}
+            isDisabled={isEditingGridCoins}
           />
-        </Layout>
-      </LoadErrorHandler>
-    </RoutesHandler>
+        </div>
+        <Spacer size={40} />
+        <GridCoinsPanel
+          rebalancingCoins={rebalancingCoins}
+          wallet={wallet || []}
+          symbolCurrency={symbolCurrency}
+          setRebalancingCoins={onSetRebalancingCoins}
+          detailedCoinsLoading={detailedCoinsLoading}
+          isEditing={isEditingGridCoins}
+          setEditing={setEditingGridCoins}
+        />
+      </Layout>
+    </LoadErrorHandler>
   );
 };
 
