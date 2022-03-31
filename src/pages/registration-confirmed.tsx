@@ -22,7 +22,9 @@ const RegistrationConfirmedPage = () => {
     } catch {
       showToast("Errore nel verificare l'email", "error");
     } finally {
-      router.push(homePath);
+      setTimeout(() => {
+        router.push(homePath);
+      }, 2000);
     }
   };
 
