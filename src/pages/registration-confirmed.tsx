@@ -2,11 +2,12 @@ import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { applyActionCode } from "firebase/auth";
 import { useToast } from "hooks/useToast";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "utils/firebase";
 import { homePath } from "utils/paths";
 
 const RegistrationConfirmedPage = () => {
+  const [hasBeenCalled, setHasBeenCalled] = useState(false);
   const router = useRouter();
   const oobCodeQuery = router.query.oobCode;
   const oobCode = typeof oobCodeQuery === "string" ? oobCodeQuery : oobCodeQuery?.[0] || "";
@@ -14,6 +15,7 @@ const RegistrationConfirmedPage = () => {
   const { showToast } = useToast();
 
   const registerEmail = async () => {
+    setHasBeenCalled(true);
     try {
       await applyActionCode(auth, oobCode);
       showToast("Email verificata correttamente", "success");
@@ -25,10 +27,10 @@ const RegistrationConfirmedPage = () => {
   };
 
   useEffect(() => {
-    if (oobCode) {
+    if (oobCode && !hasBeenCalled) {
       registerEmail();
     }
-  }, [registerEmail, oobCode]);
+  }, [registerEmail, oobCode, hasBeenCalled]);
 
   return <LoadErrorHandler data={null} error={null} />;
 };
