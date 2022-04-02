@@ -8,7 +8,7 @@ import { Spacer } from "components/Spacer";
 import { useRouter } from "next/router";
 import { useToast } from "hooks/useToast";
 import { getCorrectPasswordErrorLabel, validatePassword } from "utils/validation";
-import { loginPath } from "utils/paths";
+import { homePath, loginPath } from "utils/paths";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
 
@@ -35,6 +35,10 @@ const SigninPage = () => {
       onPasswordReset();
     }
   };
+
+  if (!oobCode) {
+    router.push(homePath);
+  }
 
   return (
     <CenteredBoxPageLayout

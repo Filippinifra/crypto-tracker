@@ -6,7 +6,7 @@ import { LogoutButton } from "components/LogoutButton";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
 
-const ConfirmationPage = () => {
+const WaitingRegistrationPage = () => {
   const { currentUser } = useAuth();
 
   return (
@@ -28,4 +28,4 @@ const ConfirmationPage = () => {
   );
 };
 
-export default ConfirmationPage;
+export default WaitingRegistrationPage;

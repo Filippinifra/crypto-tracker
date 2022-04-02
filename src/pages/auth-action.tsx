@@ -1,6 +1,6 @@
 import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { useRouter } from "next/router";
-import { changePasswordPath, registrationConfirmedPath } from "utils/paths";
+import { changePasswordPath, homePath, registrationConfirmingPath } from "utils/paths";
 
 const AuthActionPage = () => {
   const router = useRouter();
@@ -11,8 +11,12 @@ const AuthActionPage = () => {
     .map(([key, value]) => `${key}=${value}`)
     .join("&");
 
+  if (!mode) {
+    router.push(homePath);
+  }
+
   if (mode === "verifyEmail") {
-    router.push(`${registrationConfirmedPath}?${queryParamsString}`);
+    router.push(`${registrationConfirmingPath}?${queryParamsString}`);
   }
 
   if (mode === "resetPassword") {
