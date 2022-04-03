@@ -1,7 +1,7 @@
 import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { applyActionCode } from "firebase/auth";
 import { useToast } from "hooks/useToast";
-import { useRouter } from "next/router";
+import { useClientRouter } from "hooks/useClientRouter";
 import { useEffect, useState } from "react";
 import { auth } from "utils/firebase";
 import { homePath } from "utils/paths";
@@ -10,7 +10,7 @@ import { useAuth } from "hooks/useAuth";
 const RegistrationConfirmingPage = () => {
   const [hasBeenCalled, setHasBeenCalled] = useState(false);
   const { setCurrentUser } = useAuth();
-  const router = useRouter();
+  const router = useClientRouter();
   const oobCodeQuery = router.query.oobCode;
   const oobCode = typeof oobCodeQuery === "string" ? oobCodeQuery : oobCodeQuery?.[0] || "";
 

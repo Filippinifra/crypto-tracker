@@ -1,12 +1,11 @@
 import { useAuth } from "hooks/useAuth";
-import { useRouter } from "next/router";
 import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { FC } from "react";
-import { isBrowser } from "utils/browser";
 import { waitingRegistration, homePath, logAndUnlogPaths, loginPath, unloggedPaths, registrationConfirmingPath, loggedPaths } from "utils/paths";
+import { useClientRouter } from "hooks/useClientRouter";
 
 const PublicAndPrivateRouter: FC = ({ children }) => {
-  const router = useRouter();
+  const router = useClientRouter();
   const { currentUser, isLoadingUser } = useAuth();
 
   const currentPath = router.pathname;
@@ -23,30 +22,25 @@ const PublicAndPrivateRouter: FC = ({ children }) => {
   }
 
   if (!currentUser && isLoggedPath) {
-    if (isBrowser) {
-      router.replace(loginPath);
-    }
+    router.replace(loginPath);
     return <LoadErrorHandler data={null} error={null} />;
   }
 
   if (currentUser && isUnloggedPath) {
-    if (isBrowser) {
-      router.replace(homePath);
-    }
+    router.replace(homePath);
+
     return <LoadErrorHandler data={null} error={null} />;
   }
 
   if (currentUser?.verified && (isWaitingConfirmationPath || isConfirmingRegistrationPath)) {
-    if (isBrowser) {
-      router.replace(homePath);
-    }
+    router.replace(homePath);
+
     return <LoadErrorHandler data={null} error={null} />;
   }
 
   if (currentUser && !currentUser.verified && !isLogAndUnlogPath && !isWaitingConfirmationPath) {
-    if (isBrowser) {
-      router.replace(waitingRegistration);
-    }
+    router.replace(waitingRegistration);
+
     return <LoadErrorHandler data={null} error={null} />;
   }
 

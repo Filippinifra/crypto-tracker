@@ -3,7 +3,7 @@ import { Spacer } from "components/Spacer";
 import { Typography } from "components/Typography";
 import { useResponsive } from "hooks/useResponsive";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useClientRouter } from "hooks/useClientRouter";
 import React, { FC } from "react";
 import styled from "styled-components";
 import { registrationPath } from "utils/paths";
@@ -32,7 +32,7 @@ const ScreenImage: FC<{ src: string; style?: React.CSSProperties; width?: number
 
 export default function InfoPage() {
   const { getResponsiveValue } = useResponsive();
-  const router = useRouter();
+  const router = useClientRouter();
 
   return (
     <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>

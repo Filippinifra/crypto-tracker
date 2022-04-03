@@ -5,7 +5,7 @@ import { Button } from "components/Button";
 import { Typography } from "components/Typography";
 import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
-import { useRouter } from "next/router";
+import { useClientRouter } from "hooks/useClientRouter";
 import { useToast } from "hooks/useToast";
 import { validateMail } from "utils/validation";
 import { loginPath } from "utils/paths";
@@ -14,7 +14,7 @@ import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
 
 const RecoverPasswordPage = () => {
   const [email, setEmail] = useState("");
-  const router = useRouter();
+  const router = useClientRouter();
   const { showToast } = useToast();
   const disabled = !validateMail(email);
 

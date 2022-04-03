@@ -5,16 +5,16 @@ import { Button } from "components/Button";
 import { Typography } from "components/Typography";
 import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
-import { useRouter } from "next/router";
 import { useToast } from "hooks/useToast";
 import { getCorrectPasswordErrorLabel, validatePassword } from "utils/validation";
 import { homePath, loginPath } from "utils/paths";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
+import { useClientRouter } from "hooks/useClientRouter";
 
 const SigninPage = () => {
   const [password, setPassword] = useState("");
-  const router = useRouter();
+  const router = useClientRouter();
   const { showToast } = useToast();
   const disabled = !validatePassword(password);
   const oobCodeQuery = router.query.oobCode;

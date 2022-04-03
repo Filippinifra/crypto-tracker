@@ -6,7 +6,7 @@ import { Button } from "components/Button";
 import { Typography } from "components/Typography";
 import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
-import { useRouter } from "next/router";
+import { useClientRouter } from "hooks/useClientRouter";
 import { useToast } from "hooks/useToast";
 import { getCorrectPasswordErrorLabel, validateMail, validatePassword } from "utils/validation";
 import { loginPath } from "utils/paths";
@@ -18,7 +18,7 @@ const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setCurrentUser } = useAuth();
-  const router = useRouter();
+  const router = useClientRouter();
   const { showToast } = useToast();
   const disabled = !validateMail(email) || !validatePassword(password);
 

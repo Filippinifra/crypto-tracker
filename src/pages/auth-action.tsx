@@ -1,9 +1,9 @@
 import { LoadErrorHandler } from "components/LoadErrorHandler";
-import { useRouter } from "next/router";
+import { useClientRouter } from "hooks/useClientRouter";
 import { changePasswordPath, homePath, registrationConfirmingPath } from "utils/paths";
 
 const AuthActionPage = () => {
-  const router = useRouter();
+  const router = useClientRouter();
   const modeQuery = router.query.mode;
   const mode = typeof modeQuery === "string" ? modeQuery : modeQuery?.[0] || "";
 

@@ -1,10 +1,10 @@
 import { Button } from "components/Button";
 import { Typography } from "components/Typography";
-import { useRouter } from "next/router";
+import { useClientRouter } from "hooks/useClientRouter";
 import { infoPath } from "utils/paths";
 
 export const InfoButton = () => {
-  const router = useRouter();
+  const router = useClientRouter();
 
   return (
     <Button
