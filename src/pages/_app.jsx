@@ -9,8 +9,6 @@ const MyApp = ({ Component, pageProps }) => {
     <>
       <Head>
         <title>Crypto Tracker</title>
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no" />
       </Head>
       <style global jsx>{`
