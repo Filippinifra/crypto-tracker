@@ -9,7 +9,7 @@ import { useAuth } from "hooks/useAuth";
 
 const RegistrationConfirmingPage = () => {
   const [hasBeenCalled, setHasBeenCalled] = useState(false);
-  const { setCurrentUser } = useAuth();
+  const { setCurrentUser, currentUser } = useAuth();
   const router = useClientRouter();
   const oobCodeQuery = router.query.oobCode;
   const oobCode = typeof oobCodeQuery === "string" ? oobCodeQuery : oobCodeQuery?.[0] || "";
@@ -20,7 +20,9 @@ const RegistrationConfirmingPage = () => {
     setHasBeenCalled(true);
     try {
       await applyActionCode(auth, oobCode);
-      setCurrentUser((user) => ({ verified: true, email: user?.email || null, uid: user?.uid || "" }));
+      if (currentUser) {
+        setCurrentUser((user) => ({ verified: true, email: user?.email || null, uid: user?.uid || "" }));
+      }
       showToast("Email verificata correttamente", "success");
     } catch {
       showToast("Errore nel verificare l'email", "error");
