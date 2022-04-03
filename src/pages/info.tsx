@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useClientRouter } from "hooks/useClientRouter";
 import React, { FC } from "react";
 import styled from "styled-components";
-import { registrationPath } from "utils/paths";
+import { homePath, registrationPath } from "utils/paths";
 
 const Wrapper = styled.div`
   max-width: 700px;
@@ -209,7 +209,7 @@ export default function InfoPage() {
       </Typography>
       <Spacer size={30} />
       <div style={{ width: "100%", textAlign: "center" }}>
-        <Button onClick={() => router.push("/")}>{"Home/Login"}</Button>
+        <Button onClick={() => router.push(homePath)}>{"Home/Login"}</Button>
       </div>
     </Wrapper>
   );
