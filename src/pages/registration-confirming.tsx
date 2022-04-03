@@ -37,7 +37,7 @@ const RegistrationConfirmingPage = () => {
     } else {
       router.push(homePath);
     }
-  }, [registerEmail, oobCode, hasBeenCalled]);
+  }, [registerEmail, oobCode, hasBeenCalled, router]);
 
   return <LoadErrorHandler data={null} error={null} />;
 };
