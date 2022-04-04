@@ -1,13 +1,10 @@
 import { FC, FormEvent, KeyboardEvent } from "react";
 import styled from "styled-components";
-import { isSafari } from "utils/browser";
 
 const InputStyled = styled.input`
-  padding: ${isSafari ? "7px 7px" : "8px 9px"};
+  padding: 8px;
   letter-spacing: 2px;
   font-size: 12px;
-  border: 1px solid black;
-  border-radius: 4px;
 `;
 
 interface Props {
