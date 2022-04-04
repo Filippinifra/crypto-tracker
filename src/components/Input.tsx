@@ -2,12 +2,12 @@ import { FC, FormEvent, KeyboardEvent } from "react";
 import styled from "styled-components";
 
 const InputStyled = styled.input`
-  padding: 8px 9px;
+  padding: 6px 7px;
   letter-spacing: 2px;
   font-size: 12px;
   border: 1px solid black;
   border-radius: 4px;
-  margin: 0;
+  margin: 2px;
 `;
 
 interface Props {

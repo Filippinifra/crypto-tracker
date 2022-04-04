@@ -36,7 +36,7 @@ export const CoinsDropdown = ({ options, value, onChange, ...others }) => {
       }}
       options={slicedOptions}
       onInputChange={setInput}
-      placeholder={others.isDisabled ? "Per inserire una moneta finisci di modificare la sezione delle monete" : "Scrivi o scegli una moneta"}
+      placeholder={others.isDisabled ? "Finisci di modificare la sezione sotto" : "Scrivi o scegli una moneta"}
       {...others}
       styles={{
         container: (styles, { isDisabled }) => ({
