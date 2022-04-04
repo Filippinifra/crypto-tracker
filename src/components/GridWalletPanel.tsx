@@ -191,7 +191,9 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet
       <div style={{ padding: "0 0 0 5px" }}>
         <Grid
           templateColumns={
-            isEditing ? getResponsiveValue(["1fr 1fr 1fr 20px", "150px 126px 106px 20px", "150px 126px 106px 20px"]) : getResponsiveValue(["1fr 1fr 1fr", "150px 126px 126px", "150px 126px 126px"])
+            isEditing
+              ? getResponsiveValue(["calc(30%) calc(30%) calc(30%) calc(10%)", "150px 126px 106px 20px", "150px 126px 106px 20px"])
+              : getResponsiveValue(["3fr 3fr 4fr", "150px 126px 126px", "150px 126px 126px"])
           }
           fullWidth={getResponsiveValue([true, false, false])}
           data={[...getHeaders(isEditing), ...walletData, ...(isEditing ? [<AddWalletPieceIcon key={`wallet-add-coin`} />] : [])]}
