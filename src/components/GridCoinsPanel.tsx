@@ -290,21 +290,23 @@ export const GridCoinsPanel: FC<{
         </div>
       </div>
       <Spacer size={20} />
-      {detailedCoinsLoading ? (
-        <Placeholder height={1000} width={1310} />
-      ) : (
-        <GridScrollWrapper>
-          <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px 20px"} data={[...getHeaders(), ...coinsData]} />
-          {!tempRebalancing.length && (
-            <>
-              <Spacer size={20} />
-              <Typography variant="body">Inserisci almeno una moneta</Typography>
-            </>
-          )}
-          {/* KEEP This to allow dropdown to have space to be opened for last one coin */}
-          {isEditing && <Spacer size={40 * wallet.length + 50} />}
-        </GridScrollWrapper>
-      )}
+      <GridScrollWrapper>
+        {detailedCoinsLoading ? (
+          <Placeholder height={1000} width={1310} />
+        ) : (
+          <>
+            <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px 20px"} data={[...getHeaders(), ...coinsData]} />
+            {!tempRebalancing.length && (
+              <>
+                <Spacer size={20} />
+                <Typography variant="body">Inserisci almeno una moneta</Typography>
+              </>
+            )}
+            {/* KEEP This to allow dropdown to have space to be opened for last one coin */}
+            {isEditing && <Spacer size={40 * wallet.length + 50} />}
+          </>
+        )}
+      </GridScrollWrapper>
     </>
   );
 };
