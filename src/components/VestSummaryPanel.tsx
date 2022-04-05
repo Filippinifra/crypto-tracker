@@ -9,7 +9,7 @@ import { Input } from "components/Input";
 import { useToast } from "hooks/useToast";
 import { EditButtons } from "components/EditButtons";
 import { useResponsive } from "hooks/useResponsive";
-import { TotalVest } from "types/totalVest";
+import { EditingTotalVest, TotalVest } from "types/totalVest";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string }> = ({ value, isTitle, color }) => {
   const style: React.CSSProperties = { width: "100%", backgroundColor: color || (isTitle ? vestColor : "white"), padding: 10, boxSizing: "border-box" };
@@ -28,7 +28,7 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: (newVesting
   symbolCurrency,
 }) => {
   const [isEditing, setEditing] = useState(false);
-  const [tempTotalVest, setTempTotalVest] = useState(totalVest);
+  const [tempTotalVest, setTempTotalVest] = useState<EditingTotalVest>(totalVest);
   const { showToast } = useToast();
   const { getResponsiveValue } = useResponsive();
 
@@ -94,11 +94,12 @@ export const VestSummaryPanel: FC<{ totalVest: number; setTotalVest: (newVesting
             isEditing ? (
               <Input
                 type="number"
-                value={tempTotalVest || ""}
+                value={tempTotalVest !== null ? tempTotalVest : ""}
                 onChange={(e: FormEvent<HTMLInputElement>) => {
+                  const input = e.currentTarget.value;
                   const value = Number(e.currentTarget.value);
                   if (value >= 0) {
-                    setTempTotalVest(value);
+                    setTempTotalVest(input === "" ? null : value);
                   } else {
                     showToast("Non puoi aver investito un numero negativo di denaro", "error");
                   }
