@@ -16,6 +16,19 @@ import { ToastType } from "types/toastType";
 import { Placeholder } from "components/Placeholder";
 import { Icon } from "components/Icon";
 import { EditButtons } from "components/EditButtons";
+import styled from "styled-components";
+
+const GridScrollWrapper = styled.div`
+  width: auto;
+  overflow: scroll;
+  padding: 5px 0 0 5px;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+`;
 
 const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; height?: number; textColor?: string; style?: React.CSSProperties }> = ({
   value,
@@ -280,7 +293,7 @@ export const GridCoinsPanel: FC<{
       {detailedCoinsLoading ? (
         <Placeholder height={1000} width={1310} />
       ) : (
-        <div style={{ width: "auto", overflow: "scroll", padding: "5px 0 0 5px" }}>
+        <GridScrollWrapper>
           <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px 20px"} data={[...getHeaders(), ...coinsData]} />
           {!tempRebalancing.length && (
             <>
@@ -290,7 +303,7 @@ export const GridCoinsPanel: FC<{
           )}
           {/* KEEP This to allow dropdown to have space to be opened for last one coin */}
           {isEditing && <Spacer size={40 * wallet.length + 50} />}
-        </div>
+        </GridScrollWrapper>
       )}
     </>
   );
