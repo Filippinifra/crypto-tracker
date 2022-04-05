@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
-import { WalletDivision, WalletPiece } from "types/walletDivision";
+import { EditingWalletPiece, WalletDivision, EditingWalletDivision } from "types/walletDivision";
 import { addColor, headerGridWalletColor, pieColorsDark, removeColor } from "utils/colors";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
 import { Grid } from "components/Grid";
@@ -53,12 +53,12 @@ const getRow = ({
   setTempWallet,
   showToast,
 }: {
-  walletPiece: WalletPiece;
+  walletPiece: EditingWalletPiece;
   sumFiatValue: number;
   symbolCurrency: string | undefined;
   index: number;
   isEditing: boolean;
-  setTempWallet: React.Dispatch<React.SetStateAction<WalletDivision>>;
+  setTempWallet: React.Dispatch<React.SetStateAction<EditingWalletDivision>>;
   showToast: (message: string, type: ToastType) => void;
   getResponsiveValue: ([smallValue, mediumValue, largeValue]: any[]) => any;
 }) => {
@@ -70,7 +70,7 @@ const getRow = ({
     setTempWallet((walletPieces) => walletPieces.map((wp) => (wp.typologyId === typologyId ? { ...wp, typologyName: newName } : wp)));
   };
 
-  const onChangePercentage = (newPercentage: number) => {
+  const onChangePercentage = (newPercentage: number | null) => {
     setTempWallet((walletPieces) => walletPieces.map((wp) => (wp.typologyId === typologyId ? { ...wp, percentage: newPercentage } : wp)));
   };
 
@@ -93,13 +93,15 @@ const getRow = ({
     ),
     isEditing ? (
       <Input
-        value={percentage || ""}
+        value={percentage !== null ? percentage : ""}
         onChange={(e) => {
+          const input = e.currentTarget.value;
           const value = Number(e.currentTarget.value);
+
           if (value < 0) {
             showToast("Non puoi inserire un numero negativo di allocazione percentuale", "error");
           } else {
-            onChangePercentage(value);
+            onChangePercentage(input === "" ? null : value);
           }
         }}
         type="number"
@@ -108,7 +110,7 @@ const getRow = ({
     ) : (
       <LabelCell key={`wallet-${typologyId}-percentage`} value={`${percentage}%`} style={{ backgroundColor: colorRow }} />
     ),
-    <LabelCell key={`wallet-${typologyId}-value`} value={`${getSplittedPrice((sumFiatValue / 100) * percentage, 5, 0)}${symbolCurrency}`} style={{ backgroundColor: colorRow }} />,
+    <LabelCell key={`wallet-${typologyId}-value`} value={`${getSplittedPrice((sumFiatValue / 100) * (percentage || 0), 5, 0)}${symbolCurrency}`} style={{ backgroundColor: colorRow }} />,
   ];
 
   return isEditing
@@ -131,7 +133,7 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet
   sumFiatValue,
   symbolCurrency,
 }) => {
-  const [tempWallet, setTempWallet] = useState(wallet);
+  const [tempWallet, setTempWallet] = useState<EditingWalletDivision>(wallet);
   const [isEditing, setEditing] = useState(false);
 
   const { getResponsiveValue } = useResponsive();
@@ -176,7 +178,8 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet
               setEditing(true);
             }}
             onSave={() => {
-              setWallet(tempWallet);
+              const walletFormatted = tempWallet.map((e) => ({ ...e, percentage: e.percentage || 0 }));
+              setWallet(walletFormatted);
               setEditing(false);
             }}
             onCancel={() => {

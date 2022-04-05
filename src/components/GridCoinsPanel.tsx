@@ -2,7 +2,7 @@ import { Grid } from "components/Grid";
 import Image from "next/image";
 import React, { Dispatch, FC, ReactElement, SetStateAction, useEffect, useState } from "react";
 import { CurrencySymbol } from "types/currency";
-import { RebalancingCoin, RebalancingCoins } from "types/rebalancingCoins";
+import { EditingRebalancingCoin, EditingRebalancingCoins, RebalancingCoins } from "types/rebalancingCoins";
 import { getFiatRebalanceColor, getPercentageBalanceColor, getPriceChangeColor, greenVariationColor, headerGridCoinColors, redVariationColor, removeColor } from "utils/colors";
 import { Typography } from "components/Typography";
 import { getSplittedPrice, PLACEHOLDER } from "utils/labels";
@@ -71,12 +71,12 @@ const getRow = ({
   setTempRebalancing,
   showToast,
 }: {
-  coin: RebalancingCoin;
+  coin: EditingRebalancingCoin;
   index: number;
   wallet: WalletDivision;
   symbolCurrency: CurrencySymbol;
   isEditing: boolean;
-  setTempRebalancing: React.Dispatch<React.SetStateAction<RebalancingCoins>>;
+  setTempRebalancing: React.Dispatch<React.SetStateAction<EditingRebalancingCoins>>;
   showToast: (message: string, type: ToastType) => void;
 }) => {
   const {
@@ -108,12 +108,12 @@ const getRow = ({
     setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, typologyId } : e)));
   };
 
-  const onEditAllocation = (allocation: number) => {
-    setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, allocationPercentage: Number(allocation) } : e)));
+  const onEditAllocation = (allocation: number | null) => {
+    setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, allocationPercentage: allocation } : e)));
   };
 
-  const onEditCoins = (coins: number) => {
-    setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, coins: Number(coins) } : e)));
+  const onEditCoins = (coins: number | null) => {
+    setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, coins: coins } : e)));
   };
 
   const onRemoveCoins = () => {
@@ -145,14 +145,16 @@ const getRow = ({
     <LabelCell color={color} value={symbolAndName} key={`coin-table-${keyElement}-name`} />,
     isEditing ? (
       <Input
-        value={allocationPercentage || ""}
+        value={allocationPercentage !== null ? allocationPercentage : ""}
         type="number"
         onChange={(e: React.FormEvent<HTMLInputElement>) => {
+          const input = e.currentTarget.value;
           const value = Number(e.currentTarget.value);
+
           if (value < 0) {
             showToast("Non puoi inserire una percentuale di allocazione negativa", "error");
           } else {
-            onEditAllocation(value);
+            onEditAllocation(input === "" ? null : value);
           }
         }}
         key={`coin-table-${keyElement}-allocation-editing`}
@@ -170,20 +172,22 @@ const getRow = ({
     />,
     isEditing ? (
       <Input
-        value={coins || ""}
+        value={coins !== null ? coins : ""}
         type="number"
         onChange={(e: React.FormEvent<HTMLInputElement>) => {
+          const input = e.currentTarget.value;
           const value = Number(e.currentTarget.value);
+
           if (value < 0) {
             showToast("Non puoi avere un numero negativo di monete", "error");
           } else {
-            onEditCoins(value);
+            onEditCoins(input === "" ? null : value);
           }
         }}
         key={`coin-table-${keyElement}-coins-editing`}
       />
     ) : (
-      <LabelCell color={color} value={coins} key={`coin-table-${keyElement}-holding-token`} />
+      <LabelCell color={color} value={coins || 0} key={`coin-table-${keyElement}-holding-token`} />
     ),
     <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-holding-in-fiat`} />,
     <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={percentageBalance} key={`coin-table-${keyElement}-perc-balancing`} />,
@@ -220,7 +224,7 @@ export const GridCoinsPanel: FC<{
   isEditing: boolean;
   setEditing: Dispatch<SetStateAction<boolean>>;
 }> = ({ rebalancingCoins, wallet, symbolCurrency, setRebalancingCoins, detailedCoinsLoading, isEditing, setEditing }) => {
-  const [tempRebalancing, setTempRebalancing] = useState(reorderCoins(rebalancingCoins, wallet));
+  const [tempRebalancing, setTempRebalancing] = useState<EditingRebalancingCoins>(reorderCoins(rebalancingCoins, wallet));
 
   const { showToast } = useToast();
 

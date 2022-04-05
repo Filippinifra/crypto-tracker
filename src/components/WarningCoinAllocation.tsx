@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { RebalancingCoins } from "types/rebalancingCoins";
+import { EditingRebalancingCoins } from "types/rebalancingCoins";
 import { WalletDivision } from "types/walletDivision";
 import { errorColor } from "utils/colors";
 import { Icon } from "components/Icon";
@@ -7,10 +7,10 @@ import { Tooltip } from "components/Tooltip";
 import { Typography } from "components/Typography";
 import { Spacer } from "components/Spacer";
 
-export const WarningCoinAllocation: FC<{ coins: RebalancingCoins; wallet: WalletDivision }> = ({ coins, wallet }) => {
+export const WarningCoinAllocation: FC<{ coins: EditingRebalancingCoins; wallet: WalletDivision }> = ({ coins, wallet }) => {
   const typologyChecksElements = wallet.map(({ typologyId: walletTypologyId, typologyName, color }) => {
     const coinByTipology = coins.filter(({ typologyId: coinTypology }) => walletTypologyId === coinTypology);
-    const totalPercentageTypology = coinByTipology.reduce((r, { allocationPercentage }) => r + allocationPercentage, 0);
+    const totalPercentageTypology = coinByTipology.reduce((r, { allocationPercentage }) => r + (allocationPercentage || 0), 0);
 
     const correctPercentage = totalPercentageTypology === 100;
 

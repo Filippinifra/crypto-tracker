@@ -17,11 +17,12 @@ interface Props {
   value: string | number;
   style?: React.CSSProperties;
   autocomplete?: string;
+  step?: number;
   onChange: (e: FormEvent<HTMLInputElement>) => void;
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
 }
 
-export const Input: FC<Props> = ({ type, placeholder, name, value, style, autocomplete, onChange, onKeyDown }) => {
+export const Input: FC<Props> = ({ type, placeholder, name, value, style, autocomplete, step, onChange, onKeyDown }) => {
   return (
     <InputStyled
       type={type}
@@ -36,6 +37,7 @@ export const Input: FC<Props> = ({ type, placeholder, name, value, style, autoco
       }}
       style={style}
       autoComplete={autocomplete}
+      step={step}
     />
   );
 };
