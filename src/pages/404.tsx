@@ -6,6 +6,6 @@ export default function NotFoundPage() {
   const { replace } = useClientRouter();
 
   replace(homePath);
-
+  //da cancellare
   return <LoadErrorHandler data={null} error={null} />;
 }
