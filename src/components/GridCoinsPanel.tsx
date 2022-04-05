@@ -17,6 +17,7 @@ import { Placeholder } from "components/Placeholder";
 import { Icon } from "components/Icon";
 import { EditButtons } from "components/EditButtons";
 import styled from "styled-components";
+import { CoinGridWidth } from "utils/dimensions";
 
 const GridScrollWrapper = styled.div`
   width: auto;
@@ -269,7 +270,7 @@ export const GridCoinsPanel: FC<{
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "space-between", maxWidth: 1310 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", maxWidth: CoinGridWidth }}>
         <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
         <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
           {!detailedCoinsLoading && <WarningCoinAllocation wallet={wallet} coins={tempRebalancing} />}
@@ -292,7 +293,7 @@ export const GridCoinsPanel: FC<{
       <Spacer size={20} />
       <GridScrollWrapper>
         {detailedCoinsLoading ? (
-          <Placeholder height={1000} width={1310} />
+          <Placeholder height={1000} width={CoinGridWidth} />
         ) : (
           <>
             <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px 20px"} data={[...getHeaders(), ...coinsData]} />

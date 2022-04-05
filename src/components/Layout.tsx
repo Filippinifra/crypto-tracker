@@ -8,6 +8,7 @@ import { useResponsive } from "hooks/useResponsive";
 import { Spacer } from "components/Spacer";
 import { LogoutButton } from "components/LogoutButton";
 import { InfoButton } from "components/InfoButton";
+import { HomeWrapperWidth } from "utils/dimensions";
 
 const Wrapper = styled.div`
   height: auto;
@@ -18,14 +19,17 @@ const ButtonsWrapper = styled.div`
   justify-content: flex-end;
   position: fixed;
   z-index: 99999;
+  width: 100%;
+  max-width: ${HomeWrapperWidth}px;
+  margin: auto;
 `;
 
 export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: (newCurrency: Currency) => void; personalCoins: PersonalCoins }> = ({ children, prefCurrency, setPrefCurrency, personalCoins }) => {
   const { getResponsiveValue } = useResponsive();
 
   return (
-    <Wrapper style={{ padding: `40px ${getResponsiveValue([8, 15, 40])}px` }}>
-      <ButtonsWrapper style={{ right: getResponsiveValue([8, 15, 40]), gap: getResponsiveValue([20, 25, 30]) }}>
+    <Wrapper style={{ padding: `40px ${getResponsiveValue([8, 15, 40])}px`, maxWidth: HomeWrapperWidth, margin: "auto" }}>
+      <ButtonsWrapper style={{ gap: getResponsiveValue([20, 25, 30]), width: `calc(100% - ${getResponsiveValue([8, 15, 40]) * 2}px)` }}>
         <InfoButton />
         <LogoutButton />
         <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
