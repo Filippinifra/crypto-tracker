@@ -61,7 +61,6 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
     const keyElement = uuidv4();
     const newCoin: PersonalCoin = { coins: 0, id: coin.id, keyElement, percentage: 0, platform: "", typologyId: "" };
     setPersonalCoins(personalCoins ? [...personalCoins, newCoin] : [newCoin]);
-    showToast("Nuova moneta aggiunta", "success");
   };
 
   const options = availableCoins?.filter(({ id }) => id).map((value) => ({ value, label: `${value.symbol.toUpperCase()} // ${value.name} // ${value.id}` }));
