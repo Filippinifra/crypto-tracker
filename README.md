@@ -1,34 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Introduction
+
+This app is built with Next.js, React.js, and Typescript.
+
+The app's logic is to track a cryptocurrency wallet and provide a rebalancing asset allocation tool.
+
+This is a screenshot of the home page (which could not be updated):
+
+![screenshot-home](/screenshot-home.png)
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies when you fork/clone the project by using:
+
+```bash
+npm
+```
+
+To run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+### Folder structure:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src
+├── components      # All components (piece of reusable code)
+├── contexts        # React contexts for handling global state
+├── hooks
+├── images
+├── mappers         # Methods for converting API layer objects to Internal layer objects
+├── pages           # Next.js pages (routes)
+├── types           # Internal layer types and API layer types
+└── utils
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Logics for app:
 
-## Deploy on Vercel
+The user can create an account, login, and reset their password.
+When logged in or out, the user has access to an info page (how the software works).
+A logged-in user can access a dashboard (home) that allows him to:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Calculate his profit/loss by setting a total vest.
+- Create a wallet group allocation and assign a name and percentage to each piece.
+- Add new coins to be tracked in the wallet.
+- Set for each coin a typology (group allocation), an asset allocation related to the typology, and the quantity of coins owned.
+- See which moves he may do to rebalance the wallet.
+- Change favorite currency (euro or dollar).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Other
+
+Mobile, tablet, and desktop versions of the app are all responsive.
+The app is only available in Italian.
+Errors and loaders are handled by the app.
+To obtain data about the user, the app uses a Firebase setup server as a backend.
+Coinjecko API is used by the app to retrieve coin prices and available coins on the market.
