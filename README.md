@@ -1,9 +1,7 @@
 ## Introduction
 
-This app is built with Next.js, React.js, and Typescript.
-
-The app's logic is to track a cryptocurrency wallet and provide a rebalancing asset allocation tool.
-
+This app is built with Next.js, React.js, and Typescript.<br />
+The app's logic is to track a cryptocurrency wallet and provide a rebalancing asset allocation tool.<br />
 This is a screenshot of the home page (which could not be updated):
 
 ![screenshot-home](/screenshot-home.png)
@@ -42,8 +40,8 @@ src
 
 ### Logics for app:
 
-The user can create an account, login, and reset their password.
-When logged in or out, the user has access to an info page (how the software works).
+The user can create an account, login, and reset their password.<br />
+When logged in or out, the user has access to an info page (how the software works).<br />
 A logged-in user can access a dashboard (home) that allows him to:
 
 - Calculate his profit/loss by setting a total vest.
@@ -55,8 +53,8 @@ A logged-in user can access a dashboard (home) that allows him to:
 
 ### Other
 
-Mobile, tablet, and desktop versions of the app are all responsive.
-The app is only available in Italian.
-Errors and loaders are handled by the app.
-To obtain data about the user, the app uses a Firebase setup server as a backend.
+Mobile, tablet, and desktop versions of the app are all responsive.<br />
+The app is only available in Italian.<br />
+Errors and loaders are handled by the app.<br />
+To obtain data about the user, the app uses a Firebase setup server as a backend.<br />
 Coinjecko API is used by the app to retrieve coin prices and available coins on the market.
