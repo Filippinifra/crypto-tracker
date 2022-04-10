@@ -20,7 +20,7 @@ export const ChangeLanguageButton = () => {
   }, [language]);
 
   return (
-    <Button onClick={onChangeLanguage} style={{ height: "auto", display: "flex", alignItems: "center", justifyContent: "center", paddingRight: 2 }}>
+    <Button onClick={onChangeLanguage} style={{ height: "auto", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 2px 0 4px" }}>
       <Typography variant="body2">{currentFlag}</Typography>
     </Button>
   );
