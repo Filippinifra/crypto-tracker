@@ -8,9 +8,9 @@ export enum Languages {
 }
 export const defaultLang = Languages.en;
 export const availableLanguages = [Languages.en, Languages.it];
-export const mapLanguageToFlagCode = {
-  [Languages.it]: "it",
-  [Languages.en]: "gb",
+export const mapLanguageToFlag = {
+  [Languages.it]: "🇮🇹",
+  [Languages.en]: "🇬🇧",
 };
 
 i18n.use(initReactI18next).init({
