@@ -3,6 +3,8 @@ import { ToastProvider } from "contexts/ToastContext";
 import Head from "next/head";
 import { AuthProvider } from "contexts/AuthContext";
 import { RoutesHandler } from "components/RoutesHandler";
+/*eslint-disable-next-line */
+import i18n from "utils/i18next";
 
 const MyApp = ({ Component, pageProps }) => {
   return (

@@ -9,6 +9,7 @@ import { Spacer } from "components/Spacer";
 import { LogoutButton } from "components/LogoutButton";
 import { InfoButton } from "components/InfoButton";
 import { HomeWrapperWidth } from "utils/dimensions";
+import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 
 const Wrapper = styled.div`
   height: auto;
@@ -30,6 +31,7 @@ export const Layout: FC<{ prefCurrency: Currency; setPrefCurrency: (newCurrency:
   return (
     <Wrapper style={{ padding: `40px ${getResponsiveValue([8, 15, 40])}px`, maxWidth: HomeWrapperWidth, margin: "auto" }}>
       <ButtonsWrapper style={{ gap: getResponsiveValue([20, 25, 30]), width: `calc(100% - ${getResponsiveValue([8, 15, 40]) * 2}px)` }}>
+        <ChangeLanguageButton />
         <InfoButton />
         <LogoutButton />
         <ChangeCurrencyButton prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} />
