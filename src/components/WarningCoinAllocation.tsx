@@ -6,8 +6,11 @@ import { Icon } from "components/Icon";
 import { Tooltip } from "components/Tooltip";
 import { Typography } from "components/Typography";
 import { Spacer } from "components/Spacer";
+import { useTranslation } from "react-i18next";
 
 export const WarningCoinAllocation: FC<{ coins: EditingRebalancingCoins; wallet: WalletDivision }> = ({ coins, wallet }) => {
+  const { t } = useTranslation();
+
   const typologyChecksElements = wallet.map(({ typologyId: walletTypologyId, typologyName, color }) => {
     const coinByTipology = coins.filter(({ typologyId: coinTypology }) => walletTypologyId === coinTypology);
     const totalPercentageTypology = coinByTipology.reduce((r, { allocationPercentage }) => r + (allocationPercentage || 0), 0);
@@ -19,7 +22,7 @@ export const WarningCoinAllocation: FC<{ coins: EditingRebalancingCoins; wallet:
         <>
           <Typography variant="body">
             <span style={{ color, fontWeight: 600 }}>{typologyName}</span>
-            {`: ${totalPercentageTypology}% (${correctPercentage ? "Giusto" : "Sbagliato"})`}
+            {`: ${totalPercentageTypology}% (${correctPercentage ? t("home.coins.allocationCorrect") : t("home.coins.allocationWrong")})`}
           </Typography>
           <Spacer size={5} />
         </>
@@ -35,7 +38,7 @@ export const WarningCoinAllocation: FC<{ coins: EditingRebalancingCoins; wallet:
     <Tooltip
       content={
         <div>
-          <Typography variant="body">Non hai allocato la giusta percentuale a ogni tipologia:</Typography>
+          <Typography variant="body">{t("home.coins.percentageSumNotCorrect")}</Typography>
           <Spacer size={10} />
           {typologyChecksElements.map(({ element, key }) => (
             <React.Fragment key={key}>{element}</React.Fragment>

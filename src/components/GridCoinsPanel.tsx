@@ -18,6 +18,7 @@ import { Icon } from "components/Icon";
 import { EditButtons } from "components/EditButtons";
 import styled from "styled-components";
 import { CoinGridWidth } from "utils/dimensions";
+import { TFunction, useTranslation } from "react-i18next";
 
 const GridScrollWrapper = styled.div`
   width: auto;
@@ -58,20 +59,20 @@ const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; he
   );
 };
 
-const getHeaders = () => {
+const getHeaders = (t: TFunction<"translation", undefined>) => {
   return [
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[0]} value={"Tipologia"} key={`coin-table-type`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[1]} value={"Logo"} key={`coin-table-image`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[1]} value={"Simbolo e nome"} key={`coin-table-name`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[2]} value={"Allocazione"} key={`coin-table-perc`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[2]} value={"Controvalore allocazione"} key={`coin-table-value-for-perc`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[3]} value={"Prezzo"} key={`coin-table-price`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[3]} value={"Variazione 24 ore"} key={`coin-table-price-variation`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[4]} value={"Tokens"} key={`coin-table-holding-token`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[4]} value={"Possesso"} key={`coin-table-holding-in-fiat`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={"Bilanciamento percentuale"} key={`coin-table-perc-balancing`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={"Sbilanciamento valore"} key={`coin-table-value-balancing`} />,
-    <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={"Numero coin per ribilancio"} key={`coin-table-coin-balancing`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[0]} value={t("home.coins.typologyCellTitle")} key={`coin-table-type`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[1]} value={t("home.coins.logoCellTitle")} key={`coin-table-image`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[1]} value={t("home.coins.symbolAndNameCellTitle")} key={`coin-table-name`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[2]} value={t("home.coins.allocationCellTitle")} key={`coin-table-perc`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[2]} value={t("home.coins.allocationCountervalueCellTitle")} key={`coin-table-value-for-perc`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[3]} value={t("home.coins.priceCellTitle")} key={`coin-table-price`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[3]} value={t("home.coins.change24CellTitle")} key={`coin-table-price-variation`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[4]} value={t("home.coins.coinsCellTitle")} key={`coin-table-holding-token`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[4]} value={t("home.coins.holdingCellTitle")} key={`coin-table-holding-in-fiat`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={t("home.coins.percentageBalanceCellTitle")} key={`coin-table-perc-balancing`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={t("home.coins.valueImbalanceCellTitle")} key={`coin-table-value-balancing`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={t("home.coins.rebalancingCoinsCellTitle")} key={`coin-table-coin-balancing`} />,
     <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={" "} key={`coin-table-coin-icons`} />,
   ];
 };
@@ -84,6 +85,7 @@ const getRow = ({
   isEditing,
   setTempRebalancing,
   showToast,
+  t,
 }: {
   coin: EditingRebalancingCoin;
   index: number;
@@ -92,6 +94,7 @@ const getRow = ({
   isEditing: boolean;
   setTempRebalancing: React.Dispatch<React.SetStateAction<EditingRebalancingCoins>>;
   showToast: (message: string, type: ToastType) => void;
+  t: TFunction<"translation", undefined>;
 }) => {
   const {
     symbolAndName,
@@ -166,7 +169,7 @@ const getRow = ({
           const value = Number(e.currentTarget.value);
 
           if (value < 0) {
-            showToast("Non puoi inserire una percentuale di allocazione negativa", "error");
+            showToast(t("home.coins.cantInsertNegativeAllocationValue"), "error");
           } else {
             onEditAllocation(input === "" ? null : value);
           }
@@ -193,7 +196,7 @@ const getRow = ({
           const value = Number(e.currentTarget.value);
 
           if (value < 0) {
-            showToast("Non puoi avere un numero negativo di monete", "error");
+            showToast(t("home.coins.cantInsertNegativeCoinsValue"), "error");
           } else {
             onEditCoins(input === "" ? null : value);
           }
@@ -241,6 +244,7 @@ export const GridCoinsPanel: FC<{
   const [tempRebalancing, setTempRebalancing] = useState<EditingRebalancingCoins>(reorderCoins(rebalancingCoins, wallet));
 
   const { showToast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const hasChangedSomething = JSON.stringify(rebalancingCoins) !== JSON.stringify(tempRebalancing);
@@ -256,7 +260,7 @@ export const GridCoinsPanel: FC<{
 
   // @ts-ignore
   const coinsData: ReactElement<any, any>[] = tempRebalancing.reduce((r, coinData, index) => {
-    return [...r, ...getRow({ coin: coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing, showToast })];
+    return [...r, ...getRow({ coin: coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing, showToast, t })];
   }, []);
 
   const normalizeAndSetCoins = () => {
@@ -271,7 +275,7 @@ export const GridCoinsPanel: FC<{
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between", maxWidth: CoinGridWidth }}>
-        <Typography variant="body">Allocazione asset e ribilanciamento:</Typography>
+        <Typography variant="body">{t("home.coins.title")}</Typography>
         <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
           {!detailedCoinsLoading && <WarningCoinAllocation wallet={wallet} coins={tempRebalancing} />}
           <EditButtons
@@ -285,7 +289,7 @@ export const GridCoinsPanel: FC<{
             }}
             onCancel={() => {
               setEditing(false);
-              showToast("Hai cancellato le modifiche alle monete", "warning");
+              showToast(t("home.coins.editingCanceled"), "warning");
             }}
           />
         </div>
@@ -296,11 +300,11 @@ export const GridCoinsPanel: FC<{
           <Placeholder height={1000} width={CoinGridWidth} />
         ) : (
           <>
-            <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px 20px"} data={[...getHeaders(), ...coinsData]} />
+            <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px 20px"} data={[...getHeaders(t), ...coinsData]} />
             {!tempRebalancing.length && (
               <>
                 <Spacer size={20} />
-                <Typography variant="body">Inserisci almeno una moneta</Typography>
+                <Typography variant="body">{t("home.coins.insertAlmostOneCoin")}</Typography>
               </>
             )}
             {/* KEEP This to allow dropdown to have space to be opened for last one coin */}

@@ -14,6 +14,7 @@ import { ToastType } from "types/toastType";
 import { Icon } from "components/Icon";
 import { v4 as uuidv4 } from "uuid";
 import { useResponsive } from "hooks/useResponsive";
+import { useTranslation } from "react-i18next";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string; style?: React.CSSProperties }> = ({ value, isTitle, color, style }) => {
   const additionalStyle: React.CSSProperties = {
@@ -35,10 +36,11 @@ const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string;
 };
 
 const getHeaders = (isEditing: boolean) => {
+  const { t } = useTranslation();
   const basicHeaders = [
-    <LabelCell value={"Tipologia"} key={`wallet-typology`} isTitle />,
-    <LabelCell value={"Percentuale"} key={`wallet-percentage`} isTitle />,
-    <LabelCell value={"Corrispettivo"} key={`wallet-value`} isTitle />,
+    <LabelCell value={t("home.wallet.typology")} key={`wallet-typology`} isTitle />,
+    <LabelCell value={t("home.wallet.percentage")} key={`wallet-percentage`} isTitle />,
+    <LabelCell value={t("home.wallet.pieceTotal")} key={`wallet-value`} isTitle />,
   ];
 
   return isEditing ? [...basicHeaders, <LabelCell value={" "} key={`wallet-icon`} isTitle />] : basicHeaders;
@@ -62,6 +64,7 @@ const getRow = ({
   showToast: (message: string, type: ToastType) => void;
   getResponsiveValue: ([smallValue, mediumValue, largeValue]: any[]) => any;
 }) => {
+  const { t } = useTranslation();
   const { percentage, typologyId, color: colorTypology, typologyName } = walletPiece;
 
   const colorRow = index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
@@ -99,7 +102,7 @@ const getRow = ({
           const value = Number(e.currentTarget.value);
 
           if (value < 0) {
-            showToast("Non puoi inserire un numero negativo di allocazione percentuale", "error");
+            showToast(t("home.wallet.cantInsertNegativeValue"), "error");
           } else {
             onChangePercentage(input === "" ? null : value);
           }
@@ -138,6 +141,7 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet
 
   const { getResponsiveValue } = useResponsive();
   const { showToast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (wallet && !isEditing) {
@@ -169,7 +173,7 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet
   return (
     <>
       <div style={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="body">Allocazione portafoglio:</Typography>
+        <Typography variant="body">{t("home.wallet.title")}</Typography>
         <div style={{ display: "flex", gap: 20 }}>
           {Boolean(tempWallet.length) && <WarningWalletAllocation wallet={tempWallet} />}
           <EditButtons
@@ -185,7 +189,7 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet
             onCancel={() => {
               setTempWallet(wallet);
               setEditing(false);
-              showToast("Hai cancellato le modifiche relative all'allocazione del portafoglio", "warning");
+              showToast(t("home.wallet.editingCanceled"), "warning");
             }}
           />
         </div>
@@ -205,7 +209,7 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet
       {!tempWallet.length && (
         <>
           <Spacer size={20} />
-          <Typography variant="body">Inserisci almeno una tipologia</Typography>
+          <Typography variant="body">{t("home.wallet.insertAlmostOneTypology")}</Typography>
         </>
       )}
     </>
