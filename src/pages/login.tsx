@@ -13,7 +13,7 @@ import { recoverPasswordPath, registrationPath } from "utils/paths";
 import { toUser } from "mappers/toUser";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
-import { logEvent } from "firebase/analytics";
+import { logEvent, setUserId as setAnalyticsUserId } from "firebase/analytics";
 
 const SigninPage = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +27,10 @@ const SigninPage = () => {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       setCurrentUser(toUser(response.user));
-      logEvent(analytics, 'login', response.user );
+      if (analytics) {
+        setAnalyticsUserId(analytics, response.user.uid);
+        logEvent(analytics, "login", response.user);
+      }
     } catch (error) {
       showToast("Errore durante la fase di accesso", "error");
     }

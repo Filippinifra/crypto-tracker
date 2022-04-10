@@ -2,7 +2,7 @@ import { toUser } from "mappers/toUser";
 import { useState, useEffect, createContext, FC, Dispatch, SetStateAction } from "react";
 import { User } from "types/user";
 import { auth, analytics } from "utils/firebase";
-import { setUserId } from "firebase/analytics";
+import { setUserId as setAnalyticsUserId } from "firebase/analytics";
 
 export interface Authentication {
   currentUser: User | undefined | null;
@@ -22,7 +22,9 @@ export const AuthProvider: FC = ({ children }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setUserId(analytics, user.uid);
+        if (analytics) {
+          setAnalyticsUserId(analytics, user.uid);
+        }
         setCurrentUser(toUser(user));
       } else {
         setCurrentUser(null);

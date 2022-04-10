@@ -1,6 +1,6 @@
 import { KeyboardEvent, useState } from "react";
 import { useAuth } from "hooks/useAuth";
-import { auth } from "utils/firebase";
+import { analytics, auth } from "utils/firebase";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { Button } from "components/Button";
 import { Typography } from "components/Typography";
@@ -13,6 +13,7 @@ import { loginPath } from "utils/paths";
 import { toUser } from "mappers/toUser";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
+import { setUserId as setAnalyticsUserId } from "firebase/analytics";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -25,6 +26,9 @@ const SignupPage = () => {
   const onConfirm = async () => {
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
+      if (analytics) {
+        setAnalyticsUserId(analytics, response.user.uid);
+      }
       setCurrentUser(toUser(response.user));
       sendEmailVerification(response.user);
     } catch (error) {

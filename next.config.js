@@ -18,7 +18,6 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compiler: {
-    // ssr and displayName are configured by default
     styledComponents: true,
   },
   images: {
@@ -27,7 +26,6 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Apply these headers to all routes in your application.
         source: "/:path*",
         headers: securityHeaders,
       },

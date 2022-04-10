@@ -36,9 +36,11 @@ export default function InfoPage() {
   const { getResponsiveValue } = useResponsive();
   const router = useClientRouter();
 
-  useEffect (()=>{
-    logEvent( analytics, 'info_page_visited');
-  },[])
+  useEffect(() => {
+    if (analytics) {
+      logEvent(analytics, "info_page_visited");
+    }
+  }, []);
 
   return (
     <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>
