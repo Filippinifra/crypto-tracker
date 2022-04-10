@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,7 +17,11 @@ if (!firebase.getApps().length) {
   const app = firebase.initializeApp(firebaseConfig);
 }
 
+if (typeof window !== "undefined") {
+  var analytics = getAnalytics();
+}
+
 const auth = getAuth();
 const database = getDatabase();
 
-export { auth, database };
+export { auth, database, analytics };
