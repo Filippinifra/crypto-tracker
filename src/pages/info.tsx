@@ -4,9 +4,11 @@ import { Typography } from "components/Typography";
 import { useResponsive } from "hooks/useResponsive";
 import Image from "next/image";
 import { useClientRouter } from "hooks/useClientRouter";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import styled from "styled-components";
 import { homePath, registrationPath } from "utils/paths";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "utils/firebase";
 
 const Wrapper = styled.div`
   max-width: 700px;
@@ -33,6 +35,10 @@ const ScreenImage: FC<{ src: string; style?: React.CSSProperties; width?: number
 export default function InfoPage() {
   const { getResponsiveValue } = useResponsive();
   const router = useClientRouter();
+
+  useEffect (()=>{
+    logEvent( analytics, 'info_page_visited');
+  },[])
 
   return (
     <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>

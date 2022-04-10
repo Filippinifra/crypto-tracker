@@ -23,6 +23,8 @@ import { useToast } from "hooks/useToast";
 import { useResponsive } from "hooks/useResponsive";
 import { useAuth } from "hooks/useAuth";
 import { DoughnutCompleteChart } from "components/DoughnutCompleteChart";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "utils/firebase";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -100,9 +102,13 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
     if (!loading && !error) {
       removesNotExistingTypologyId();
     }
-
     return () => removesNotExistingTypologyId();
   }, [wallet, loading, error, removesNotExistingTypologyId]);
+
+    
+  useEffect (()=>{
+    logEvent( analytics, 'index_page_visited');
+  },[])
 
   return (
     <LoadErrorHandler data={data} error={error}>
