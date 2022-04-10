@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useToast } from "hooks/useToast";
 import { Currency, getNameForCurrency } from "types/currency";
 import useSWR from "swr";
@@ -14,6 +15,7 @@ export const useDetailedCoins = (coins: PersonalCoins | undefined, prefCurrency:
     fetcher
   );
 
+  const { t } = useTranslation();
   const { showToast } = useToast();
 
   const [previousData, setPreviousData] = useState<DetailedCoinsDTO>();
@@ -22,10 +24,10 @@ export const useDetailedCoins = (coins: PersonalCoins | undefined, prefCurrency:
     const newData = await mutate();
 
     if (JSON.stringify(newData) !== JSON.stringify(previousData)) {
-      showToast("I prezzi sono stati aggiornati", "success");
+      showToast(t("home.pricesUpdateCompleted"), "success");
       setPreviousData(newData);
     } else {
-      showToast("I prezzi sono già aggiornati", "warning");
+      showToast(t("home.pricesAlreadyUpdated"), "warning");
     }
   };
 

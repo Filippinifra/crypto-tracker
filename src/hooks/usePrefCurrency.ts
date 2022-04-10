@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Currency } from "types/currency";
 import { useEffect, useState } from "react";
 import { useAuth } from "hooks/useAuth";
@@ -8,6 +9,7 @@ import { toPrefCurrency } from "mappers/toPrefCurrency";
 export const usePrefCurrency = () => {
   const [prefCurrency, setPrefCurrency] = useState<Currency>();
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   const { currentUser } = useAuth();
   const { getCurrency: getCurrencyDB, setCurrency: setCurrencyDB } = useDatabase(currentUser || undefined);
@@ -18,10 +20,10 @@ export const usePrefCurrency = () => {
     try {
       await setCurrencyDB(newCurrency);
       setPrefCurrency(newCurrency);
-      showToast(`La valuta è stata cambiata in ${Currency[newCurrency]}`, "success");
-      showToast(`Attenzione! È necessario cambiare manualmente il totale investito in ${Currency[newCurrency]}`, "warning");
+      showToast(`${t("home.prefCurrencyUpdateCompleted")} ${Currency[newCurrency]}`, "success");
+      showToast(`${t("home.prefCurrencyShouldChangeVesting")} ${Currency[newCurrency]}`, "warning");
     } catch {
-      showToast("Modifiche relative al cambio della valuta non salvate", "error");
+      showToast(t("home.prefCurrencyUpdateError"), "error");
     }
   };
 
@@ -31,7 +33,7 @@ export const usePrefCurrency = () => {
       const currency = response.val();
       setPrefCurrency(currency || Currency.EUR);
     } catch {
-      showToast("Errore nel caricare la valuta", "error");
+      showToast(t("home.prefCurrencyFetchError"), "error");
     } finally {
       setLoading(false);
     }

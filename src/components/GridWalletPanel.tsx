@@ -14,7 +14,7 @@ import { ToastType } from "types/toastType";
 import { Icon } from "components/Icon";
 import { v4 as uuidv4 } from "uuid";
 import { useResponsive } from "hooks/useResponsive";
-import { useTranslation } from "react-i18next";
+import { TFunction, useTranslation } from "react-i18next";
 
 const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string; style?: React.CSSProperties }> = ({ value, isTitle, color, style }) => {
   const additionalStyle: React.CSSProperties = {
@@ -54,6 +54,7 @@ const getRow = ({
   isEditing,
   setTempWallet,
   showToast,
+  t,
 }: {
   walletPiece: EditingWalletPiece;
   sumFiatValue: number;
@@ -63,8 +64,8 @@ const getRow = ({
   setTempWallet: React.Dispatch<React.SetStateAction<EditingWalletDivision>>;
   showToast: (message: string, type: ToastType) => void;
   getResponsiveValue: ([smallValue, mediumValue, largeValue]: any[]) => any;
+  t: TFunction<"translation", undefined>;
 }) => {
-  const { t } = useTranslation();
   const { percentage, typologyId, color: colorTypology, typologyName } = walletPiece;
 
   const colorRow = index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
@@ -151,7 +152,7 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet
 
   // @ts-ignore
   const walletData: React.ReactElement<any, any>[] = tempWallet.reduce((r, walletDataRow, index) => {
-    return [...r, ...getRow({ walletPiece: walletDataRow, sumFiatValue, symbolCurrency, index, isEditing, setTempWallet, showToast, getResponsiveValue })];
+    return [...r, ...getRow({ walletPiece: walletDataRow, sumFiatValue, symbolCurrency, index, isEditing, setTempWallet, showToast, getResponsiveValue, t })];
   }, []);
 
   const addNewWalletPiece = () => {
