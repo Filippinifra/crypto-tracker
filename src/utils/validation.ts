@@ -6,14 +6,14 @@ export const existsNumber = (value: string) => /\d/.test(value);
 export const existsUppercaseAndLowercase = (value: string) => /(?=.*?[A-Z])/.test(value) && /(?=.*?[a-z])/.test(value);
 export const existsSpecialChar = (value: string) => /(?=.*?[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/.test(value);
 
-export const getCorrectPasswordErrorLabel = (password: string): string | undefined => {
+export const getCorrectPasswordErrorKey = (password: string): string | undefined => {
   if (!atLeast6Chars(password)) {
-    return "La password deve contenere almeno 6 caratteri";
+    return "atLeast6chars";
   } else if (!existsNumber(password)) {
-    return "La password deve contenere almeno un numero";
+    return "atLeast1Number";
   } else if (!existsUppercaseAndLowercase(password)) {
-    return "La password deve contenere almeno una lettera maiuscola e una minuscola";
+    return "atLeastUpperAndLowerCase";
   } else if (!existsSpecialChar(password)) {
-    return "La password deve contenere almeno un carattere speciale";
+    return "atLeastSpecialChar";
   }
 };

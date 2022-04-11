@@ -6,27 +6,29 @@ import { Typography } from "components/Typography";
 import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
 import { useToast } from "hooks/useToast";
-import { getCorrectPasswordErrorLabel, validatePassword } from "utils/validation";
+import { getCorrectPasswordErrorKey, validatePassword } from "utils/validation";
 import { homePath, loginPath } from "utils/paths";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
 import { useClientRouter } from "hooks/useClientRouter";
+import { useTranslation } from "react-i18next";
 
-const SigninPage = () => {
+const ChangePasswordPage = () => {
   const [password, setPassword] = useState("");
   const router = useClientRouter();
   const { showToast } = useToast();
   const disabled = !validatePassword(password);
   const oobCodeQuery = router.query.oobCode;
   const oobCode = typeof oobCodeQuery === "string" ? oobCodeQuery : oobCodeQuery?.[0] || "";
+  const { t } = useTranslation();
 
   const onPasswordReset = async () => {
     try {
       await confirmPasswordReset(auth, oobCode, password);
-      showToast(`La password è stata cambiata correttamente`, "success");
+      showToast(t("changePassword.passwordCorreclyChanged"), "success");
       router.push(loginPath);
     } catch (error) {
-      showToast("Errore durante il salvataggio della nuova password", "error");
+      showToast(t("changePassword.errorChangingPassword"), "error");
     }
   };
 
@@ -50,18 +52,18 @@ const SigninPage = () => {
               router.push(loginPath);
             }}
           >
-            <Typography variant="body2">Torna alla pagina di accesso</Typography>
+            <Typography variant="body2">{t("changePassword.goLoginPageButton")}</Typography>
           </Button>
         </>
       }
     >
-      <Typography variant="title">CAMBIO PASSWORD</Typography>
+      <Typography variant="title">{t("changePassword.changePassword")}</Typography>
       <Spacer size={40} />
-      <Typography variant="body">Nuova password</Typography>
+      <Typography variant="body">{t("changePassword.newPassword")}</Typography>
       <Spacer size={10} />
       <Input
         type="password"
-        placeholder="Inserisci la nuova password"
+        placeholder={t("changePassword.insertNewPassword")}
         name="password"
         value={password}
         onChange={(e) => {
@@ -72,16 +74,16 @@ const SigninPage = () => {
       />
       <Spacer size={5} />
       <Typography variant="error" style={{ height: 10 }}>
-        {!password || validatePassword(password) ? "" : getCorrectPasswordErrorLabel(password)}
+        {!password || validatePassword(password) ? "" : t(`validation.${getCorrectPasswordErrorKey(password)}`)}
       </Typography>
       <Spacer size={25} />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Button onClick={onPasswordReset} disabled={disabled}>
-          <Typography variant="body2">Conferma nuova password</Typography>
+          <Typography variant="body2">{t("changePassword.confirmPassword")}</Typography>
         </Button>
       </div>
     </CenteredBoxPageLayout>
   );
 };
 
-export default SigninPage;
+export default ChangePasswordPage;

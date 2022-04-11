@@ -5,9 +5,11 @@ import { ReloadPageButton } from "components/ReloadPageButton";
 import { LogoutButton } from "components/LogoutButton";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
+import { useTranslation } from "react-i18next";
 
 const WaitingRegistrationPage = () => {
   const { currentUser } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <CenteredBoxPageLayout
@@ -19,9 +21,9 @@ const WaitingRegistrationPage = () => {
         </>
       }
     >
-      <Typography variant="title">CONFERMA EMAIL</Typography>
+      <Typography variant="title">{t("waitingRegistration.confirmEmail")}</Typography>
       <Spacer size={40} />
-      <Typography variant="body">{"Ti abbiamo inviato una mail di conferma all'indirizzo email"}</Typography>
+      <Typography variant="body">{t("waitingRegistration.emailSentToConfirm")}</Typography>
       <Spacer size={20} />
       <Typography variant="body">{currentUser?.email}</Typography>
     </CenteredBoxPageLayout>

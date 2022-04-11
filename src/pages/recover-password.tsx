@@ -11,20 +11,22 @@ import { validateMail } from "utils/validation";
 import { loginPath } from "utils/paths";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
+import { useTranslation } from "react-i18next";
 
 const RecoverPasswordPage = () => {
   const [email, setEmail] = useState("");
   const router = useClientRouter();
   const { showToast } = useToast();
   const disabled = !validateMail(email);
+  const { t } = useTranslation();
 
   const onPasswordReset = async () => {
     try {
       await sendPasswordResetEmail(auth, email);
-      showToast(`Una email è stata inviata a ${email} per il recupero della password`, "success");
+      showToast(t("recoverPassword.mailHasBeenSent", { email }), "success");
       router.push(loginPath);
     } catch (error) {
-      showToast("Errore durante il recupero della password", "error");
+      showToast(t("recoverPassword.errorSendingEmail"), "error");
     }
   };
 
@@ -44,18 +46,18 @@ const RecoverPasswordPage = () => {
               router.push(loginPath);
             }}
           >
-            <Typography variant="body2">Torna alla pagina di accesso</Typography>
+            <Typography variant="body2">{t("recoverPassword.goRegistrationPageButton")}</Typography>
           </Button>
         </>
       }
     >
-      <Typography variant="title">RECUPERO PASSWORD</Typography>
+      <Typography variant="title">{t("recoverPassword.recoverPassword")}</Typography>
       <Spacer size={40} />
-      <Typography variant="body">Email</Typography>
+      <Typography variant="body">{t("recoverPassword.email")}</Typography>
       <Spacer size={10} />
       <Input
         type="text"
-        placeholder="Inserisci la email"
+        placeholder={t("recoverPassword.insertEmailPlaceholder")}
         name="email"
         value={email}
         onChange={(e) => {
@@ -66,12 +68,12 @@ const RecoverPasswordPage = () => {
       />
       <Spacer size={5} />
       <Typography variant="error" style={{ height: 10 }}>
-        {!email || validateMail(email) ? "" : "Email non valida"}
+        {!email || validateMail(email) ? "" : t("validation.notValidEmail")}
       </Typography>
       <Spacer size={25} />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Button onClick={onPasswordReset} disabled={disabled}>
-          <Typography variant="body2">Invia Mail di Recupero</Typography>
+          <Typography variant="body2">{t("recoverPassword.sendRecoverEmail")}</Typography>
         </Button>
       </div>
     </CenteredBoxPageLayout>

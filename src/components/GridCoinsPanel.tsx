@@ -304,7 +304,7 @@ export const GridCoinsPanel: FC<{
             {!tempRebalancing.length && (
               <>
                 <Spacer size={20} />
-                <Typography variant="body">{t("home.coins.insertAlmostOneCoin")}</Typography>
+                <Typography variant="body">{t("home.coins.insertAtLeastOneCoin")}</Typography>
               </>
             )}
             {/* KEEP This to allow dropdown to have space to be opened for last one coin */}

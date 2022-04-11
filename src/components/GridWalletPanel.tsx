@@ -210,7 +210,7 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet
       {!tempWallet.length && (
         <>
           <Spacer size={20} />
-          <Typography variant="body">{t("home.wallet.insertAlmostOneTypology")}</Typography>
+          <Typography variant="body">{t("home.wallet.insertAtLeastOneTypology")}</Typography>
         </>
       )}
     </>

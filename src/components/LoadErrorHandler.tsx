@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { errorColor, loadingColor } from "utils/colors";
 import { Typography } from "components/Typography";
 import { ReloadPageButton } from "components/ReloadPageButton";
+import { useTranslation } from "react-i18next";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -14,6 +15,7 @@ const Wrapper = styled.div`
 
 export const LoadErrorHandler: FC<{ data: any; error: any }> = ({ data, error, children }) => {
   const [isOnline, setOnline] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     window.addEventListener("offline", () => {
@@ -27,7 +29,7 @@ export const LoadErrorHandler: FC<{ data: any; error: any }> = ({ data, error, c
   if (!data && !error) {
     return (
       <Wrapper style={{ backgroundColor: loadingColor, color: "black" }}>
-        <Typography variant="body">.. Caricamento ..</Typography>
+        <Typography variant="body">{t("general.loadingMessage")}</Typography>
       </Wrapper>
     );
   }
@@ -35,7 +37,7 @@ export const LoadErrorHandler: FC<{ data: any; error: any }> = ({ data, error, c
   if (error || !isOnline) {
     return (
       <Wrapper style={{ backgroundColor: errorColor, color: "white", display: "flex", flexDirection: "column", gap: 30 }}>
-        <Typography variant="body">{!isOnline ? "Non sei online, controlla la connessione!" : "Errore! Ricaricare la pagina."}</Typography>
+        <Typography variant="body">{!isOnline ? t("general.errorOfflineMessage") : t("general.errorPleaseReloadMessage")}</Typography>
         <ReloadPageButton />
       </Wrapper>
     );

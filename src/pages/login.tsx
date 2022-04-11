@@ -8,20 +8,22 @@ import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
 import { useClientRouter } from "hooks/useClientRouter";
 import { useToast } from "hooks/useToast";
-import { getCorrectPasswordErrorLabel, validateMail, validatePassword } from "utils/validation";
+import { getCorrectPasswordErrorKey, validateMail, validatePassword } from "utils/validation";
 import { recoverPasswordPath, registrationPath } from "utils/paths";
 import { toUser } from "mappers/toUser";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
 import { logEvent, setUserId as setAnalyticsUserId } from "firebase/analytics";
+import { useTranslation } from "react-i18next";
 
-const SigninPage = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setCurrentUser } = useAuth();
   const router = useClientRouter();
   const { showToast } = useToast();
   const disabled = !validateMail(email) || !validatePassword(password);
+  const { t } = useTranslation();
 
   const onConfirm = async () => {
     try {
@@ -32,7 +34,7 @@ const SigninPage = () => {
         logEvent(analytics, "login", response.user);
       }
     } catch (error) {
-      showToast("Errore durante la fase di accesso", "error");
+      showToast(t("login.errorLogin"), "error");
     }
   };
 
@@ -52,19 +54,19 @@ const SigninPage = () => {
               router.push(registrationPath);
             }}
           >
-            <Typography variant="body2">Registrazione</Typography>
+            <Typography variant="body2">{t("login.signinButton")}</Typography>
           </Button>
         </>
       }
     >
       <form>
-        <Typography variant="title">ACCESSO</Typography>
+        <Typography variant="title">{t("login.login")}</Typography>
         <Spacer size={40} />
-        <Typography variant="body">Email</Typography>
+        <Typography variant="body">{t("login.email")}</Typography>
         <Spacer size={10} />
         <Input
           type="text"
-          placeholder="Inserisci la email"
+          placeholder={t("login.insertEmailPlaceholder")}
           name="email"
           value={email}
           onChange={(e) => {
@@ -75,15 +77,15 @@ const SigninPage = () => {
         />
         <Spacer size={5} />
         <Typography variant="error" style={{ height: 10 }}>
-          {!email || validateMail(email) ? "" : "Email non valida"}
+          {!email || validateMail(email) ? "" : t("validation.notValidEmail")}
         </Typography>
         <Spacer size={25} />
-        <Typography variant="body">Password</Typography>
+        <Typography variant="body">{t("login.password")}</Typography>
         <Spacer size={10} />
         <Input
           type="password"
           value={password}
-          placeholder="Inserisci la password"
+          placeholder={t("login.insertPasswordPlaceholder")}
           name="psw"
           onChange={(e) => {
             setPassword(e.currentTarget.value);
@@ -93,7 +95,7 @@ const SigninPage = () => {
         />
         <Spacer size={5} />
         <Typography variant="error" style={{ height: 10 }}>
-          {!password || validatePassword(password) ? "" : getCorrectPasswordErrorLabel(password)}
+          {!password || validatePassword(password) ? "" : t(`validation.${getCorrectPasswordErrorKey(password)}`)}
         </Typography>
         <Spacer size={20} />
         <div
@@ -102,13 +104,13 @@ const SigninPage = () => {
           }}
         >
           <Typography variant="body2" style={{ cursor: "pointer", textDecoration: "underline" }}>
-            Recupera Password
+            {t("login.recoverPassword")}
           </Typography>
         </div>
         <Spacer size={30} />
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button onClick={onConfirm} disabled={disabled}>
-            <Typography variant="body2">Entra</Typography>
+            <Typography variant="body2">{t("login.confirm")}</Typography>
           </Button>
         </div>
       </form>
@@ -116,4 +118,4 @@ const SigninPage = () => {
   );
 };
 
-export default SigninPage;
+export default LoginPage;
