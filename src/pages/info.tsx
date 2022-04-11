@@ -9,6 +9,8 @@ import styled from "styled-components";
 import { homePath, registrationPath } from "utils/paths";
 import { logEvent } from "firebase/analytics";
 import { analytics } from "utils/firebase";
+import { useTranslation } from "react-i18next";
+
 
 const Wrapper = styled.div`
   max-width: 700px;
@@ -35,7 +37,9 @@ const ScreenImage: FC<{ src: string; style?: React.CSSProperties; width?: number
 export default function InfoPage() {
   const { getResponsiveValue } = useResponsive();
   const router = useClientRouter();
-
+  const { t } = useTranslation();
+  const InfoTypography: FC = ({children}) => <Typography variant={"body"}style={{whiteSpace: "pre-line"}}>{children}</Typography>
+  
   useEffect(() => {
     if (analytics) {
       logEvent(analytics, "info_page_visited");
@@ -45,79 +49,67 @@ export default function InfoPage() {
   return (
     <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>
       <div style={{ width: "100%", textAlign: "center" }}>
-        <Typography variant="title">Benvenuto!</Typography>
+        <Typography variant="title">{t("info.title1")}</Typography>
       </div>
       <Spacer size={30} />
-      <Typography variant="body">Questa pagina ti aiuterà a capire di più riguardo al nostro progetto.</Typography>
+      <Typography variant="body">{t("info.aboutProject")}</Typography>
       <Spacer size={30} />
-      <Typography variant="body">Siamo due ingegneri e siamo appassionati di criptovalute.</Typography>
+      <Typography variant="body">{t("info.aboutUs")}</Typography>
       <Spacer size={30} />
       <Typography variant="body">
-        La nostra visione consiste nel supportare le persone interessate alle criptovalute tramite una serie di strumenti.
-        <br />
-        Il primo che presentiamo (e che abbiamo sviluppato ad ora) è quello che troverai in questa piattaforma:{" "}
-        <BoldLabel>un tool che ti aiuterà nel ribilanciamento di un portafoglio di criptovalute.</BoldLabel>
+      {t("info.ourVision")}{" "}
+        <BoldLabel>{t("info.ourVisionBold")}</BoldLabel>
       </Typography>
       <Spacer size={30} />
       <Typography variant="body">
-        Se non sai ancora cosa è il ribilanciamento di un portafoglio puoi leggere qualcosa in più{" "}
+      {t("info.aboutRebalancing")}{" "}
         <BoldLabel>
           <a href="https://thecryptogateway.it/investimento-cosa-vuol-dire-ribilanciamento-del-portafoglio/" rel="noreferrer" target={"_blank"} style={{ color: "black" }}>
-            qui
+          {t("info.hereRef")}
           </a>
         </BoldLabel>{" "}
-        (articolo di The Crypto Gateway sul ribilanciamento).
+        {t("info.linkDescription")}
       </Typography>
       <Spacer size={30} />
       <Typography variant="body">
-        Il tool che ti stiamo per presentare ti darà la possibilità di:
+      {t("info.toolDescription")}
         <br />
-        <br />- salvare il totale di denaro investito fino ad oggi e calcolare in tempo reale perdita/guadagno in base alle criptovalute che possiedi
+        <br />{t("info.functionality1")}
         <br />
-        <br />- strutturare un tuo portafoglio creando più &quot;tipologie&quot; di rischio e dedicando per ogni fetta la percentuale che riterrai più opportuna
+        <br />{t("info.functionality2")}
         <br />
-        <br />- tracciare manualmente le criptovalute che possiedi: il numero di monete, la tipologia di appartenenza e l&apos;allocazione dedicata alla moneta
+        <br />{t("info.functionality3")}
       </Typography>
       <Spacer size={30} />
       <Typography variant="body">
-        Prima di passare alla guida su come utilizzare la piattaforma ci tenevamo a informarti che:
+      {t("info.applicationInfo")}
         <br />
-        <br />- la piattaforma non si collega a nessun exchange/wallet, le monete devono essere manualmente aggiunte, modificate e rimosse
+        <br />{t("info.info1")}
         <br />
-        <br />- non ci riteniamo responsabili per possibili furti di dati
+        <br />{t("info.info2")}
         <br />
-        <br />- il servizio che offriamo è totalmente sperimentale e no profit
+        <br />{t("info.info3")}
         <br />
-        <br />- i dati che raccogliamo sugli utenti sono salvati in un database protetto
+        <br />{t("info.info4")}
         <br />
-        <br />- i dati riguardo alle monete (prezzo, variazione ecc) potrebbero non essere accurati (sfruttiamo le api di coinjecko)
-        <br />
-        <br />- la piattaforma è in fase di beta testing, potrebbero perciò verificarsi bug o malfunzionamenti
+        <br />{t("info.info5")}
       </Typography>
       <Spacer size={30} />
       <Typography variant="body">
-        Nel caso volessi darci un feedback, segnalarci un bug o altro puoi contattarci a{" "}
+      {t("info.helpFeedback")}{" "}
         <BoldLabel>
           <a href="mailto:master.gunner96@yahoo.com" style={{ color: "black" }}>
-            master.gunner96@yahoo.com
+          {t("info.helpMail")}
           </a>
         </BoldLabel>
       </Typography>
       <Spacer size={30} />
       <div style={{ width: "100%", textAlign: "center" }}>
-        <Typography variant="title">Iniziamo!</Typography>
+        <Typography variant="title">{t("info.title2")}</Typography>
       </div>
       <Spacer size={30} />
-      <Typography variant="body">Il primo passo per iniziare a sfruttare le funzionalità della piattaforma è quello di avere bene in mente come strutturare un portafoglio.</Typography>
-      <Spacer size={30} />
-      <Typography variant="body">
-        Come saprai è bene strutturare un portafoglio suddividendolo in tipologie di rischio, e allocando per ciascuna tipologia un&apos;adeguata percentuale sul totale.
-      </Typography>
-      <Spacer size={30} />
-      <Typography variant="body">Ogni investitore ha una sua strategia! È importante capirla al più presto per mantenerla nel tempo e non agire con la pancia (ma con la testa).</Typography>
-      <Spacer size={30} />
-      <Typography variant="body">
-        Se desideri leggere qualcosa in più riguardo a come strutturare un portafoglio ti consigliamo di leggere{" "}
+      <InfoTypography>{t("info.introTutorial")}{" "}</InfoTypography>
+        <Typography variant="body">
         <BoldLabel>
           <a href="https://thecryptogateway.it/costruzione-del-portafoglio-di-investimento/" rel="noreferrer" target={"_blank"} style={{ color: "black" }}>
             questo articolo
