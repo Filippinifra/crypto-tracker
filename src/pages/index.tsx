@@ -96,7 +96,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
 
     if (wallet && JSON.stringify(personalCoins) !== JSON.stringify(result) && result) {
       setPersonalCoins(result);
-      showToast("home.coinsWithNoExistingTypologyChanges", "warning");
+      showToast(t("home.coinsWithNoExistingTypologyChanges"), "warning");
     }
   }, [personalCoins, wallet, setPersonalCoins, showToast]);
 
