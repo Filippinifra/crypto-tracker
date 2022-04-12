@@ -6,6 +6,7 @@ import { LogoutButton } from "components/LogoutButton";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
 import { useTranslation } from "react-i18next";
+import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 
 const WaitingRegistrationPage = () => {
   const { currentUser } = useAuth();
@@ -15,6 +16,7 @@ const WaitingRegistrationPage = () => {
     <CenteredBoxPageLayout
       headerButtons={
         <>
+          <ChangeLanguageButton />
           <InfoButton />
           <ReloadPageButton />
           <LogoutButton />

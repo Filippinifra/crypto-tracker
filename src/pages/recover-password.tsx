@@ -12,6 +12,7 @@ import { loginPath } from "utils/paths";
 import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
 import { useTranslation } from "react-i18next";
+import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 
 const RecoverPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -40,6 +41,7 @@ const RecoverPasswordPage = () => {
     <CenteredBoxPageLayout
       headerButtons={
         <>
+          <ChangeLanguageButton />
           <InfoButton />
           <Button
             onClick={() => {

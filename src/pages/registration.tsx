@@ -15,6 +15,7 @@ import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
 import { setUserId as setAnalyticsUserId } from "firebase/analytics";
 import { useTranslation } from "react-i18next";
+import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -48,6 +49,7 @@ const SignupPage = () => {
     <CenteredBoxPageLayout
       headerButtons={
         <>
+          <ChangeLanguageButton />
           <InfoButton />
           <Button
             onClick={() => {

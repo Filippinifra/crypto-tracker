@@ -10,10 +10,12 @@ import { homePath, registrationPath } from "utils/paths";
 import { logEvent } from "firebase/analytics";
 import { analytics } from "utils/firebase";
 import { useTranslation } from "react-i18next";
+import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 
 const Wrapper = styled.div`
   max-width: 700px;
   margin: 0px auto;
+  position: relative;
 `;
 
 const BoldLabel: FC = ({ children }) => (
@@ -52,6 +54,10 @@ export default function InfoPage() {
 
   return (
     <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>
+      <div style={{ position: "fixed", maxWidth: 700, display: "flex", justifyContent: "flex-end", width: "100%" }}>
+        <ChangeLanguageButton />
+      </div>
+      <Spacer size={20} />
       <div style={{ width: "100%", textAlign: "center" }}>
         <Typography variant="title">{t("info.title1")}</Typography>
       </div>

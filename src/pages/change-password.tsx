@@ -12,6 +12,7 @@ import { InfoButton } from "components/InfoButton";
 import { CenteredBoxPageLayout } from "components/CenteredBoxPageLayout";
 import { useClientRouter } from "hooks/useClientRouter";
 import { useTranslation } from "react-i18next";
+import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 
 const ChangePasswordPage = () => {
   const [password, setPassword] = useState("");
@@ -46,6 +47,7 @@ const ChangePasswordPage = () => {
     <CenteredBoxPageLayout
       headerButtons={
         <>
+          <ChangeLanguageButton />
           <InfoButton />
           <Button
             onClick={() => {
