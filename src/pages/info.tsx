@@ -23,7 +23,6 @@ const TopRightWrapper = styled.div`
   max-width: 700px;
   display: flex;
   justify-content: flex-end;
-  width: 100%;
   z-index: 100;
 `;
 
@@ -63,7 +62,7 @@ export default function InfoPage() {
 
   return (
     <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>
-      <TopRightWrapper>
+      <TopRightWrapper style={{ width: `calc(100% - ${getResponsiveValue([30, 40, 50]) * 2}px)` }}>
         <ChangeLanguageButton />
       </TopRightWrapper>
       <Spacer size={20} />
