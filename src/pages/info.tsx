@@ -115,7 +115,7 @@ export default function InfoPage() {
       <Typography variant="body">
         {`${t("info.helpFeedback")} `}
         <BoldLabel>
-          <a href="mailto:master.gunner96@yahoo.com" style={{ color: "black" }}>
+          <a href="mailto:infowebfinance@gmail.com" style={{ color: "black" }}>
             {t("info.helpMail")}
           </a>
         </BoldLabel>
@@ -182,7 +182,7 @@ export default function InfoPage() {
       <InfoTypography>
         {t("info.outro")}
         <BoldLabel>
-          <a href="mailto:master.gunner96@yahoo.com" style={{ color: "black" }}>
+          <a href="mailto:infowebfinance@gmail.com" style={{ color: "black" }}>
             {t("info.helpMail")}
           </a>
         </BoldLabel>
