@@ -55,12 +55,6 @@ export default function InfoPage() {
   const router = useClientRouter();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    if (analytics) {
-      logEvent(analytics, "info_page_visited");
-    }
-  }, []);
-
   return (
     <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>
       <TopRightWrapper style={{ width: `calc(100% - ${getResponsiveValue([30, 40, 50]) * 2}px)` }}>
