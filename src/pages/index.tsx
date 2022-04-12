@@ -107,11 +107,6 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
     return () => removesNotExistingTypologyId();
   }, [wallet, loading, error, removesNotExistingTypologyId]);
 
-  useEffect(() => {
-    if (analytics) {
-      logEvent(analytics, "index_page_visited");
-    }
-  }, []);
 
   return (
     <LoadErrorHandler data={data} error={error}>
