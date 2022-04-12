@@ -14,6 +14,7 @@ export const resources = {
         atLeast1Number: "The password must contain at least one number",
         atLeastUpperAndLowerCase: "The password must contain at least one uppercase and one lowercase letter",
         atLeastSpecialChar: "The password must contain at least one special character",
+        notPasswordConfirm: "The two inserted password does not match"
       },
       registration: {
         loginButton: "Login",
@@ -21,7 +22,9 @@ export const resources = {
         email: "Email",
         insertEmailPlaceholder: "Insert email",
         password: "Password",
+        confirmPassword: "Confirm password",
         insertPasswordPlaceholder: "Insert password",
+        confirmPasswordPlaceholder: "Insert password again",
         confirm: "Register",
         errorRegistration: "Error during registration",
       },
@@ -196,6 +199,7 @@ export const resources = {
         atLeast1Number: "La password deve contenere almeno un numero",
         atLeastUpperAndLowerCase: "La password deve contenere almeno una lettera maiuscola e una minuscola",
         atLeastSpecialChar: "La password deve contenere almeno un carattere speciale",
+        notPasswordConfirm: "Le due password inserite non coincidono"
       },
       registration: {
         loginButton: "Accesso",
@@ -203,7 +207,9 @@ export const resources = {
         email: "Email",
         insertEmailPlaceholder: "Inserisci la email",
         password: "Password",
+        confirmPassword: "Conferma la password",
         insertPasswordPlaceholder: "Inserisci la password",
+        confirmPasswordPlaceholder: "Reinserisci la password",
         confirm: "Registrati",
         errorRegistration: "Errore durante la fase di registrazione",
       },

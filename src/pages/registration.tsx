@@ -8,7 +8,7 @@ import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
 import { useClientRouter } from "hooks/useClientRouter";
 import { useToast } from "hooks/useToast";
-import { getCorrectPasswordErrorKey, validateMail, validatePassword } from "utils/validation";
+import { getCorrectPasswordErrorKey, validateMail, validatePassword, validateConfirmPassword } from "utils/validation";
 import { loginPath } from "utils/paths";
 import { toUser } from "mappers/toUser";
 import { InfoButton } from "components/InfoButton";
@@ -20,10 +20,11 @@ import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { setCurrentUser } = useAuth();
   const router = useClientRouter();
   const { showToast } = useToast();
-  const disabled = !validateMail(email) || !validatePassword(password);
+  const disabled = !validateMail(email) || !validatePassword(password) || validateConfirmPassword(password, confirmPassword);
   const { t } = useTranslation();
 
   const onConfirm = async () => {
@@ -98,6 +99,25 @@ const SignupPage = () => {
         <Spacer size={5} />
         <Typography variant="error" style={{ height: 10 }}>
           {!password || validatePassword(password) ? "" : t(`validation.${getCorrectPasswordErrorKey(password)}`)}
+        </Typography>
+
+        <Spacer size={25} />
+        <Typography variant="body">{t("registration.confirmPassword")}</Typography>
+        <Spacer size={10} />
+        <Input
+          type="password"
+          value={confirmPassword}
+          placeholder={t("registration.confirmPasswordPlaceholder")}
+          name="confirmpsw"
+          onChange={(e) => {
+            setConfirmPassword(e.currentTarget.value);
+          }}
+          autocomplete={"password"}
+          onKeyDown={handleKeyPress}
+        />
+        <Spacer size={5} />
+        <Typography variant="error" style={{ height: 10 }}>
+          {!password || validateConfirmPassword(password, confirmPassword) ? "" : t(`validation.notPasswordConfirm`)}
         </Typography>
         <Spacer size={40} />
         <div style={{ display: "flex", justifyContent: "center" }}>

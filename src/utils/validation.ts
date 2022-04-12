@@ -1,5 +1,6 @@
 export const validateMail = (email: string) => /\S+@\S+\.\S+/.test(email);
 export const validatePassword = (password: string) => atLeast6Chars(password) && existsNumber(password) && existsUppercaseAndLowercase(password) && existsSpecialChar(password);
+export const validateConfirmPassword = (password: string, passwordConfirm: string) => password === passwordConfirm;
 
 export const atLeast6Chars = (value: string) => value.length >= 6;
 export const existsNumber = (value: string) => /\d/.test(value);
