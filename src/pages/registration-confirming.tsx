@@ -35,7 +35,7 @@ const RegistrationConfirmingPage = () => {
     } else {
       router.push(homePath);
     }
-  }, [router, oobCode, hasBeenCalled, currentUser, setCurrentUser, showToast]);
+  }, [router, oobCode, hasBeenCalled, currentUser, setCurrentUser, showToast, t]);
 
   useEffect(() => {
     performInitialAction();

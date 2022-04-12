@@ -35,8 +35,7 @@ const LabelCell: FC<{ value: string | number; isTitle?: boolean; color?: string;
   );
 };
 
-const getHeaders = (isEditing: boolean) => {
-  const { t } = useTranslation();
+const getHeaders = (isEditing: boolean, t: TFunction<"translation", undefined>) => {
   const basicHeaders = [
     <LabelCell value={t("home.wallet.typology")} key={`wallet-typology`} isTitle />,
     <LabelCell value={t("home.wallet.percentage")} key={`wallet-percentage`} isTitle />,
@@ -204,7 +203,7 @@ export const GridWalletPanel: FC<{ wallet: WalletDivision; setWallet: (newWallet
               : getResponsiveValue(["3fr 3fr 4fr", "150px 126px 126px", "150px 126px 126px"])
           }
           fullWidth={getResponsiveValue([true, false, false])}
-          data={[...getHeaders(isEditing), ...walletData, ...(isEditing ? [<AddWalletPieceIcon key={`wallet-add-coin`} />] : [])]}
+          data={[...getHeaders(isEditing, t), ...walletData, ...(isEditing ? [<AddWalletPieceIcon key={`wallet-add-coin`} />] : [])]}
         />
       </div>
       {!tempWallet.length && (

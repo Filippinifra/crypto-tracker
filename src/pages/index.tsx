@@ -98,7 +98,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
       setPersonalCoins(result);
       showToast(t("home.coinsWithNoExistingTypologyChanges"), "warning");
     }
-  }, [personalCoins, wallet, setPersonalCoins, showToast]);
+  }, [personalCoins, wallet, setPersonalCoins, showToast, t]);
 
   useEffect(() => {
     if (!loading && !error) {
