@@ -18,6 +18,15 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
+const TopRightWrapper = styled.div`
+  position: fixed;
+  max-width: 700px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  z-index: 100;
+`;
+
 const BoldLabel: FC = ({ children }) => (
   <Typography variant="body" component="span" style={{ fontWeight: 600 }}>
     {children}
@@ -54,9 +63,9 @@ export default function InfoPage() {
 
   return (
     <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>
-      <div style={{ position: "fixed", maxWidth: 700, display: "flex", justifyContent: "flex-end", width: "100%" }}>
+      <TopRightWrapper>
         <ChangeLanguageButton />
-      </div>
+      </TopRightWrapper>
       <Spacer size={20} />
       <div style={{ width: "100%", textAlign: "center" }}>
         <Typography variant="title">{t("info.title1")}</Typography>
