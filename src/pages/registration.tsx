@@ -117,7 +117,7 @@ const SignupPage = () => {
         />
         <Spacer size={5} />
         <Typography variant="error" style={{ height: 10 }}>
-          {!password || validateConfirmPassword(password, confirmPassword) ? "" : t(`validation.notPasswordConfirm`)}
+          {!confirmPassword || validateConfirmPassword(password, confirmPassword) || !validatePassword(password)  ? "" : t(`validation.notPasswordConfirm`)}
         </Typography>
         <Spacer size={40} />
         <div style={{ display: "flex", justifyContent: "center" }}>
