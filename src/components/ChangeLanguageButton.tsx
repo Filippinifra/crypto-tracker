@@ -8,20 +8,24 @@ export const ChangeLanguageButton = () => {
   const { language, setLanguage } = useLanguage();
 
   const onChangeLanguage = () => {
-    const currentIndexLanguage = availableLanguages.indexOf(language);
-    const nextIndex = currentIndexLanguage === availableLanguages.length - 1 ? 0 : currentIndexLanguage + 1;
-    const nextLanguage = availableLanguages[nextIndex];
+    if (language) {
+      const currentIndexLanguage = availableLanguages.indexOf(language);
+      const nextIndex = currentIndexLanguage === availableLanguages.length - 1 ? 0 : currentIndexLanguage + 1;
+      const nextLanguage = availableLanguages[nextIndex];
 
-    setLanguage(nextLanguage);
+      setLanguage(nextLanguage);
+    }
   };
 
   const currentFlag = useMemo(() => {
-    return mapLanguageToFlag[language];
+    if (language) {
+      return mapLanguageToFlag[language];
+    }
   }, [language]);
 
-  return (
+  return currentFlag ? (
     <Button onClick={onChangeLanguage} style={{ height: "auto", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 2px 0 4px" }}>
       <Typography variant="body2">{` ${currentFlag} `}</Typography>
     </Button>
-  );
+  ) : null;
 };

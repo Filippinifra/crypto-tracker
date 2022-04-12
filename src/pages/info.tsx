@@ -24,6 +24,7 @@ const TopRightWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   z-index: 100;
+  gap: 20px;
 `;
 
 const BoldLabel: FC = ({ children }) => (
@@ -64,6 +65,9 @@ export default function InfoPage() {
     <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>
       <TopRightWrapper style={{ width: `calc(100% - ${getResponsiveValue([30, 40, 50]) * 2}px)` }}>
         <ChangeLanguageButton />
+        <Button onClick={() => router.push(homePath)}>
+          <Typography variant="body2">{"Home/Login"}</Typography>
+        </Button>
       </TopRightWrapper>
       <Spacer size={20} />
       <div style={{ width: "100%", textAlign: "center" }}>
@@ -193,7 +197,9 @@ export default function InfoPage() {
       </InfoTypography>
       <Spacer size={30} />
       <div style={{ width: "100%", textAlign: "center" }}>
-        <Button onClick={() => router.push(homePath)}>{"Home/Login"}</Button>
+        <Button onClick={() => router.push(homePath)}>
+          <Typography variant="body2">{"Home/Login"}</Typography>
+        </Button>
       </div>
     </Wrapper>
   );

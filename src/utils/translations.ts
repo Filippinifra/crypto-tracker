@@ -174,6 +174,11 @@ export const resources = {
         column3: "- The last column tells how many coins you have to buy or sell to fix your balance gap.",
         outro: "We remind you that the platform is free and also available on mobile.\n\nWe wish you a pleasant use, and we will leave our email below to contact us.\n\n",
       },
+      language: {
+        successOnUpdate: "Language has been changed successfully",
+        errorOnUpdate: "Error during update the language",
+        errorOnFetch: "Error during fetch the language",
+      },
     },
   },
   it: {
@@ -354,6 +359,11 @@ export const resources = {
           "- La terza colonna identifica quante monete servono per il bilanciamento. Nella prima riga USDC deve essere ribilanciata di 119.769 monete, il che vuol dire che dovresti comprare 119.769 USDC per bilanciare la posizione.",
         outro:
           "Ti ricordiamo che la piattaforma è completamente gratuita e disponibile anche in veresione mobile.\n\nTi auguriamo un piacevole utilizzo e lasciamo di seguito l'indirizzo email per contattarci.\n\n",
+      },
+      linguaggio: {
+        successOnUpdate: "La lingua è stata modificata con successo",
+        errorOnUpdate: "Errore durante l'aggiornamento della lingua",
+        errorOnFetch: "Errore durante il recupero della lingua",
       },
     },
   },
