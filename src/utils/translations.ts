@@ -133,14 +133,15 @@ export const resources = {
           insertAtLeastOneCoin: "Insert at least one coin",
         },
       },
-      info:{
-        title1:"Welcome!",
-        aboutProject: "This page will help you to understand our project.\n\n\nWe are two engineers and crypto enthusiastic.\n\n\nWe aim to support people interested in crypto through a collection of tools.\nThe first one is already available on this platform: ",
+      info: {
+        title1: "Welcome!",
+        aboutProject:
+          "This page will help you to understand our project.\n\n\nWe are two engineers and crypto enthusiastic.\n\n\nWe aim to support people interested in crypto through a collection of tools.\nThe first one is already available on this platform: ",
         ourVisionBold: "a tool that will help you in crypto portfolio rebalancing.",
         aboutRebalancing: "\n\nIf you are interested in portfolio rebalancing, you can read something interesting",
         hereRef: "here",
-        linkDescription:"(an italian rebalancing article written by The Crypto Gatway).",
-        toolDescription:"Our tool will give you the following functionality:",
+        linkDescription: "(an italian rebalancing article written by The Crypto Gatway).",
+        toolDescription: "Our tool will give you the following functionality:",
         functionality1: "- track the amount of invested capital and calculate the gain/loss of your wallet in real-time",
         functionality2: "- create your portfolio by allocating your capital with the percentage you consider most appropriate",
         functionality3: "- track your cryptocurrency manually: the number of coins, what are their typologies, and the percentage reserved for such coins",
@@ -153,21 +154,26 @@ export const resources = {
         helpFeedback: "Feel free to contact us for a feedback or a bug report at",
         helpMail: "master.gunner96@yahoo.com",
         title2: "Let's start!",
-        introTutorial:"The first and most important step consists of having in mind how to structure your portfolio.\n\nAs you know, it is important to divide your portfolio by risk typologies and allocate a percentage to each of them.\n\nEvery investor has his strategy! You have to find yours in order to do the correct move, and not act moved by feelings.\n\nIf you are interested in reading something more about \"how to structure your portfolio\" we suggest you take a look",
+        introTutorial:
+          'The first and most important step consists of having in mind how to structure your portfolio.\n\nAs you know, it is important to divide your portfolio by risk typologies and allocate a percentage to each of them.\n\nEvery investor has his strategy! You have to find yours in order to do the correct move, and not act moved by feelings.\n\nIf you are interested in reading something more about "how to structure your portfolio" we suggest you take a look',
         linkDescription2: "(written by The Crypto Gateway).",
         registrationLink: "To register on the application click ",
-        registrationPhase: "\n\nYou will receive an email with some instructions, follow them, and finally you can start to set up your wallet tracker.\n\nOnce your account is ready, you will land on this page:",
-        panel1: "The panel at the top left, allows you to insert the total amount of fiat you have invested in cryptocurrency. This value can be edited whenever you want, e.g. when you buy or withdraw cryptocurrency.",
-        panel2: "Now it is time to set up the portfolio risk typologies. As shown in the following screenshot, you can add new typologies (with the green plus button), remove them (with the red trash button), and also edit their names and allocation percentage.",
-        panel3: "Under the first two panels, there is a search bar that will help you add your owned coin. It is possible to add the same coin more than one time. This feature helps those who have the same coin on different exchanges or wallets.",
+        registrationPhase:
+          "\n\nYou will receive an email with some instructions, follow them, and finally you can start to set up your wallet tracker.\n\nOnce your account is ready, you will land on this page:",
+        panel1:
+          "The panel at the top left, allows you to insert the total amount of fiat you have invested in cryptocurrency. This value can be edited whenever you want, e.g. when you buy or withdraw cryptocurrency.",
+        panel2:
+          "Now it is time to set up the portfolio risk typologies. As shown in the following screenshot, you can add new typologies (with the green plus button), remove them (with the red trash button), and also edit their names and allocation percentage.",
+        panel3:
+          "Under the first two panels, there is a search bar that will help you add your owned coin. It is possible to add the same coin more than one time. This feature helps those who have the same coin on different exchanges or wallets.",
         panel4: "The last panel of the page is in charge to show your coins and data. Here you can set up their typology, their allocation, and their amount.",
         panel5: "As shown in the following screenshot, after saving your configuration, you can consult the data about rebalancing and coins' trend.",
         panel6: "Let's take a look into these three columns:",
         column1: "- The first column identifies the balance of the coin related to the percentage we decided to allocate for it.",
         column2: "- The second column is similar to the first one, but rather than the percentage, it shows the balance related to the fiat currency you have chosen.",
         column3: "- The last column tells how many coins you have to buy or sell to fix your balance gap.",
-        outro: "We remind you that the platform is free and also available on mobile.\n\nWe wish you a pleasant use, and we will leave our email below to contact us.\n\n"
-      }
+        outro: "We remind you that the platform is free and also available on mobile.\n\nWe wish you a pleasant use, and we will leave our email below to contact us.\n\n",
+      },
     },
   },
   it: {
@@ -304,16 +310,17 @@ export const resources = {
           insertAtLeastOneCoin: "Inserisci almeno una moneta",
         },
       },
-      info:{
-        title1:"Benvenuto!",
-        aboutProject: "Questa pagina ti aiuterà a capire di più riguardo al nostro progetto.\n\n\nSiamo due ingegneri e siamo appassionati di criptovalute.\n\n\nLa nostra visione consiste nel supportare le persone interessate alle criptovalute tramite una serie di strumenti.\nIl primo che presentiamo (e che abbiamo sviluppato ad ora) è quello che troverai in questa piattaforma: ",
+      info: {
+        title1: "Benvenuto!",
+        aboutProject:
+          "Questa pagina ti aiuterà a capire di più riguardo al nostro progetto.\n\n\nSiamo due ingegneri e siamo appassionati di criptovalute.\n\n\nLa nostra visione consiste nel supportare le persone interessate alle criptovalute tramite una serie di strumenti.\nIl primo che presentiamo (e che abbiamo sviluppato ad ora) è quello che troverai in questa piattaforma: ",
         ourVisionBold: "un tool che ti aiuterà nel ribilanciamento di un portafoglio di criptovalute.",
         aboutRebalancing: "\n\nSe non sai ancora cosa è il ribilanciamento di un portafoglio puoi leggere qualcosa in più",
         hereRef: "qui",
-        linkDescription:"(articolo di The Crypto Gateway sul ribilanciamento).",
-        toolDescription:"Il tool che ti stiamo per presentare ti darà la possibilità di:",
+        linkDescription: "(articolo di The Crypto Gateway sul ribilanciamento).",
+        toolDescription: "Il tool che ti stiamo per presentare ti darà la possibilità di:",
         functionality1: "- salvare il totale di denaro investito fino ad oggi e calcolare in tempo reale perdita/guadagno in base alle criptovalute che possiedi",
-        functionality2: "- strutturare un tuo portafoglio creando più \"tipologie\" di rischio e dedicando per ogni fetta la percentuale che riterrai più opportuna",
+        functionality2: '- strutturare un tuo portafoglio creando più "tipologie" di rischio e dedicando per ogni fetta la percentuale che riterrai più opportuna',
         functionality3: "- tracciare manualmente le criptovalute che possiedi: il numero di monete, la tipologia di appartenenza e l'allocazione dedicata alla moneta",
         applicationInfo: "Prima di passare alla guida su come utilizzare la piattaforma ci tenevamo a informarti che:",
         info1: "- la piattaforma non si collega a nessun exchange/wallet, le monete devono essere manualmente aggiunte, modificate e rimosse",
@@ -321,25 +328,33 @@ export const resources = {
         info3: "- i dati che raccogliamo sugli utenti sono salvati in un database protetto",
         info4: "- i dati riguardo alle monete (prezzo, variazione ecc) sono in linea con Coingecko.",
         info5: "- la piattaforma è in fase di beta testing, potrebbero perciò verificarsi bug o malfunzionamenti",
-        helpFeedback:"Nel caso volessi darci un feedback, segnalarci un bug o altro puoi contattarci a",
-        helpMail:"master.gunner96@yahoo.com",
+        helpFeedback: "Nel caso volessi darci un feedback, segnalarci un bug o altro puoi contattarci a",
+        helpMail: "master.gunner96@yahoo.com",
         title2: "Iniziamo!",
-        introTutorial: "Il primo passo per iniziare a sfruttare le funzionalità della piattaforma è quello di avere bene in mente come strutturare un portafoglio.\n\nCome saprai è bene strutturare un portafoglio suddividendolo in tipologie di rischio, e allocando per ciascuna tipologia un'adeguata percentuale sul totale.\n\nOgni investitore ha una sua strategia! È importante capirla al più presto per mantenerla nel tempo e non agire con la pancia (ma con la testa).\n\nSe desideri leggere qualcosa in più riguardo a come strutturare un portafoglio ti consigliamo di leggere",
+        introTutorial:
+          "Il primo passo per iniziare a sfruttare le funzionalità della piattaforma è quello di avere bene in mente come strutturare un portafoglio.\n\nCome saprai è bene strutturare un portafoglio suddividendolo in tipologie di rischio, e allocando per ciascuna tipologia un'adeguata percentuale sul totale.\n\nOgni investitore ha una sua strategia! È importante capirla al più presto per mantenerla nel tempo e non agire con la pancia (ma con la testa).\n\nSe desideri leggere qualcosa in più riguardo a come strutturare un portafoglio ti consigliamo di leggere",
         linkDescription2: "(The Crypto Gateway).",
         registrationLink: "Per registratrti sull'applicazione clicca ",
-        registrationPhase: "\n\nRiceverai un'email con alcune istruzioni, seguile e finalmente potrai iniziare a configurare il tracker per il tuo portafoglio.\n\nUna volta che il tuo account sara creato, ti ritroverai su questa pagina:",
-        panel1: "Partendo dal primo pannello in alto a sinistra potrai inserire il totale investito. Una volta inserito il totale puoi cliccare su salva. Tale valore può essere aggionrato in qualsiasi momento, per esempio se decidi di comprare o vendere le tue crypto.",
-        panel2: "Ora è il momento di modificare il portafoglio. Con il bottone verde '+' potrai aggiungere tipologie di rischio al tuo portafoglio, mentre con il bottone rosso '-' le potrai eliminare. Ricorda ceh sarai tu a scegliere i nomi e le percentuali per l'allocazione.",
-        panel3: "Troverai inoltre una grossa barra di ricerca che ti aiuterà ad inserire le tue monete. Puoi aggiungere più volte le stesse monete. Questa funzionalità aiuterà gli utenti che hanno la stessa moneta su exchange o wallet differenti.",
+        registrationPhase:
+          "\n\nRiceverai un'email con alcune istruzioni, seguile e finalmente potrai iniziare a configurare il tracker per il tuo portafoglio.\n\nUna volta che il tuo account sara creato, ti ritroverai su questa pagina:",
+        panel1:
+          "Partendo dal primo pannello in alto a sinistra potrai inserire il totale investito. Una volta inserito il totale puoi cliccare su salva. Tale valore può essere aggionrato in qualsiasi momento, per esempio se decidi di comprare o vendere le tue crypto.",
+        panel2:
+          "Ora è il momento di modificare il portafoglio. Con il bottone verde '+' potrai aggiungere tipologie di rischio al tuo portafoglio, mentre con il bottone rosso '-' le potrai eliminare. Ricorda ceh sarai tu a scegliere i nomi e le percentuali per l'allocazione.",
+        panel3:
+          "Troverai inoltre una grossa barra di ricerca che ti aiuterà ad inserire le tue monete. Puoi aggiungere più volte le stesse monete. Questa funzionalità aiuterà gli utenti che hanno la stessa moneta su exchange o wallet differenti.",
         panel4: "Il seguente pannello ti permetterà di modificare, per ogni moneta, la tipologia di appartenenza, l'allocazione percetuale assegnata e il totale di posseduto.",
         panel5: "Dopo aver salvato i tuoi dati, potrai vedere il ribilanciamento e l'andamento delle tue monete. Prendiamo come esempio questo screenshot:",
         panel6: "Andiamo a vedere queste tre colonne:",
-        column1: "- La prima colonna identifica quanto una moneta è bilanciata. Nella prima riga USDC è bilanciata al 45%, il che vuol dire che possiedi solamente il 45% di monete USDC che dovresti possedere per avere l'asset bilanciato.",
-        column2: "- La seconda colonna identifica quanto sei sbilanciato in valore euro/dollaro. Nella prima riga USDC è sbilanciato di 108.85€, il che vuol dire che per ribilanciare la posizione dovresti comprare un totale di USDC per un controvalore di 108.85€.",
-        column3: "- La terza colonna identifica quante monete servono per il bilanciamento. Nella prima riga USDC deve essere ribilanciata di 119.769 monete, il che vuol dire che dovresti comprare 119.769 USDC per bilanciare la posizione.",
-        outro: "Ti ricordiamo che la piattaforma è completamente gratuita e disponibile anche in veresione mobile.\n\nTi auguriamo un piacevole utilizzo e lasciamo di seguito l'indirizzo email per contattarci.\n\n",
-
-      }
+        column1:
+          "- La prima colonna identifica quanto una moneta è bilanciata. Nella prima riga USDC è bilanciata al 45%, il che vuol dire che possiedi solamente il 45% di monete USDC che dovresti possedere per avere l'asset bilanciato.",
+        column2:
+          "- La seconda colonna identifica quanto sei sbilanciato in valore euro/dollaro. Nella prima riga USDC è sbilanciato di 108.85€, il che vuol dire che per ribilanciare la posizione dovresti comprare un totale di USDC per un controvalore di 108.85€.",
+        column3:
+          "- La terza colonna identifica quante monete servono per il bilanciamento. Nella prima riga USDC deve essere ribilanciata di 119.769 monete, il che vuol dire che dovresti comprare 119.769 USDC per bilanciare la posizione.",
+        outro:
+          "Ti ricordiamo che la piattaforma è completamente gratuita e disponibile anche in veresione mobile.\n\nTi auguriamo un piacevole utilizzo e lasciamo di seguito l'indirizzo email per contattarci.\n\n",
+      },
     },
   },
 };

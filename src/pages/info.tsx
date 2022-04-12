@@ -11,7 +11,6 @@ import { logEvent } from "firebase/analytics";
 import { analytics } from "utils/firebase";
 import { useTranslation } from "react-i18next";
 
-
 const Wrapper = styled.div`
   max-width: 700px;
   margin: 0px auto;
@@ -34,12 +33,17 @@ const ScreenImage: FC<{ src: string; style?: React.CSSProperties; width?: number
   );
 };
 
+const InfoTypography: FC = ({ children }) => (
+  <Typography variant={"body"} style={{ whiteSpace: "pre-line" }}>
+    {children}
+  </Typography>
+);
+
 export default function InfoPage() {
   const { getResponsiveValue } = useResponsive();
   const router = useClientRouter();
   const { t } = useTranslation();
-  const InfoTypography: FC = ({children}) => <Typography variant={"body"}style={{whiteSpace: "pre-line"}}>{children}</Typography>
-  
+
   useEffect(() => {
     if (analytics) {
       logEvent(analytics, "info_page_visited");
@@ -57,44 +61,52 @@ export default function InfoPage() {
         <BoldLabel>{t("info.ourVisionBold")}</BoldLabel>
       </InfoTypography>
       <InfoTypography>
-      {t("info.aboutRebalancing")}{" "}
+        {`${t("info.aboutRebalancing")} `}
         <BoldLabel>
           <a href="https://thecryptogateway.it/investimento-cosa-vuol-dire-ribilanciamento-del-portafoglio/" rel="noreferrer" target={"_blank"} style={{ color: "black" }}>
-          {t("info.hereRef")}
+            {t("info.hereRef")}
           </a>
-        </BoldLabel>{" "}
-        {t("info.linkDescription")}
+        </BoldLabel>
+        {` ${t("info.linkDescription")}`}
       </InfoTypography>
       <Spacer size={30} />
       <Typography variant="body">
-      {t("info.toolDescription")}
+        {t("info.toolDescription")}
         <br />
-        <br />{t("info.functionality1")}
         <br />
-        <br />{t("info.functionality2")}
+        {t("info.functionality1")}
         <br />
-        <br />{t("info.functionality3")}
+        <br />
+        {t("info.functionality2")}
+        <br />
+        <br />
+        {t("info.functionality3")}
       </Typography>
       <Spacer size={30} />
       <Typography variant="body">
-      {t("info.applicationInfo")}
+        {t("info.applicationInfo")}
         <br />
-        <br />{t("info.info1")}
         <br />
-        <br />{t("info.info2")}
+        {t("info.info1")}
         <br />
-        <br />{t("info.info3")}
         <br />
-        <br />{t("info.info4")}
+        {t("info.info2")}
         <br />
-        <br />{t("info.info5")}
+        <br />
+        {t("info.info3")}
+        <br />
+        <br />
+        {t("info.info4")}
+        <br />
+        <br />
+        {t("info.info5")}
       </Typography>
       <Spacer size={30} />
       <Typography variant="body">
-      {t("info.helpFeedback")}{" "}
+        {`${t("info.helpFeedback")} `}
         <BoldLabel>
           <a href="mailto:master.gunner96@yahoo.com" style={{ color: "black" }}>
-          {t("info.helpMail")}
+            {t("info.helpMail")}
           </a>
         </BoldLabel>
       </Typography>
@@ -103,20 +115,21 @@ export default function InfoPage() {
         <Typography variant="title">{t("info.title2")}</Typography>
       </div>
       <Spacer size={30} />
-      <InfoTypography>{t("info.introTutorial")}{" "}
+      <InfoTypography>
+        {`${t("info.introTutorial")} `}
         <BoldLabel>
           <a href="https://thecryptogateway.it/costruzione-del-portafoglio-di-investimento/" rel="noreferrer" target={"_blank"} style={{ color: "black" }}>
-          {t("info.hereRef")}
+            {t("info.hereRef")}
           </a>
-        </BoldLabel>{" "}
-        {t("info.linkDescription2")}
-        </InfoTypography>
+        </BoldLabel>
+        {` ${t("info.linkDescription2")}`}
+      </InfoTypography>
       <Spacer size={30} />
       <InfoTypography>
-      {t("info.registrationLink")}
+        {t("info.registrationLink")}
         <BoldLabel>
           <a href={registrationPath} target={"_blank"} rel="noreferrer" style={{ color: "black" }}>
-          {t("info.hereRef")}{"."}
+            {`${t("info.hereRef")}.`}
           </a>
         </BoldLabel>
       </InfoTypography>
@@ -145,21 +158,25 @@ export default function InfoPage() {
       <ScreenImage src={require("images/rebalancing-voices.png")} />
       <Spacer size={30} />
       <Typography variant="body">
-      {t("info.panel6")}
+        {t("info.panel6")}
         <br />
-        <br />{t("info.column1")}
         <br />
-        <br />{t("info.column2")}
+        {t("info.column1")}
         <br />
-        <br />{t("info.column3")}
+        <br />
+        {t("info.column2")}
+        <br />
+        <br />
+        {t("info.column3")}
       </Typography>
-    <InfoTypography>{t("info.outro")}
+      <InfoTypography>
+        {t("info.outro")}
         <BoldLabel>
           <a href="mailto:master.gunner96@yahoo.com" style={{ color: "black" }}>
-          {t("info.helpMail")}
+            {t("info.helpMail")}
           </a>
         </BoldLabel>
-        </InfoTypography>
+      </InfoTypography>
       <Spacer size={30} />
       <div style={{ width: "100%", textAlign: "center" }}>
         <Button onClick={() => router.push(homePath)}>{"Home/Login"}</Button>
