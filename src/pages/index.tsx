@@ -23,8 +23,6 @@ import { useToast } from "hooks/useToast";
 import { useResponsive } from "hooks/useResponsive";
 import { useAuth } from "hooks/useAuth";
 import { DoughnutCompleteChart } from "components/DoughnutCompleteChart";
-import { logEvent } from "firebase/analytics";
-import { analytics } from "utils/firebase";
 import { useTranslation } from "react-i18next";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
@@ -106,7 +104,6 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
     }
     return () => removesNotExistingTypologyId();
   }, [wallet, loading, error, removesNotExistingTypologyId]);
-
 
   return (
     <LoadErrorHandler data={data} error={error}>

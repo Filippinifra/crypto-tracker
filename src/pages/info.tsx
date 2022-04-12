@@ -4,11 +4,9 @@ import { Typography } from "components/Typography";
 import { useResponsive } from "hooks/useResponsive";
 import Image from "next/image";
 import { useClientRouter } from "hooks/useClientRouter";
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import { homePath, registrationPath } from "utils/paths";
-import { logEvent } from "firebase/analytics";
-import { analytics } from "utils/firebase";
 import { useTranslation } from "react-i18next";
 import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 
