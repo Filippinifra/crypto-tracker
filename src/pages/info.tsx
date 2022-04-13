@@ -11,6 +11,61 @@ import { useTranslation } from "react-i18next";
 import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 import { contactMail } from "utils/constants";
 
+import AddCoinsImageEn from "images/info/en/add-coins.png";
+import EditCoinsImageEn from "images/info/en/edit-coins.png";
+import EditVestingImageEn from "images/info/en/edit-vesting.png";
+import EditWalletImageEn from "images/info/en/edit-wallet.png";
+import EmptyDataHomeImageEn from "images/info/en/empty-data-home.png";
+import RebalancingExampleMobileImageEn from "images/info/en/rebalancing-example-mobile.png";
+import RebalancingExampleImageEn from "images/info/en/rebalancing-example.png";
+import RebalancingVoicesImageEn from "images/info/en/rebalancing-voices.png";
+import RegistrationScreenImageEn from "images/info/en/registration-screen.png";
+import TopButtonsImageEn from "images/info/en/top-buttons.png";
+
+import AddCoinsImageIt from "images/info/it/add-coins.png";
+import EditCoinsImageIt from "images/info/it/edit-coins.png";
+import EditVestingImageIt from "images/info/it/edit-vesting.png";
+import EditWalletImageIt from "images/info/it/edit-wallet.png";
+import EmptyDataHomeImageIt from "images/info/it/empty-data-home.png";
+import RebalancingExampleMobileImageIt from "images/info/it/rebalancing-example-mobile.png";
+import RebalancingExampleImageIt from "images/info/it/rebalancing-example.png";
+import RebalancingVoicesImageIt from "images/info/it/rebalancing-voices.png";
+import RegistrationScreenImageIt from "images/info/it/registration-screen.png";
+import TopButtonsImageIt from "images/info/it/top-buttons.png";
+import { useLanguage } from "hooks/useLanguage";
+
+const englishImages = {
+  AddCoinsImage: AddCoinsImageEn,
+  EditCoinsImage: EditCoinsImageEn,
+  EditVestingImage: EditVestingImageEn,
+  EditWalletImage: EditWalletImageEn,
+  EmptyDataHomeImage: EmptyDataHomeImageEn,
+  RebalancingExampleMobileImage: RebalancingExampleMobileImageEn,
+  RebalancingExampleImage: RebalancingExampleImageEn,
+  RebalancingVoicesImage: RebalancingVoicesImageEn,
+  RegistrationScreenImage: RegistrationScreenImageEn,
+  TopButtonsImage: TopButtonsImageEn,
+};
+
+const italianImages = {
+  AddCoinsImage: AddCoinsImageIt,
+  EditCoinsImage: EditCoinsImageIt,
+  EditVestingImage: EditVestingImageIt,
+  EditWalletImage: EditWalletImageIt,
+  EmptyDataHomeImage: EmptyDataHomeImageIt,
+  RebalancingExampleMobileImage: RebalancingExampleMobileImageIt,
+  RebalancingExampleImage: RebalancingExampleImageIt,
+  RebalancingVoicesImage: RebalancingVoicesImageIt,
+  RegistrationScreenImage: RegistrationScreenImageIt,
+  TopButtonsImage: TopButtonsImageIt,
+};
+
+const images = {
+  en: englishImages,
+  it: italianImages,
+  default: englishImages,
+};
+
 const Wrapper = styled.div`
   max-width: 700px;
   margin: 0px auto;
@@ -53,6 +108,8 @@ export default function InfoPage() {
   const { getResponsiveValue } = useResponsive();
   const router = useClientRouter();
   const { t } = useTranslation();
+  const { language } = useLanguage();
+  const correctImagesGroup = images[language || "en"];
 
   return (
     <Wrapper style={{ padding: getResponsiveValue(["20px 30px", "40px 40px", "60px 50px"]) }}>
@@ -146,27 +203,27 @@ export default function InfoPage() {
       </InfoTypography>
       <InfoTypography>{t("info.registrationPhase")}</InfoTypography>
       <Spacer size={30} />
-      <ScreenImage src={require("images/empty-data-home.png")} />
+      <ScreenImage src={correctImagesGroup.EmptyDataHomeImage as unknown as string} />
       <Spacer size={30} />
       <Typography variant="body">{t("info.panel1")}</Typography>
       <Spacer size={30} />
-      <ScreenImage src={require("images/edit-vesting.png")} />
+      <ScreenImage src={correctImagesGroup.EditVestingImage as unknown as string} />
       <Spacer size={30} />
       <Typography variant="body">{t("info.panel2")}</Typography>
       <Spacer size={30} />
-      <ScreenImage src={require("images/edit-wallet.png")} />
+      <ScreenImage src={correctImagesGroup.EditWalletImage as unknown as string} />
       <Spacer size={30} />
       <Typography variant="body">{t("info.panel3")}</Typography>
       <Spacer size={30} />
-      <ScreenImage src={require("images/add-coins.png")} />
+      <ScreenImage src={correctImagesGroup.AddCoinsImage as unknown as string} />
       <Spacer size={30} />
       <Typography variant="body">{t("info.panel4")}</Typography>
       <Spacer size={30} />
-      <ScreenImage src={require("images/edit-coins.png")} />
+      <ScreenImage src={correctImagesGroup.EditCoinsImage as unknown as string} />
       <Spacer size={30} />
       <Typography variant="body">{t("info.panel5")}</Typography>
       <Spacer size={30} />
-      <ScreenImage src={require("images/rebalancing-voices.png")} />
+      <ScreenImage src={correctImagesGroup.RebalancingVoicesImage as unknown as string} />
       <Spacer size={30} />
       <Typography variant="body">
         {t("info.panel6")}
