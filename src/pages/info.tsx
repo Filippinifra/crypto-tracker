@@ -10,29 +10,21 @@ import { homePath, registrationPath } from "utils/paths";
 import { useTranslation } from "react-i18next";
 import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 import { contactMail } from "utils/constants";
+import { useLanguage } from "hooks/useLanguage";
 
 import AddCoinsImageEn from "images/info/en/add-coins.png";
 import EditCoinsImageEn from "images/info/en/edit-coins.png";
 import EditVestingImageEn from "images/info/en/edit-vesting.png";
 import EditWalletImageEn from "images/info/en/edit-wallet.png";
 import EmptyDataHomeImageEn from "images/info/en/empty-data-home.png";
-import RebalancingExampleMobileImageEn from "images/info/en/rebalancing-example-mobile.png";
-import RebalancingExampleImageEn from "images/info/en/rebalancing-example.png";
 import RebalancingVoicesImageEn from "images/info/en/rebalancing-voices.png";
-import RegistrationScreenImageEn from "images/info/en/registration-screen.png";
-import TopButtonsImageEn from "images/info/en/top-buttons.png";
 
 import AddCoinsImageIt from "images/info/it/add-coins.png";
 import EditCoinsImageIt from "images/info/it/edit-coins.png";
 import EditVestingImageIt from "images/info/it/edit-vesting.png";
 import EditWalletImageIt from "images/info/it/edit-wallet.png";
 import EmptyDataHomeImageIt from "images/info/it/empty-data-home.png";
-import RebalancingExampleMobileImageIt from "images/info/it/rebalancing-example-mobile.png";
-import RebalancingExampleImageIt from "images/info/it/rebalancing-example.png";
 import RebalancingVoicesImageIt from "images/info/it/rebalancing-voices.png";
-import RegistrationScreenImageIt from "images/info/it/registration-screen.png";
-import TopButtonsImageIt from "images/info/it/top-buttons.png";
-import { useLanguage } from "hooks/useLanguage";
 
 const englishImages = {
   AddCoinsImage: AddCoinsImageEn,
@@ -40,11 +32,7 @@ const englishImages = {
   EditVestingImage: EditVestingImageEn,
   EditWalletImage: EditWalletImageEn,
   EmptyDataHomeImage: EmptyDataHomeImageEn,
-  RebalancingExampleMobileImage: RebalancingExampleMobileImageEn,
-  RebalancingExampleImage: RebalancingExampleImageEn,
   RebalancingVoicesImage: RebalancingVoicesImageEn,
-  RegistrationScreenImage: RegistrationScreenImageEn,
-  TopButtonsImage: TopButtonsImageEn,
 };
 
 const italianImages = {
@@ -53,11 +41,7 @@ const italianImages = {
   EditVestingImage: EditVestingImageIt,
   EditWalletImage: EditWalletImageIt,
   EmptyDataHomeImage: EmptyDataHomeImageIt,
-  RebalancingExampleMobileImage: RebalancingExampleMobileImageIt,
-  RebalancingExampleImage: RebalancingExampleImageIt,
   RebalancingVoicesImage: RebalancingVoicesImageIt,
-  RegistrationScreenImage: RegistrationScreenImageIt,
-  TopButtonsImage: TopButtonsImageIt,
 };
 
 const images = {
