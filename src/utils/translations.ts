@@ -14,7 +14,7 @@ export const resources = {
         atLeast1Number: "The password must contain at least one number",
         atLeastUpperAndLowerCase: "The password must contain at least one uppercase and one lowercase letter",
         atLeastSpecialChar: "The password must contain at least one special character",
-        notPasswordConfirm: "The two inserted password does not match"
+        passwordsNoMatch: "The two inserted password does not match",
       },
       registration: {
         loginButton: "Login",
@@ -155,7 +155,6 @@ export const resources = {
         info4: "- coins' data (price, variation, ecc) follow the Coingecko values",
         info5: "- since the platform is in a beta testing phase, bugs or malfunctions may occur",
         helpFeedback: "Feel free to contact us for a feedback or a bug report at",
-        helpMail: "infowebfinance@gmail.com",
         title2: "Let's start!",
         introTutorial:
           'The first and most important step consists of having in mind how to structure your portfolio.\n\nAs you know, it is important to divide your portfolio by risk typologies and allocate a percentage to each of them.\n\nEvery investor has his strategy! You have to find yours in order to do the correct move, and not act moved by feelings.\n\nIf you are interested in reading something more about "how to structure your portfolio" we suggest you take a look',
@@ -199,7 +198,7 @@ export const resources = {
         atLeast1Number: "La password deve contenere almeno un numero",
         atLeastUpperAndLowerCase: "La password deve contenere almeno una lettera maiuscola e una minuscola",
         atLeastSpecialChar: "La password deve contenere almeno un carattere speciale",
-        notPasswordConfirm: "Le due password inserite non coincidono"
+        passwordsNoMatch: "Le due password inserite non coincidono",
       },
       registration: {
         loginButton: "Accesso",
@@ -340,7 +339,6 @@ export const resources = {
         info4: "- i dati riguardo alle monete (prezzo, variazione ecc) sono in linea con Coingecko.",
         info5: "- la piattaforma è in fase di beta testing, potrebbero perciò verificarsi bug o malfunzionamenti",
         helpFeedback: "Nel caso volessi darci un feedback, segnalarci un bug o altro puoi contattarci a",
-        helpMail: "infowebfinance@gmail.com",
         title2: "Iniziamo!",
         introTutorial:
           "Il primo passo per iniziare a sfruttare le funzionalità della piattaforma è quello di avere bene in mente come strutturare un portafoglio.\n\nCome saprai è bene strutturare un portafoglio suddividendolo in tipologie di rischio, e allocando per ciascuna tipologia un'adeguata percentuale sul totale.\n\nOgni investitore ha una sua strategia! È importante capirla al più presto per mantenerla nel tempo e non agire con la pancia (ma con la testa).\n\nSe desideri leggere qualcosa in più riguardo a come strutturare un portafoglio ti consigliamo di leggere",

@@ -8,7 +8,7 @@ import { Input } from "components/Input";
 import { Spacer } from "components/Spacer";
 import { useClientRouter } from "hooks/useClientRouter";
 import { useToast } from "hooks/useToast";
-import { getCorrectPasswordErrorKey, validateMail, validatePassword, validateConfirmPassword } from "utils/validation";
+import { getCorrectPasswordErrorKey, validateMail, validatePassword } from "utils/validation";
 import { loginPath } from "utils/paths";
 import { toUser } from "mappers/toUser";
 import { InfoButton } from "components/InfoButton";
@@ -24,8 +24,11 @@ const SignupPage = () => {
   const { setCurrentUser } = useAuth();
   const router = useClientRouter();
   const { showToast } = useToast();
-  const disabled = !validateMail(email) || !validatePassword(password) || validateConfirmPassword(password, confirmPassword);
   const { t } = useTranslation();
+
+  const passwordAndConfirmOneEqual = password === confirmPassword;
+
+  const disabled = !validateMail(email) || !validatePassword(password) || !passwordAndConfirmOneEqual;
 
   const onConfirm = async () => {
     try {
@@ -100,7 +103,6 @@ const SignupPage = () => {
         <Typography variant="error" style={{ height: 10 }}>
           {!password || validatePassword(password) ? "" : t(`validation.${getCorrectPasswordErrorKey(password)}`)}
         </Typography>
-
         <Spacer size={25} />
         <Typography variant="body">{t("registration.confirmPassword")}</Typography>
         <Spacer size={10} />
@@ -112,12 +114,11 @@ const SignupPage = () => {
           onChange={(e) => {
             setConfirmPassword(e.currentTarget.value);
           }}
-          autocomplete={"password"}
           onKeyDown={handleKeyPress}
         />
         <Spacer size={5} />
         <Typography variant="error" style={{ height: 10 }}>
-          {!confirmPassword || validateConfirmPassword(password, confirmPassword) || !validatePassword(password)  ? "" : t(`validation.notPasswordConfirm`)}
+          {!confirmPassword || passwordAndConfirmOneEqual ? "" : t(`validation.passwordsNoMatch`)}
         </Typography>
         <Spacer size={40} />
         <div style={{ display: "flex", justifyContent: "center" }}>

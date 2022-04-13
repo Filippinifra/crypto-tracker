@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { homePath, registrationPath } from "utils/paths";
 import { useTranslation } from "react-i18next";
 import { ChangeLanguageButton } from "components/ChangeLanguageButton";
+import { contactMail } from "utils/constants";
 
 const Wrapper = styled.div`
   max-width: 700px;
@@ -115,8 +116,8 @@ export default function InfoPage() {
       <Typography variant="body">
         {`${t("info.helpFeedback")} `}
         <BoldLabel>
-          <a href="mailto:infowebfinance@gmail.com" style={{ color: "black" }}>
-            {t("info.helpMail")}
+          <a href={`mailto:${contactMail}`} style={{ color: "black" }}>
+            {contactMail}
           </a>
         </BoldLabel>
       </Typography>
@@ -182,8 +183,8 @@ export default function InfoPage() {
       <InfoTypography>
         {t("info.outro")}
         <BoldLabel>
-          <a href="mailto:infowebfinance@gmail.com" style={{ color: "black" }}>
-            {t("info.helpMail")}
+          <a href={`mailto:${contactMail}`} style={{ color: "black" }}>
+            {contactMail}
           </a>
         </BoldLabel>
       </InfoTypography>
