@@ -230,11 +230,6 @@ export default function InfoPage() {
         </BoldLabel>
       </InfoTypography>
       <Spacer size={30} />
-      <div style={{ width: "100%", textAlign: "center" }}>
-        <Button onClick={() => router.push(homePath)}>
-          <Typography variant="body2">{"Home/Login"}</Typography>
-        </Button>
-      </div>
     </Wrapper>
   );
 }
