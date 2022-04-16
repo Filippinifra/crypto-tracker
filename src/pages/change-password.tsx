@@ -16,9 +16,11 @@ import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 
 const ChangePasswordPage = () => {
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const router = useClientRouter();
   const { showToast } = useToast();
-  const disabled = !validatePassword(password);
+  const passwordAndConfirmOneEqual = password === confirmPassword;
+  const disabled = !validatePassword(password) || !passwordAndConfirmOneEqual;
   const oobCodeQuery = router.query.oobCode;
   const oobCode = typeof oobCodeQuery === "string" ? oobCodeQuery : oobCodeQuery?.[0] || "";
   const { t } = useTranslation();
@@ -78,7 +80,24 @@ const ChangePasswordPage = () => {
       <Typography variant="error" style={{ height: 10 }}>
         {!password || validatePassword(password) ? "" : t(`validation.${getCorrectPasswordErrorKey(password)}`)}
       </Typography>
-      <Spacer size={25} />
+      <Spacer size={5} />
+        <Typography variant="body">{t("registration.confirmPassword")}</Typography>
+        <Spacer size={10} />
+        <Input
+          type="password"
+          value={confirmPassword}
+          placeholder={t("registration.confirmPasswordPlaceholder")}
+          name="confirmpsw"
+          onChange={(e) => {
+            setConfirmPassword(e.currentTarget.value);
+          }}
+          onKeyDown={handleKeyPress}
+        />
+        <Spacer size={5} />
+        <Typography variant="error" style={{ height: 10 }}>
+          {!confirmPassword || passwordAndConfirmOneEqual ? "" : t(`validation.passwordsNoMatch`)}
+        </Typography>
+        <Spacer size={25} />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Button onClick={onPasswordReset} disabled={disabled}>
           <Typography variant="body2">{t("changePassword.confirmPassword")}</Typography>
