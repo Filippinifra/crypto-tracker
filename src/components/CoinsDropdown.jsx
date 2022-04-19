@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
 import Select from "react-select";
 import { shadowStyle } from "components/ShadowStyle";
+import { useTranslation } from "react-i18next";
 
 export const CoinsDropdown = ({ options, value, onChange, ...others }) => {
   const [input, setInput] = useState("");
+  const { t } = useTranslation();
 
   const filteredOptions = useMemo(() => {
     if (!input) {
@@ -36,7 +38,7 @@ export const CoinsDropdown = ({ options, value, onChange, ...others }) => {
       }}
       options={slicedOptions}
       onInputChange={setInput}
-      placeholder={others.isDisabled ? "Finisci di modificare la sezione sotto" : "Scrivi o scegli una moneta"}
+      placeholder={others.isDisabled ? t("home.addCoin.dropdownDisabledPlaceholder") : t("home.addCoin.dropdownPlaceholder")}
       {...others}
       styles={{
         container: (styles, { isDisabled }) => ({

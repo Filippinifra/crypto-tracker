@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { TotalVest } from "types/totalVest";
 import { useAuth } from "hooks/useAuth";
@@ -9,6 +10,7 @@ import { toTotalVest } from "mappers/toTotalVest";
 export const useTotalVest = () => {
   const [totalVest, setTotalVest] = useState<TotalVestDTO>();
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   const { currentUser } = useAuth();
   const { getVesting: getVestingDB, setVesting: setVestingDB } = useDatabase(currentUser || undefined);
@@ -19,9 +21,9 @@ export const useTotalVest = () => {
     try {
       await setVestingDB(newVesting);
       setTotalVest(newVesting);
-      showToast("Modifiche relative al totale investito salvate correttamente", "success");
+      showToast(t("home.vesting.updateCompleted"), "success");
     } catch {
-      showToast("Modifiche relative al totale investito non salvate", "error");
+      showToast(t("home.vesting.updateError"), "error");
     }
   };
 
@@ -31,7 +33,7 @@ export const useTotalVest = () => {
       const vest = response.val();
       setTotalVest(vest || 0);
     } catch {
-      showToast("Errore nel caricare il totale investito", "error");
+      showToast(t("home.vesting.fetchError"), "error");
     } finally {
       setLoading(false);
     }

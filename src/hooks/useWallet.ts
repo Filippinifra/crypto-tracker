@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useAuth } from "hooks/useAuth";
 import { WalletDivision } from "types/walletDivision";
 import { useEffect, useState } from "react";
@@ -9,6 +10,7 @@ import { toWallet } from "mappers/toWallet";
 export const useWallet = () => {
   const [wallet, setWallet] = useState<WalletDivisionDTO>();
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   const { currentUser } = useAuth();
   const { getWallet: getWalletDB, setWallet: setWalletDB } = useDatabase(currentUser || undefined);
@@ -20,9 +22,9 @@ export const useWallet = () => {
       const finalWallet: WalletDivisionDTO = newWallet.map(({ percentage, typologyId, typologyName }) => ({ percentage, typologyId, typologyName }));
       await setWalletDB(finalWallet);
       setWallet(newWallet);
-      showToast("Modifiche relative all'allocazione del portafoglio salvate correttamente", "success");
+      showToast(t("home.wallet.updateCompleted"), "success");
     } catch {
-      showToast("Modifiche relative all'allocazione del portafoglio non salvate", "error");
+      showToast(t("home.wallet.updateError"), "error");
     }
   };
 
@@ -32,7 +34,7 @@ export const useWallet = () => {
       const wallet: WalletDivisionDTO = response.val();
       setWallet(wallet || []);
     } catch {
-      showToast("Errore nel caricare il portafoglio", "error");
+      showToast(t("home.wallet.fetchError"), "error");
     } finally {
       setLoading(false);
     }

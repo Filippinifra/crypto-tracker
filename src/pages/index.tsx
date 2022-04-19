@@ -23,6 +23,7 @@ import { useToast } from "hooks/useToast";
 import { useResponsive } from "hooks/useResponsive";
 import { useAuth } from "hooks/useAuth";
 import { DoughnutCompleteChart } from "components/DoughnutCompleteChart";
+import { useTranslation } from "react-i18next";
 
 export const getStaticProps: GetStaticProps<{ availableCoins: AvailableCoins | undefined }> = async () => {
   let res = null;
@@ -55,6 +56,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
 
   const showDoughnut = Boolean(wallet?.length) && Boolean(personalCoins?.length) && personalCoins?.some(({ typologyId, percentage }) => Boolean(typologyId) && Boolean(percentage));
 
+  const { t } = useTranslation();
   const { showToast } = useToast();
 
   const addCoin = (coin: AvailableCoin) => {
@@ -92,15 +94,14 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
 
     if (wallet && JSON.stringify(personalCoins) !== JSON.stringify(result) && result) {
       setPersonalCoins(result);
-      showToast("Le monete assegnate a tipologie che sono state rimosse ora hanno una tipologia vuota", "warning");
+      showToast(t("home.coinsWithNoExistingTypologyChanges"), "warning");
     }
-  }, [personalCoins, wallet, setPersonalCoins, showToast]);
+  }, [personalCoins, wallet, setPersonalCoins, showToast, t]);
 
   useEffect(() => {
     if (!loading && !error) {
       removesNotExistingTypologyId();
     }
-
     return () => removesNotExistingTypologyId();
   }, [wallet, loading, error, removesNotExistingTypologyId]);
 
@@ -108,7 +109,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
     <LoadErrorHandler data={data} error={error}>
       <Layout prefCurrency={prefCurrency} setPrefCurrency={setPrefCurrency} personalCoins={personalCoins || []}>
         <Typography variant="body">
-          {"Ciao "}
+          {`${t("home.helloMessage")} `}
           <Typography variant="body" style={{ fontWeight: 600 }} component="span">
             {currentUser?.email}
           </Typography>
@@ -126,7 +127,7 @@ const Home = ({ availableCoins }: InferGetStaticPropsType<typeof getStaticProps>
           {showDoughnut && <DoughnutCompleteChart personalCoins={personalCoins || []} wallet={wallet || []} />}
         </div>
         <Spacer size={50} />
-        <Typography variant="body">Aggiungi le tue coins:</Typography>
+        <Typography variant="body">{t("home.addCoin.title")}</Typography>
         <Spacer size={20} />
         <div style={{ width: getResponsiveValue(["auto", "550px", "600px"]), margin: "6px 0 0 6px" }}>
           <CoinsDropdown

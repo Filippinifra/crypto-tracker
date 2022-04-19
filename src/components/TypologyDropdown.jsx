@@ -1,6 +1,9 @@
+import { useTranslation } from "react-i18next";
 import Select from "react-select";
 
 export const TypologyDropdown = ({ options, value, onChange, ...others }) => {
+  const { t } = useTranslation();
+
   return (
     <Select
       value={value}
@@ -10,7 +13,7 @@ export const TypologyDropdown = ({ options, value, onChange, ...others }) => {
         }
       }}
       options={options}
-      placeholder={"Tipologia"}
+      placeholder={t("home.coins.typologyDropdownPlaceholder")}
       {...others}
       styles={{
         container: (props) => ({ ...props, border: "1px solid black", margin: 2, height: 30 }),

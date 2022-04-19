@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import { shadowStyle } from "components/ShadowStyle";
 
@@ -14,7 +14,7 @@ const ButtonStyled = styled.div<{ disabled: boolean }>`
   color: black;
 `;
 
-export const Button: FC<{ onClick: () => void; disabled?: boolean }> = ({ children, onClick, disabled = false, ...others }) => {
+export const Button: FC<{ onClick: () => void; disabled?: boolean; style?: React.CSSProperties }> = ({ children, onClick, disabled = false, style }) => {
   return (
     <ButtonStyled
       disabled={disabled}
@@ -23,7 +23,7 @@ export const Button: FC<{ onClick: () => void; disabled?: boolean }> = ({ childr
           onClick();
         }
       }}
-      {...others}
+      style={style}
     >
       {children}
     </ButtonStyled>

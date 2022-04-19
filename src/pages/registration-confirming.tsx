@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { auth } from "utils/firebase";
 import { homePath } from "utils/paths";
 import { useAuth } from "hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 const RegistrationConfirmingPage = () => {
   const [hasBeenCalled, setHasBeenCalled] = useState(false);
@@ -13,6 +14,7 @@ const RegistrationConfirmingPage = () => {
   const router = useClientRouter();
   const oobCodeQuery = router.query.oobCode;
   const oobCode = typeof oobCodeQuery === "string" ? oobCodeQuery : oobCodeQuery?.[0] || "";
+  const { t } = useTranslation();
 
   const { showToast } = useToast();
 
@@ -24,16 +26,16 @@ const RegistrationConfirmingPage = () => {
         if (currentUser) {
           setCurrentUser((user) => ({ verified: true, email: user?.email || null, uid: user?.uid || "" }));
         }
-        showToast("Email verificata correttamente", "success");
+        showToast(t("registrationConfirming.confirmSuccess"), "success");
       } catch {
-        showToast("Errore nel verificare l'email", "error");
+        showToast(t("registrationConfirming.confirmError"), "error");
       } finally {
         router.push(homePath);
       }
     } else {
       router.push(homePath);
     }
-  }, [router, oobCode, hasBeenCalled, currentUser, setCurrentUser, showToast]);
+  }, [router, oobCode, hasBeenCalled, currentUser, setCurrentUser, showToast, t]);
 
   useEffect(() => {
     performInitialAction();

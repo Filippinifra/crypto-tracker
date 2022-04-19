@@ -1,6 +1,8 @@
+import { isBrowser } from "utils/browser";
 import * as firebase from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { Analytics, getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,10 +15,15 @@ const firebaseConfig = {
 };
 
 if (!firebase.getApps().length) {
-  const app = firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
+}
+
+let analytics: Analytics | null = null;
+if (isBrowser) {
+  analytics = getAnalytics();
 }
 
 const auth = getAuth();
 const database = getDatabase();
 
-export { auth, database };
+export { auth, database, analytics };

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { PersonalCoins } from "types/personalCoins";
 import { useAuth } from "hooks/useAuth";
@@ -8,6 +9,7 @@ import { toPersonalCoins } from "mappers/toPersonalCoins";
 export const usePersonalCoins = () => {
   const [personalCoins, setPersonalCoins] = useState<PersonalCoins>();
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   const { currentUser } = useAuth();
   const { getCoins: getCoinsDB, setCoins: setCoinsDB } = useDatabase(currentUser || undefined);
@@ -18,9 +20,9 @@ export const usePersonalCoins = () => {
     try {
       await setCoinsDB(newCoins);
       setPersonalCoins(newCoins);
-      showToast("Modifiche relative alle monete salvate correttamente", "success");
+      showToast(t("home.coins.updateCompleted"), "success");
     } catch {
-      showToast("Modifiche relative alle monete non salvate", "error");
+      showToast(t("home.coins.updateError"), "error");
     }
   };
 
@@ -30,7 +32,7 @@ export const usePersonalCoins = () => {
       const coins = response.val();
       setPersonalCoins(coins || []);
     } catch (e) {
-      showToast("Errore nel caricare le monete", "error");
+      showToast(t("home.coins.fetchError"), "error");
     } finally {
       setLoading(false);
     }

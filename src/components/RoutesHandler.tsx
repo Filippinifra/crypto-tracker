@@ -3,10 +3,12 @@ import { LoadErrorHandler } from "components/LoadErrorHandler";
 import { FC } from "react";
 import { waitingRegistration, homePath, logAndUnlogPaths, loginPath, unloggedPaths, registrationConfirmingPath, loggedPaths } from "utils/paths";
 import { useClientRouter } from "hooks/useClientRouter";
+import { useLanguage } from "hooks/useLanguage";
 
 const PublicAndPrivateRouter: FC = ({ children }) => {
   const router = useClientRouter();
   const { currentUser, isLoadingUser } = useAuth();
+  const { language } = useLanguage();
 
   const currentPath = router.pathname;
 
@@ -17,7 +19,7 @@ const PublicAndPrivateRouter: FC = ({ children }) => {
   const isWaitingConfirmationPath = currentPath === waitingRegistration;
   const isConfirmingRegistrationPath = currentPath === registrationConfirmingPath;
 
-  if (isLoadingUser) {
+  if (isLoadingUser || !language) {
     return <LoadErrorHandler data={null} error={null} />;
   }
 

@@ -2,7 +2,10 @@ import { ToastContainer } from "components/ToastContainer";
 import { ToastProvider } from "contexts/ToastContext";
 import Head from "next/head";
 import { AuthProvider } from "contexts/AuthContext";
+import { LanguageProvider } from "contexts/LanguageContext";
 import { RoutesHandler } from "components/RoutesHandler";
+/*eslint-disable-next-line */
+import i18n from "utils/i18next";
 
 const MyApp = ({ Component, pageProps }) => {
   return (
@@ -31,10 +34,12 @@ const MyApp = ({ Component, pageProps }) => {
       `}</style>
       <AuthProvider>
         <ToastProvider>
-          <RoutesHandler>
-            <Component {...pageProps} />
-            <ToastContainer />
-          </RoutesHandler>
+          <LanguageProvider>
+            <RoutesHandler>
+              <Component {...pageProps} />
+              <ToastContainer />
+            </RoutesHandler>
+          </LanguageProvider>
         </ToastProvider>
       </AuthProvider>
     </>
