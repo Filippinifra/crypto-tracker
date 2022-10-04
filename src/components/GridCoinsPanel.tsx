@@ -39,6 +39,7 @@ const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; he
   height,
   textColor,
   style,
+  ...other
 }) => {
   const additionalStyle: React.CSSProperties = {
     width: "100%",
@@ -53,7 +54,7 @@ const LabelCell: FC<{ value: string | number; color: string; trunc?: boolean; he
   };
 
   return (
-    <Typography variant="body" style={additionalStyle}>
+    <Typography variant="body" style={additionalStyle} {...other}>
       {value || PLACEHOLDER}
     </Typography>
   );
@@ -83,18 +84,22 @@ const getRow = ({
   wallet,
   symbolCurrency,
   isEditing,
+  hoverRow,
   setTempRebalancing,
   showToast,
   t,
+  setHoverRow,
 }: {
   coin: EditingRebalancingCoin;
   index: number;
   wallet: WalletDivision;
   symbolCurrency: CurrencySymbol;
   isEditing: boolean;
+  hoverRow: number | null;
   setTempRebalancing: React.Dispatch<React.SetStateAction<EditingRebalancingCoins>>;
   showToast: (message: string, type: ToastType) => void;
   t: TFunction<"translation", undefined>;
+  setHoverRow: React.Dispatch<React.SetStateAction<number | null>>;
 }) => {
   const {
     symbolAndName,
@@ -113,6 +118,11 @@ const getRow = ({
   } = coin;
 
   const color = index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
+  const backgroundColor = hoverRow === index ? "#ffff00" : color;
+
+  const onMouseOver = () => setHoverRow(index);
+  const onMouseLeave = () => setHoverRow(null);
+  const onMouseMethods = { onMouseOver, onMouseLeave };
 
   const colorTypologyText = wallet.find(({ typologyId: walletTypologyId }) => walletTypologyId === typologyId);
 
@@ -154,12 +164,13 @@ const getRow = ({
         value={currentTypology?.value.typologyName || ""}
         key={`coin-table-${keyElement}-type`}
         style={{ fontWeight: 800, border: `5px solid ${colorTypologyText?.color}`, padding: 5, display: "flex" }}
+        {...onMouseMethods}
       />
     ),
-    <div style={{ backgroundColor: color, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-image`}>
+    <div style={{ backgroundColor, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-image`} {...onMouseMethods}>
       <Image src={logoUrl} alt={keyElement} height={25} width={25} />
     </div>,
-    <LabelCell color={color} value={symbolAndName} key={`coin-table-${keyElement}-name`} />,
+    <LabelCell color={color} value={symbolAndName} key={`coin-table-${keyElement}-name`} style={{ backgroundColor }} {...onMouseMethods} />,
     isEditing ? (
       <Input
         value={allocationPercentage !== null ? allocationPercentage : ""}
@@ -175,17 +186,20 @@ const getRow = ({
           }
         }}
         key={`coin-table-${keyElement}-allocation-editing`}
+        {...onMouseMethods}
       />
     ) : (
-      <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} />
+      <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} style={{ backgroundColor }} {...onMouseMethods} />
     ),
-    <LabelCell color={color} value={`${getSplittedPrice(idealAllocationValue)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-for-perc`} />,
-    <LabelCell color={color} value={`${getSplittedPrice(price)}${symbolCurrency}`} key={`coin-table-${keyElement}-price`} />,
+    <LabelCell color={color} value={`${getSplittedPrice(idealAllocationValue)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-for-perc`} style={{ backgroundColor }} {...onMouseMethods} />,
+    <LabelCell color={color} value={`${getSplittedPrice(price)}${symbolCurrency}`} key={`coin-table-${keyElement}-price`} style={{ backgroundColor }} {...onMouseMethods} />,
     <LabelCell
       color={getPriceChangeColor(priceChangePercentage24h, color)}
       textColor={priceChangePercentage24h < 0 ? redVariationColor : greenVariationColor}
       value={`${getSplittedPrice(priceChangePercentage24h, 3, 2, true)}%`}
       key={`coin-table-${keyElement}-price-variation`}
+      style={{ backgroundColor }}
+      {...onMouseMethods}
     />,
     isEditing ? (
       <Input
@@ -202,20 +216,27 @@ const getRow = ({
           }
         }}
         key={`coin-table-${keyElement}-coins-editing`}
+        {...onMouseMethods}
       />
     ) : (
-      <LabelCell color={color} value={coins || 0} key={`coin-table-${keyElement}-holding-token`} />
+      <LabelCell color={color} value={coins || 0} key={`coin-table-${keyElement}-holding-token`} style={{ backgroundColor }} {...onMouseMethods} />
     ),
-    <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-holding-in-fiat`} />,
-    <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={percentageBalance} key={`coin-table-${keyElement}-perc-balancing`} />,
-    <LabelCell color={getFiatRebalanceColor(rebalancingInFiat)} value={`${getSplittedPrice(rebalancingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-balancing`} />,
-    <LabelCell color={color} value={getSplittedPrice(rebalancingCoins)} key={`coin-table-${keyElement}-coin-balancing`} />,
+    <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-holding-in-fiat`} style={{ backgroundColor }} {...onMouseMethods} />,
+    <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={percentageBalance} key={`coin-table-${keyElement}-perc-balancing`} style={{ backgroundColor }} {...onMouseMethods} />,
+    <LabelCell
+      color={getFiatRebalanceColor(rebalancingInFiat)}
+      value={`${getSplittedPrice(rebalancingInFiat, 5, 2)}${symbolCurrency}`}
+      key={`coin-table-${keyElement}-value-balancing`}
+      style={{ backgroundColor }}
+      {...onMouseMethods}
+    />,
+    <LabelCell color={color} value={getSplittedPrice(rebalancingCoins)} key={`coin-table-${keyElement}-coin-balancing`} style={{ backgroundColor }} {...onMouseMethods} />,
     isEditing ? (
-      <div style={{ backgroundColor: color, height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-delete-icon`}>
+      <div style={{ backgroundColor, height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-delete-icon`} {...onMouseMethods}>
         <Icon name="delete" color={removeColor} style={{ cursor: "pointer" }} onClick={onRemoveCoins} />
       </div>
     ) : (
-      <div style={{ backgroundColor: color }} key={`coin-table-${keyElement}-empty-space`}></div>
+      <div style={{ backgroundColor }} key={`coin-table-${keyElement}-empty-space`} {...onMouseMethods}></div>
     ),
   ];
 };
@@ -242,6 +263,7 @@ export const GridCoinsPanel: FC<{
   setEditing: Dispatch<SetStateAction<boolean>>;
 }> = ({ rebalancingCoins, wallet, symbolCurrency, setRebalancingCoins, detailedCoinsLoading, isEditing, setEditing }) => {
   const [tempRebalancing, setTempRebalancing] = useState<EditingRebalancingCoins>(reorderCoins(rebalancingCoins, wallet));
+  const [hoverRow, setHoverRow] = useState<number | null>(null);
 
   const { showToast } = useToast();
   const { t } = useTranslation();
@@ -260,7 +282,7 @@ export const GridCoinsPanel: FC<{
 
   // @ts-ignore
   const coinsData: ReactElement<any, any>[] = tempRebalancing.reduce((r, coinData, index) => {
-    return [...r, ...getRow({ coin: coinData, index, wallet, symbolCurrency, isEditing, setTempRebalancing, showToast, t })];
+    return [...r, ...getRow({ coin: coinData, index, wallet, symbolCurrency, isEditing, hoverRow, setTempRebalancing, showToast, t, setHoverRow })];
   }, []);
 
   const normalizeAndSetCoins = () => {

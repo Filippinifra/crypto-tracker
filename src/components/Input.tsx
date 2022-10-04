@@ -22,7 +22,7 @@ interface Props {
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
 }
 
-export const Input: FC<Props> = ({ type, placeholder, name, value, style, autocomplete, step, onChange, onKeyDown }) => {
+export const Input: FC<Props> = ({ type, placeholder, name, value, style, autocomplete, step, onChange, onKeyDown, ...other }) => {
   return (
     <InputStyled
       type={type}
@@ -38,6 +38,7 @@ export const Input: FC<Props> = ({ type, placeholder, name, value, style, autoco
       style={style}
       autoComplete={autocomplete}
       step={step}
+      {...other}
     />
   );
 };
