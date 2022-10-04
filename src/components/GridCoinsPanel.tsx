@@ -119,8 +119,7 @@ const getRow = ({
     platform,
   } = coin;
 
-  const color = index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
-  const backgroundColor = hoverRow === index ? "#ffff00" : color;
+  const color = hoverRow === index ? "#ffff00" : index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
 
   const onMouseOver = () => setHoverRow(index);
   const onMouseLeave = () => setHoverRow(null);
@@ -173,10 +172,10 @@ const getRow = ({
         {...onMouseMethods}
       />
     ),
-    <div style={{ backgroundColor, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-image`} {...onMouseMethods}>
+    <div style={{ backgroundColor: color, display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-image`} {...onMouseMethods}>
       <Image src={logoUrl} alt={keyElement} height={25} width={25} />
     </div>,
-    <LabelCell color={color} value={symbolAndName} key={`coin-table-${keyElement}-name`} style={{ backgroundColor }} {...onMouseMethods} />,
+    <LabelCell color={color} value={symbolAndName} key={`coin-table-${keyElement}-name`} {...onMouseMethods} />,
     isEditing ? (
       <Input
         value={allocationPercentage !== null ? allocationPercentage : ""}
@@ -195,16 +194,15 @@ const getRow = ({
         {...onMouseMethods}
       />
     ) : (
-      <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} style={{ backgroundColor }} {...onMouseMethods} />
+      <LabelCell color={color} value={`${allocationPercentage}%`} key={`coin-table-${keyElement}-perc`} {...onMouseMethods} />
     ),
-    <LabelCell color={color} value={`${getSplittedPrice(idealAllocationValue)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-for-perc`} style={{ backgroundColor }} {...onMouseMethods} />,
-    <LabelCell color={color} value={`${getSplittedPrice(price)}${symbolCurrency}`} key={`coin-table-${keyElement}-price`} style={{ backgroundColor }} {...onMouseMethods} />,
+    <LabelCell color={color} value={`${getSplittedPrice(idealAllocationValue)}${symbolCurrency}`} key={`coin-table-${keyElement}-value-for-perc`} {...onMouseMethods} />,
+    <LabelCell color={color} value={`${getSplittedPrice(price)}${symbolCurrency}`} key={`coin-table-${keyElement}-price`} {...onMouseMethods} />,
     <LabelCell
       color={getPriceChangeColor(priceChangePercentage24h, color)}
       textColor={priceChangePercentage24h < 0 ? redVariationColor : greenVariationColor}
       value={`${getSplittedPrice(priceChangePercentage24h, 3, 2, true)}%`}
       key={`coin-table-${keyElement}-price-variation`}
-      style={{ backgroundColor }}
       {...onMouseMethods}
     />,
     isEditing ? (
@@ -225,18 +223,17 @@ const getRow = ({
         {...onMouseMethods}
       />
     ) : (
-      <LabelCell color={color} value={coins || 0} key={`coin-table-${keyElement}-holding-token`} style={{ backgroundColor }} {...onMouseMethods} />
+      <LabelCell color={color} value={coins || 0} key={`coin-table-${keyElement}-holding-token`} {...onMouseMethods} />
     ),
-    <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-holding-in-fiat`} style={{ backgroundColor }} {...onMouseMethods} />,
-    <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={percentageBalance} key={`coin-table-${keyElement}-perc-balancing`} style={{ backgroundColor }} {...onMouseMethods} />,
+    <LabelCell color={color} value={`${getSplittedPrice(holdingInFiat, 5, 2)}${symbolCurrency}`} key={`coin-table-${keyElement}-holding-in-fiat`} {...onMouseMethods} />,
+    <LabelCell color={getPercentageBalanceColor(balancingPercentage)} value={percentageBalance} key={`coin-table-${keyElement}-perc-balancing`} {...onMouseMethods} />,
     <LabelCell
       color={getFiatRebalanceColor(rebalancingInFiat)}
       value={`${getSplittedPrice(rebalancingInFiat, 5, 2)}${symbolCurrency}`}
       key={`coin-table-${keyElement}-value-balancing`}
-      style={{ backgroundColor }}
       {...onMouseMethods}
     />,
-    <LabelCell color={color} value={getSplittedPrice(rebalancingCoins)} key={`coin-table-${keyElement}-coin-balancing`} style={{ backgroundColor }} {...onMouseMethods} />,
+    <LabelCell color={color} value={getSplittedPrice(rebalancingCoins)} key={`coin-table-${keyElement}-coin-balancing`} {...onMouseMethods} />,
 
     isEditing ? (
       <Input
@@ -250,14 +247,18 @@ const getRow = ({
         {...onMouseMethods}
       />
     ) : (
-      <LabelCell color={color} value={platform} key={`coin-table-${keyElement}-platform`} style={{ backgroundColor }} {...onMouseMethods} />
+      <LabelCell color={color} value={platform} key={`coin-table-${keyElement}-platform`} {...onMouseMethods} />
     ),
     isEditing ? (
-      <div style={{ backgroundColor, height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-delete-icon`} {...onMouseMethods}>
+      <div
+        style={{ backgroundColor: color, height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
+        key={`coin-table-${keyElement}-delete-icon`}
+        {...onMouseMethods}
+      >
         <Icon name="delete" color={removeColor} style={{ cursor: "pointer" }} onClick={onRemoveCoins} />
       </div>
     ) : (
-      <div style={{ backgroundColor }} key={`coin-table-${keyElement}-empty-space`} {...onMouseMethods}></div>
+      <div style={{ backgroundColor: color }} key={`coin-table-${keyElement}-empty-space`} {...onMouseMethods}></div>
     ),
   ];
 };
