@@ -74,6 +74,7 @@ const getHeaders = (t: TFunction<"translation", undefined>) => {
     <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={t("home.coins.percentageBalanceCellTitle")} key={`coin-table-perc-balancing`} />,
     <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={t("home.coins.valueImbalanceCellTitle")} key={`coin-table-value-balancing`} />,
     <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={t("home.coins.rebalancingCoinsCellTitle")} key={`coin-table-coin-balancing`} />,
+    <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={t("home.coins.platformTitle")} key={`coin-table-platform`} />,
     <LabelCell height={50} trunc={false} color={headerGridCoinColors[5]} value={" "} key={`coin-table-coin-icons`} />,
   ];
 };
@@ -115,6 +116,7 @@ const getRow = ({
     idealAllocationValue,
     typologyId,
     keyElement,
+    platform,
   } = coin;
 
   const color = index % 2 === 0 ? "#f4f4f5" : "#d4d4d8";
@@ -141,6 +143,10 @@ const getRow = ({
 
   const onEditCoins = (coins: number | null) => {
     setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, coins: coins } : e)));
+  };
+
+  const onEditPlatform = (platform: string) => {
+    setTempRebalancing((state) => state.map((e) => (e.keyElement === keyElement ? { ...e, platform } : e)));
   };
 
   const onRemoveCoins = () => {
@@ -231,6 +237,21 @@ const getRow = ({
       {...onMouseMethods}
     />,
     <LabelCell color={color} value={getSplittedPrice(rebalancingCoins)} key={`coin-table-${keyElement}-coin-balancing`} style={{ backgroundColor }} {...onMouseMethods} />,
+
+    isEditing ? (
+      <Input
+        value={platform !== null ? platform : ""}
+        onChange={(e: React.FormEvent<HTMLInputElement>) => {
+          const input = e.currentTarget.value;
+
+          onEditPlatform(input);
+        }}
+        key={`coin-table-${keyElement}-platform`}
+        {...onMouseMethods}
+      />
+    ) : (
+      <LabelCell color={color} value={platform} key={`coin-table-${keyElement}-platform`} style={{ backgroundColor }} {...onMouseMethods} />
+    ),
     isEditing ? (
       <div style={{ backgroundColor, height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }} key={`coin-table-${keyElement}-delete-icon`} {...onMouseMethods}>
         <Icon name="delete" color={removeColor} style={{ cursor: "pointer" }} onClick={onRemoveCoins} />
@@ -322,7 +343,7 @@ export const GridCoinsPanel: FC<{
           <Placeholder height={1000} width={CoinGridWidth} />
         ) : (
           <>
-            <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px 20px"} data={[...getHeaders(t), ...coinsData]} />
+            <Grid templateColumns={"150px 58px 160px 100px 110px 90px 85px 80px 90px 120px 120px 120px 100px 20px"} data={[...getHeaders(t), ...coinsData]} />
             {!tempRebalancing.length && (
               <>
                 <Spacer size={20} />
